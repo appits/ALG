@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="cancel_sequence_form_view" model="ir.ui.view">
+            <field name="name">cancel_sequence_form_view</field>
+            <field name="model">cancel.guide</field>
+            <field name="arch" type="xml">
+                <form string="Cancelar Secuencia">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                              Desea anular la guia de despacho ?
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="picking_id" invisible="1"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                            <button name="cancel_sequence"
+                                string="CANCELAR SECUENCIA"
+                                type="object"
+                                class="btn btn-danger"/>
+                            <button string="DESCARTAR"
+                                class="btn-secondary"
+                                special="cancel" />
+                        </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="cancel_sequence_act_window" model="ir.actions.act_window">
+            <field name="name">Cancelar Secuencia</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cancel.guide</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="cancel_sequence_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

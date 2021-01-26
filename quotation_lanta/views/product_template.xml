@@ -1,0 +1,17 @@
+<odoo>
+  <data>
+      <record id="product_template_ing_id" model="ir.ui.view">
+                <field name="name">Product Template</field>
+                <field name="model">product.template</field>
+                <field name="inherit_id" ref="product.product_template_only_form_view"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='barcode']" position="after">
+                        <field name="price_market" groups="quotation_lanta.module_quotation_group"/>
+                    </xpath>
+                     <xpath expr="//field[@name='price_market']" position="after">
+                        <field name="is_operating_cost" groups="quotation_lanta.module_quotation_group"/>
+                    </xpath>
+                </field>
+        </record>
+  </data>
+</odoo>

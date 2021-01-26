@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res_partner_inherit.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <notebook>
+                   <page string="Configuration Quotation" attrs="{'invisible': [('company_type','=', 'person')]}" groups="quotation_lanta.module_quotation_group">
+                        <group>
+                            <group>
+                                <field name="percent_margin" required="1"/>
+                                <field name="margin_amount" required="1"/>
+                                <field name="percent_additional" required="1"/>
+                                <field name="base_calculation" required="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</odoo>

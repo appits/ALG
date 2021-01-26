@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="stock_picking_ing_form_inherit" model="ir.ui.view">
+            <field name="name">stock_picking_ing_form_inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_picking_move_tree']" position="before">
+                    <button class="oe_stat_button"
+                            icon="fa-cubes"
+                            type="object"
+                            attrs="{'invisible':[('production_count', '=', 0)]}"
+                            name="call_production" >
+                      <field name="production_count" string="Production" widget="statinfo"/>
+                    </button>
+                </xpath>
+                <xpath expr="//field[@name='location_dest_id']" position="replace">
+                    <field name="location_dest_id" attrs="{'readonly':['|', ('generated_by_related', '=', True), ('state', 'in', ('done', 'cancel'))]}" force_save="1"/>
+                </xpath>
+                 <xpath expr="//field[@name='location_id']" position="replace">
+                    <field name="location_id" attrs="{'readonly':['|', ('generated_by_related', '=', True), ('state', 'in', ('done', 'cancel'))]}" force_save="1"/>
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="generated_by_picking_list" readonly="1" attrs="{'invisible':[('generated_by_picking_list', '=', False)]}" force_save="1"/>
+                    <field name="related_picking_id" readonly="1" attrs="{'invisible':[('related_picking_id', '=', False)]}" force_save="1"/>
+                    <field name="generated_by_related" invisible="1" force_save="1"/>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[3]/field[@name='move_ids_without_package']/tree[1]/field[@name='product_id']" position="after">
+                    <field name="location_id" required="1"/>
+                    <field name="location_dest_id" required="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

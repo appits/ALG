@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="mrp_bom_form_q_inherit" model="ir.ui.view">
+            <field name="name">mrp_bom_form_q_inherit</field>
+            <field name="model">mrp.bom</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="percentage_of_loss" groups="quotation_lanta.module_quotation_group"/>
+                    <field name="list_for_quotation" groups="quotation_lanta.module_quotation_group"/>
+                </xpath>
+                <xpath expr="//field[@name='routing_id']" position="after">
+                    <field name="quantity_sum_raw" readonly="1" force_save="1" attrs="{'invisible': [('quantity_sum_raw','=', 0)]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

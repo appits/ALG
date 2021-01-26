@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="menu_mrp_nimetrix"
+            name="Configuration connection routing"
+            parent="mrp.menu_mrp_root"
+            sequence="12"/>
+
+        <menuitem name="Connection Routing" id="config_conect_menu" parent="menu_mrp_nimetrix" action="config_conex_act_window"/>
+    </data>
+</odoo>

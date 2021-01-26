@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="paperformat_inventory" model="report.paperformat">
+            <field name="name">European A4</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+        <report
+                id="report_label"
+                model="stock.print"
+                string="Reporte Etiquetas"
+                name="reports_lanta.inventory_labels"
+                report_type="qweb-pdf"
+                paperformat="reports_lanta.paperformat_inventory"/>
+
+
+        <template id="inventory_labels">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="col-xs-3" style="width: 32%; display: inline-table; height: 10rem;">
+                        <table class="table table-bordered mb-0" style="border-spacing:0;margin-bottom:0;height: 150px; width: 400px; border: 2px solid black;">
+                            <tr>
+                              <td style="height: 6rem;">
+                                   <t t-if="doc.last == True">
+                                       <strong><h1>N° <span t-field="doc.nro_total"></span></h1></strong>
+                                   </t>
+                                   <t t-else="doc.first == False">
+                                       <strong><h9>N° <span t-field="doc.nro_total"></span></h9></strong>
+                                       <br/>
+                                       <br/>
+                                   </t>
+
+                                    <h9><strong>Codigo : </strong> <span t-field="doc.code"></span></h9>
+                                        <br/>
+                                    <h9><strong>Producto : </strong> <span t-field="doc.product_id.name"></span></h9>
+                                        <br/>
+                                    <h9><strong>Lote : </strong><span t-field="doc.lot_id.name"></span></h9>
+                                        <br/>
+                                    <h9><strong>Fecha elaborado : </strong> <span t-field="doc.date"></span></h9>
+                                        <br/>
+                                    <h9><strong>Fecha Vencimiento : </strong><span t-field="doc.date"></span></h9>
+                                        <br/>
+                                   <h9><strong> Ubicacion : </strong><span t-field="doc.location_id.name"></span></h9>
+                                  <table class="table table-sm o_main_table">
+                                      <tbody class="sale_tbody">
+                                          <strong><h3> CANTIDAD :<span ></span></h3></strong>
+                                          <t t-if="doc.last == False">
+                                                <strong><h9>Conteo N° <span t-field="doc.nro"></span></h9></strong> /
+                                                <strong><h9>Firma:</h9></strong>
+                                          </t>
+                                      </tbody>
+                                  </table>
+                              </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

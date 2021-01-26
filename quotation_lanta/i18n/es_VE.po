@@ -1,0 +1,611 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* quotation_lanta
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-09 21:04+0000\n"
+"PO-Revision-Date: 2020-09-09 21:04+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: quotation_lanta
+#: code:addons/quotation_lanta/models/sale_order.py:0
+#, python-format
+msgid "Advertencia de Tasas!"
+msgstr ""
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__base_calculation
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_partner__base_calculation
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_users__base_calculation
+msgid "Base Calculation"
+msgstr "Base de Calculo"
+
+#. module: quotation_lanta
+#: model:ir.model,name:quotation_lanta.model_mrp_bom
+msgid "Bill of Material"
+msgstr "Lista de materiales"
+
+#. module: quotation_lanta
+#: model:ir.model,name:quotation_lanta.model_mrp_bom_line
+msgid "Bill of Material Line"
+msgstr "Línea de Lista de Materiales"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_company__calculate_vals
+msgid "Calculate Vals"
+msgstr "Calcular valores"
+
+#. module: quotation_lanta
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.quotation_form
+msgid "Calculation information"
+msgstr "Informacion de Calculo"
+
+#. module: quotation_lanta
+#: model:ir.model,name:quotation_lanta.model_res_company
+msgid "Companies"
+msgstr "Compañia"
+
+#. module: quotation_lanta
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.res_company_form_inherit
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.res_partner_form_inherit
+msgid "Configuration Quotation"
+msgstr "Configuracion de cotizacion"
+
+#. module: quotation_lanta
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.sale_order_form_inherit
+msgid "Configuration variation"
+msgstr "Configuracion de variaciones"
+
+#. module: quotation_lanta
+#: model:ir.model,name:quotation_lanta.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_company__control_bom
+msgid "Control Bom"
+msgstr "Controla lista de materiales"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__cost_input
+msgid "Cost Input"
+msgstr "Costo de Suministros ($)"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__cost_kg
+msgid "Cost Kg"
+msgstr "Costo por kg ($)"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__cost_operating
+msgid "Cost Operating"
+msgstr "Costo operativo ($)"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__cost_raw_input
+msgid "Cost Raw Input"
+msgstr "Costo MP ($)"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__create_uid
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__create_date
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_company__currency_from_id
+msgid "Currency From"
+msgstr "Moneda desde"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_company__currency_rate_from
+msgid "Currency Rate From"
+msgstr "Tasa de cambio desde"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_company__currency_rate_to
+msgid "Currency Rate To"
+msgstr "Tasa de cambio hasta"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_company__currency_to_id
+msgid "Currency To"
+msgstr "Moneda Hasta"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_sale_order__date_bcv
+msgid "Date Bcv"
+msgstr "Fecha BCV"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_company__date_currency_from
+msgid "Date Currency From"
+msgstr "Fecha tasa desde"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_company__date_currency_to
+msgid "Date Currency To"
+msgstr "Fecha tasa hasta"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_sale_order__date_rate
+msgid "Date Rate"
+msgstr "Fecha de tasa"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_company__difference
+#: model:ir.model.fields,field_description:quotation_lanta.field_sale_order__difference
+msgid "Difference"
+msgstr "Diferencia"
+
+#. module: quotation_lanta
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.quotation_form
+msgid "Discard"
+msgstr "Descartar"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__display_name
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation_line__display_name
+msgid "Display Name"
+msgstr "Nombre"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__dollar_k
+msgid "Dollar K"
+msgstr "Margen $/Kg"
+
+#. module: quotation_lanta
+#: code:addons/quotation_lanta/models/sale_order.py:0
+#: code:addons/quotation_lanta/models/sale_order.py:0
+#, python-format
+msgid ""
+"El porcentaje de variacion entre tasas en mayor al establecido por la "
+"empresa, el sistema no te permitira cotizar, el porcentaje del dia es: %s y "
+"el porcentaje permitido es: %s"
+msgstr ""
+
+#. module: quotation_lanta
+#: code:addons/quotation_lanta/models/quotation.py:0
+#, python-format
+msgid ""
+"El producto seleccionado no contiene lista de materiales para cotizacion, "
+"por favor configure una lista para seguir el proceso, el producto es: %s"
+msgstr ""
+
+#. module: quotation_lanta
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.quotation_form
+msgid "General information"
+msgstr "Informacion General"
+
+#. module: quotation_lanta
+#: model:ir.module.category,description:quotation_lanta.module_quotation
+#: model:ir.module.category,name:quotation_lanta.module_quotation
+#: model:res.groups,comment:quotation_lanta.module_quotation_group
+#: model:res.groups,name:quotation_lanta.module_quotation_group
+msgid "Grupo cotizaciones Lanta"
+msgstr ""
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__id
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation_line__id
+msgid "ID"
+msgstr ""
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_sale_order_line__is_bom
+msgid "Is Bom"
+msgstr ""
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_product_product__is_operating_cost
+#: model:ir.model.fields,field_description:quotation_lanta.field_product_template__is_operating_cost
+msgid "Is Operating Cost"
+msgstr "Es costo operativo"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_product_supplierinfo__is_price_manual
+msgid "Is Price Manual"
+msgstr "Es precio manual"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation____last_update
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation_line____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__write_uid
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__write_date
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_mrp_bom__list_for_quotation
+msgid "List For Quotation"
+msgstr "Lista para cotizacion"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_partner__margin_amount
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_users__margin_amount
+msgid "Margin Amount"
+msgstr "Monto de Margen"
+
+#. module: quotation_lanta
+#: model:ir.model.fields.selection,name:quotation_lanta.selection__quotation__base_calculation__mp
+#: model:ir.model.fields.selection,name:quotation_lanta.selection__res_partner__base_calculation__mp
+msgid "Market Price"
+msgstr "Precio Mercado"
+
+#. module: quotation_lanta
+#: model:ir.model.fields.selection,name:quotation_lanta.selection__quotation__base_calculation__max
+#: model:ir.model.fields.selection,name:quotation_lanta.selection__res_partner__base_calculation__max
+msgid "Maximum"
+msgstr "Maximo"
+
+#. module: quotation_lanta
+#: model:ir.model.fields.selection,name:quotation_lanta.selection__quotation__base_calculation__min
+#: model:ir.model.fields.selection,name:quotation_lanta.selection__res_partner__base_calculation__min
+msgid "Minimum"
+msgstr "Minimo"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation_line__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_partner__percent_additional
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_users__percent_additional
+msgid "Percent Additional"
+msgstr "Porcentaje Adicional"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_sale_order__percent_company
+msgid "Percent Company"
+msgstr "Porcentaje de Compañia"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__percent_cost_profit_kg
+msgid "Percent Cost Profit Kg"
+msgstr "Utilidad en base al Costo (%) "
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__percent_gain
+msgid "Percent Gain"
+msgstr "(%) de Ganancia"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_partner__percent_margin
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_users__percent_margin
+msgid "Percent Margin"
+msgstr "Porcentaje de Margen"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_company__percent_max_variation
+msgid "Percent Max Variation"
+msgstr "Porcentaje Maximo de variacion"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_sale_order__percent_partner
+msgid "Percent Partner"
+msgstr "Porcentaje de Cliente"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__percent_partner_additional
+msgid "Percent Partner Additional"
+msgstr "Porcentaje adicional de cliente"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__percent_profit_kg
+msgid "Percent Profit Kg"
+msgstr "Utilidad en base al Precio (%)"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_res_company__percent_variation
+msgid "Percent Variation"
+msgstr "Porcentaje de variacion"
+
+#. module: quotation_lanta
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.res_company_form_inherit
+msgid "Percent Variation %"
+msgstr "Porcentaje de variacion"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_mrp_bom__percentage_of_loss
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation_line__percentage_of_loss
+msgid "Percentage Of Loss"
+msgstr "Porcentaje de Merma"
+
+#. module: quotation_lanta
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.ModelName_form_inherit
+msgid "Price"
+msgstr "Precio"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__price_kg
+msgid "Price Kg"
+msgstr "Precio Kg ($)"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_product_product__price_market
+#: model:ir.model.fields,field_description:quotation_lanta.field_product_template__price_market
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation_line__price_market
+msgid "Price Market"
+msgstr "Costo Mercado"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation_line__price_max
+msgid "Price Max"
+msgstr "Costo Maximo"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation_line__price_min
+msgid "Price Min"
+msgstr "Costo Minimo"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__price_quotation
+msgid "Price Quotation"
+msgstr "Precio cotizacion $/kg"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_product_supplierinfo__price_rate_convert
+msgid "Price Rate Convert"
+msgstr "Precio $"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__primary_cost
+msgid "Primary Cost"
+msgstr "Total Costo Primario ($)"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__processed
+msgid "Processed"
+msgstr "Procesado"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__product_id
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation_line__product_id
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.ModelName_form_inherit
+msgid "Product"
+msgstr "Producto"
+
+#. module: quotation_lanta
+#: model:ir.model,name:quotation_lanta.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: quotation_lanta
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.quotation_form
+msgid "Product inputs"
+msgstr "Insumos"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__profit_kg
+msgid "Profit Kg"
+msgstr "Utilidad por kg ($)"
+
+#. module: quotation_lanta
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.quotation_form
+msgid "Profit and cost information"
+msgstr "Informacion de ganancias y costos"
+
+#. module: quotation_lanta
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.ModelName_form_inherit
+msgid "Purchase"
+msgstr "Compras"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__qty_bom
+msgid "Qty Bom"
+msgstr "Cantidad de lista de materiales"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation_line__qty_component
+msgid "Qty Component"
+msgstr "Cantidad de componentes"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_mrp_bom__quantity_sum_raw
+msgid "Quantity Sum Raw"
+msgstr "Suma de materias primas"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation_line__quotation_id
+#: model:ir.model.fields,field_description:quotation_lanta.field_sale_order__quotation_ids
+#: model:ir.model.fields,field_description:quotation_lanta.field_sale_order_line__quotation_ids
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.quotation_form
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.quotation_tree
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.sale_order_form_inherit
+msgid "Quotation"
+msgstr "Cotizacion"
+
+#. module: quotation_lanta
+#: model:ir.actions.act_window,name:quotation_lanta.action_quotation_calc
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.sale_order_form_inherit
+msgid "Quotation Calc"
+msgstr "Calculo de precio cotizacion"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__quotation_input_ids
+msgid "Quotation Input"
+msgstr "Insumos"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__quotation_line_ids
+msgid "Quotation Line"
+msgstr "Linea de cotizacion"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_sale_order__rate
+msgid "Rate"
+msgstr "Tasa"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_sale_order__rate_bcv
+msgid "Rate Bcv"
+msgstr "Tasa Bcv"
+
+#. module: quotation_lanta
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.quotation_form
+msgid "Raw material"
+msgstr "Materia prima"
+
+#. module: quotation_lanta
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.quotation_form
+msgid "Re-Calculate Price"
+msgstr "Re-Calcular el precio"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__result_dollar_k
+msgid "Result Dollar K"
+msgstr "Resultado $/Kg"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__result_percent_gain
+msgid "Result Percent Gain"
+msgstr "Ganancia ($)"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__result_total
+msgid "Result Total"
+msgstr "Resultado Final"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__sale_order_id
+msgid "Sale Order"
+msgstr "Orden de venta"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__sale_order_line_id
+msgid "Sale Order Line"
+msgstr "Linea orden de venta"
+
+#. module: quotation_lanta
+#: model:ir.model,name:quotation_lanta.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: quotation_lanta
+#: model:ir.model,name:quotation_lanta.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
+
+#. module: quotation_lanta
+#: model:ir.model,name:quotation_lanta.model_product_supplierinfo
+msgid "Supplier Pricelist"
+msgstr "Tarifa de proveedor"
+
+#. module: quotation_lanta
+#: code:addons/quotation_lanta/models/mrp_bom.py:0
+#, python-format
+msgid ""
+"The product cannot have a unit of measure other than the final product, the "
+"product is: %s"
+msgstr ""
+"El producto no puede tener una unidad de medida distinta del producto final,"
+" elEl producto es:"
+
+#. module: quotation_lanta
+#: code:addons/quotation_lanta/models/sale_order.py:0
+#, python-format
+msgid ""
+"The quantity to be produced from the bill of materials cannot be equal to "
+"zero, the product is: %s"
+msgstr ""
+"La cantidad a producir de la lista de materiales no puede ser igual acero, "
+"el producto es:"
+
+#. module: quotation_lanta
+#: code:addons/quotation_lanta/models/sale_order.py:0
+#, python-format
+msgid ""
+"The selected product does not contain a list of materials for quotation, "
+"please set up a list to follow the process, the product is: %s"
+msgstr ""
+"El producto seleccionado no contiene una lista de materiales para cotizar, "
+"please set up a list to follow the process, the product is:"
+
+#. module: quotation_lanta
+#: code:addons/quotation_lanta/models/mrp_bom.py:0
+#, python-format
+msgid ""
+"The sum of the raw materials has to match the quantity to be produced, "
+"validate the lines of the list of materials"
+msgstr ""
+"La suma de las materias primas debe coincidir con la cantidad a producir, "
+"validar las líneas de la lista de materiales"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__total_cost
+msgid "Total Cost"
+msgstr "Total Costo ($)"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__total_percent_lost
+msgid "Total Percent Lost"
+msgstr "Merma de Proceso ($)"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_quotation__total_percent_partner_additional
+msgid "Total Percent Partner Additional"
+msgstr "(%) Variacion Cliente"
+
+#. module: quotation_lanta
+#: model:ir.model.fields,field_description:quotation_lanta.field_sale_order__variation_percent
+msgid "Variation Percent"
+msgstr "Porcentaje de variacion"
+
+#. module: quotation_lanta
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.ModelName_form_inherit
+msgid "Vendor Information"
+msgstr "Informacion de proveedor"
+
+#. module: quotation_lanta
+#: code:addons/quotation_lanta/models/mrp_bom.py:0
+#, python-format
+msgid "You cannot have more than one BOM per product marked for quotation"
+msgstr ""
+"No puede marcar mas de una lista de materiales por producto como lista de "
+"cotizacion"
+
+#. module: quotation_lanta
+#: code:addons/quotation_lanta/models/product_template.py:0
+#, python-format
+msgid "You cannot have more than one operating cost product"
+msgstr "No puede tener mas de un producto marcado como costo operativo"
+
+#. module: quotation_lanta
+#: model_terms:ir.ui.view,arch_db:quotation_lanta.quotation_form
+msgid "price_quotation"
+msgstr ""
+
+#. module: quotation_lanta
+#: model:ir.model,name:quotation_lanta.model_quotation
+msgid "quotation"
+msgstr "Cotizacion"
+
+#. module: quotation_lanta
+#: model:ir.model,name:quotation_lanta.model_quotation_line
+msgid "quotation.line"
+msgstr "linea de cotizacion"

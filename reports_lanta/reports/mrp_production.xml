@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+      <record id="paperformat_production" model="report.paperformat">
+        <field name="default" eval="True"/>
+        <field name="name">A4 Landscape Account</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">200</field>
+        <field name="page_width">100</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">2</field>
+        <field name="margin_right">2</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report
+                id="report_mrp_production"
+                model="mrp.print"
+                string="Reporte Etiquetas de Producción"
+                name="reports_lanta.mrp_production"
+                report_type="qweb-pdf"
+                paperformat="reports_lanta.paperformat_production"/>
+
+        <template id="mrp_production">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <table>
+                            <tbody class="sale_tbody">
+                                <tr>
+                                    <img t-att-src="'data:image/png;base64,%s' % to_text(o.mrp_id.company_id.logo)" style="max-height: 35px;"/>
+                                    <p style="font-size: 12px !important;" ><strong><span t-esc="o.mrp_id.company_id.name"></span></strong></p>
+                                    <p style="font-size: 12px !important;"><strong> RIF: <span t-esc="o.mrp_id.company_id.vat"></span></strong></p>
+                                    <p style="font-size: 15px !important;" align="center"><strong><span t-field="o.product_id.name"></span></strong></p>
+                                    <p style="font-size: 15px !important;" align="center"><strong> LOTE : <span t-field="o.lot_id.name"></span></strong></p>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="page">
+                        <table class="table table-bordered">
+                            <tbody class="sale_tbody">
+                                <p style="font-size: 10px !important;" align="left"> Formula Creada por el Cliente</p>
+                                <td>
+                                  <p style="font-size: 10px !important;"><strong>RUTA : </strong><span t-esc="o.routing_id.name"></span></p>
+                                  <p style="font-size: 10px !important;"><strong>CODIGO : </strong><span t-esc="o.product_id.code"></span></p>
+                                  <p style="font-size: 10px !important;"><strong>CONTENIDO : </strong><span t-esc="o.bom_id.product_packaging_id.name"></span></p>
+                                </td>
+                                <td class="text-center">
+                                  <p style="font-size: 10px !important;"><strong>ELABORADO   : </strong><span t-field="o.date_f"  t-field-options="{&quot;format&quot;: &quot;yyyy-MM-dd&quot;}"></span></p>
+                                  <p style="font-size: 10px !important;"><strong>VENCE   : </strong><span t-field="o.date"  t-field-options="{&quot;format&quot;: &quot;yyyy-MM-dd&quot;}"></span></p>
+                                    <br/>
+                                </td>
+                                <td>
+                                    <tr>
+                                        <img t-att-src="'data:image/png;base64,%s' % to_text(o.product_id.image_1920)"
+                                        style="max-height: 35px;"  align="right"/>
+                                   </tr>
+                                </td>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="page">
+                        <table>
+                            <tbody class="sale_tbody">
+                                <p style="font-size: 12px !important;" align="center"> <strong>"USO VETERINARIO"</strong></p>
+                                <p style="font-size: 10px !important;" align="center"> <span>MANTENGASE EN UN LUGAR FRESCO Y SECO</span></p>
+                                  <td align="right">
+                                    <img t-att-src="'data:image/png;base64,%s' % to_text(o.mrp_id.company_id.image_production_1920)"
+                                    style="max-height: 25px;"/>
+                                      <img t-att-src="'data:image/png;base64,%s' % to_text(o.mrp_id.company_id.image_production_2_1920)"
+                                    style="max-height: 25px;"/>
+                                  </td>
+                            </tbody>
+                                      <p style="font-size: 8px !important;" align="center"><span t-field="o.nro"> </span> / <t t-esc="o.bom_id.numbers_bom" /></p>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>
+
+

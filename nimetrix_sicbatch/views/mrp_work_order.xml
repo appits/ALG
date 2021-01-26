@@ -1,0 +1,77 @@
+<odoo>
+    <data>
+        <record id="mrp_custom_work_order_list" model="ir.ui.view">
+                <field name="name">mrp.custom.work.order.list</field>
+                <field name="model">mrp.workorder</field>
+                <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_view_inherit"/>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='date_planned_start']" position="after">
+                        <field name="check_start" invisible="True"/>
+                        <button name=" " string="" class="btn-info" readonly="True" attrs="{'invisible':[('check_start','=',False)]}"/>
+                    </xpath>
+                     <xpath expr="//field[@name='date_planned_start']" position="after">
+                        <field name="check_end" invisible="True"/>
+                        <button name=" " string="" class="btn-success" readonly="True" attrs="{'invisible':[('check_end','=',False)]}"/>
+                     </xpath>
+
+                </field>
+        </record>
+
+        <record id="mrp_workorder_view_kanban_inherit_custom" model="ir.ui.view">
+            <field name="name">mrp.workorder.view.kanban.inherit.quality</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="mrp.workcenter_line_kanban"/>
+            <field name="arch" type="xml">
+               <xpath expr="//kanban[1]" position="attributes">
+                    <attribute name="create">true</attribute>
+               </xpath>
+                <xpath expr="//kanban[1]/templates[1]/t[1]/div[1]/div[1]/div[2]/h2[1]/span[1]/t[@t-esc='record.state.value']" position="after">
+                        <field display="full" name="check_start" invisible="True"/>
+                        <button class="btn btn-success" name=" " readonly="True" attrs="{'invisible':['|',('check_start','=',False),('state','!=','progress')]}">
+                                                    <span>In SicBatch</span>
+                        </button>
+                        <field display="full" name="check_end" invisible="True"/>
+                        <button class="btn btn-success" name=" "  attrs="{'invisible':['|',('check_end','=',False),('state','!=','progress')]}">
+                                                    <span>In SicBatch</span>
+                        </button>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="mrp_custom_work_order_form" model="ir.ui.view">
+                <field name="name">mrp.custom.work.order.form</field>
+                <field name="model">mrp.workorder</field>
+                <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <xpath expr="//button[@name='open_tablet_view']" position="after">
+                         <field name="check_sync_start" invisible="True"/>
+                        <button name="call_start_work_order" type="object" string="Start Sicbatch" class="btn-info" attrs="{'invisible':[('check_sync_start','=',False)]}"/>
+                    </xpath>
+                    <xpath expr="//button[@name='open_tablet_view']" position="after">
+                        <field name="check_sync_end" invisible="True"/>
+                        <button name="call_end_work_order" type="object" string="End Sicbatch" class="btn-success" attrs="{'invisible':[('check_sync_end','=',False)]}"/>
+                    </xpath>
+                </field>
+        </record>
+
+        <record id="mrp_custom_work_order_form_js_id" model="ir.ui.view">
+                <field name="name">mrp.custom.work.order.form.js</field>
+                <field name="model">mrp.workorder</field>
+                <field name="inherit_id" ref="mrp_workorder.mrp_workorder_view_form_tablet_menu"/>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <xpath expr="//button[@name='button_unblock']" position="after">
+                         <field name="check_sync_start" invisible="True"/>
+                        <button name="call_start_work_order" type="object" string="Start Sic Batch" class="btn-info btn-block btn-lg" attrs="{'invisible':[('check_sync_start','=',False)]}"/>
+                    </xpath>
+                    <xpath expr="//button[@name='button_scrap']" position="after">
+                        <field name="check_sync_end" invisible="True"/>
+                        <button name="call_end_work_order" type="object" string="End Sic Batch" class="btn-success btn-block btn-lg" attrs="{'invisible':[('check_sync_end','=',False)]}"/>
+                    </xpath>
+                </field>
+        </record>
+
+    </data>
+</odoo>

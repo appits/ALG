@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sicbatch_orders_form_view" model="ir.ui.view">
+            <field name="name">sicbatch.orders.form</field>
+            <field name="model">sicbatch.orders</field>
+            <field name="arch" type="xml">
+               <form string="Sicbatch Orders">
+                    <sheet>
+                          <field name="production_id" required="1" readonly="1"/>
+                          <notebook>
+                            <page string="" name="production_order_line">
+                               <field name="lines" mode="tree,kanban">
+                                   <tree string="" editable="bottom">
+                                           <field name="sicbatch_id" invisible="1"/>
+                                           <field name="order_id" required="1"/>
+                                           <field name="client_name" required="1"/>
+                                           <field name="product_value" required="1"/>
+                                           <field name="product_name" required="1"/>
+                                           <field name="selected"/>
+                                   </tree>
+                               </field>
+                            </page>
+                        </notebook>
+                        <footer>
+                            <button type="object" name="process_order"
+                                string="Process sicbatch"
+                                class="btn-primary"/>
+                            <button string="Discard"
+                                class="btn-secondary"
+                                special="cancel" />
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sicbatch_orders_act_window" model="ir.actions.act_window">
+            <field name="name">Sicbatch Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sicbatch.orders</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="sicbatch_orders_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

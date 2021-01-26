@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="Stock_Picking_form_inherit" model="ir.ui.view">
+            <field name="name">Stock_Picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_toggle_is_locked']" position="after">
+                    <button string="CANCELAR SECUENCIA" class="btn btn-danger" type="action" name="%(reports_lanta.cancel_sequence_act_window)d"
+                    attrs="{'invisible': ['|', '|',('state', '!=', 'done'), ('type_transaction', '!=', 'outgoing'), ('transaction_main', '=', 'True')]}"
+                    context="{'default_picking_id': id}"
+                    groups="reports_lanta.mudule_report_lanta_group_user"/>
+                </xpath>
+                <xpath expr="//button[@name='action_picking_move_tree']" position="after">
+                    <button string="Guia Despacho" class="oe_stat_button" icon="fa-truck" type="object" name="generate_report"
+                    attrs="{'invisible': ['|', '|',('state', '!=', 'done'), ('type_transaction', '!=', 'outgoing'), ('transaction_main', '=', 'True')]}"/>
+                </xpath>
+                <xpath expr="//button[@name='action_picking_move_tree']" position="after">
+                    <button string="Nota de Carga" class="oe_stat_button" icon="fa-truck" type="object" name="generate_report_note"
+                    attrs="{'invisible': ['|', '|',('state', '!=', 'done'), ('type_transaction', '!=', 'outgoing'), ('transaction_main', '=', 'True')]}"/>
+                </xpath>
+                <xpath expr="//button[@name='action_picking_move_tree']" position="after">
+                    <button string="Informe de Recepcion" class="oe_stat_button" icon="fa-truck" type="object" name="generate_report_reception"
+                    attrs="{'invisible': ['|', '|',('state', '!=', 'done'), ('type_transaction', '!=', 'incoming'), ('transaction_main', '=', 'True')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='picking_type_id']" position="after">
+                    <field name="invoice_reference" attrs="{'invisible': [('type_transaction', '!=', 'incoming')],  'readonly': [('state', '=', 'done')]}"/>
+                    <field name="note_reference" attrs="{'invisible': [('type_transaction', '!=', 'incoming')],  'readonly': [('state', '=', 'done')]}"/>
+                    <field name="total_qty" foced_save="1" invisible="1"/>
+                    <field name="type_transaction" foced_save="1" invisible="1"/>
+                    <field name="transaction_main" foced_save="1" invisible="1"/>
+                </xpath>
+                 <xpath expr="//field[@name='origin']" position="attributes">
+                     <attribute name="readonly">1</attribute>
+                 </xpath>
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="import_form_num" string="Nro. Planilla de importación" attrs="{'invisible': [('type_transaction', '!=', 'incoming')], 'readonly': [('state', '=', 'done')]}"/>
+                    <field name="import_dossier" string="Nro. Expediente de importación" attrs="{'invisible': [('type_transaction', '!=', 'incoming')], 'readonly': [('state', '=', 'done')]}"/>
+                    <field name="import_date" string="Fecha de importación" attrs="{'invisible': [('type_transaction', '!=', 'incoming')], 'readonly': [('state', '=', 'done')]}" />
+                </xpath>
+                <notebook>
+                        <page string="Informacion de Entrega" name="extra">
+                            <group>
+                                <group string="Informacion de Entrega" name="other_infos">
+                                    <field name="transport" string="Transporte:" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                                    <field name="car_plate" string="Placa:" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                                    <field name="date_driver" string="Datos del conductor:" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                                    <field name="identification_driver" string="Cedula:" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                                </group>
+                            </group>
+                        </page>
+                </notebook>
+                <notebook>
+                           <page name="extra_secuencial" string="Secuencias Forma Libre" attrs="{'invisible': [('type_transaction', '!=', 'outgoing'), ('transaction_main', '=', 'False')]}">
+                               <field name="guide_ids" mode="tree,kanban" readonly="1" attrs="{'invisible': [('type_transaction', '!=', 'outgoing'), ('transaction_main', '=', 'False')]}">
+                                    <tree string="Secuencias Forma Libre" readonly="1">
+                                        <field name="picking_id" invisible="1"/>
+                                        <field name="ctrl_number" string="Numero de Control"/>
+                                        <field name="processed" string="Activo"/>
+                                    </tree>
+                               </field>
+                        </page>
+                </notebook>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[3]/field[@name='move_ids_without_package']/tree[1]/field[@name='product_id']" position="after">
+                    <field name="product_packaging_id" string="Presentación" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                    <field name="qty_packaging" string="Cantidad de paquetes" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+
+
+

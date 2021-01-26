@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.module.category" id="mudule_report_lanta_group">
+                <field name="name">Reportes lanta Group</field>
+                <field name="description">Report lanta Group</field>
+                <field name="sequence">24</field>
+        </record>
+
+         <record id="mudule_report_lanta_group_user" model="res.groups">
+            <field name="name">Reportes lanta Group</field>
+            <field name="comment">Reportes lanta Group</field>
+            <field name="category_id" ref="mudule_report_lanta_group"/>
+        </record>
+
+    </data>
+</odoo>

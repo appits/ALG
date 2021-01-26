@@ -1,0 +1,573 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* nimetrix_sicbatch
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-27 22:40+0000\n"
+"PO-Revision-Date: 2020-08-27 22:40+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.mrp_workorder_view_kanban_inherit_custom
+msgid "<span>In SicBatch</span>"
+msgstr "En SicBatch"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_log__api_call
+msgid "Api Call"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model:ir.model,name:nimetrix_sicbatch.model_mrp_bom
+msgid "Bill of Material"
+msgstr "Lista de materiales"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_mrp_routing_workcenter__check_end
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_mrp_workorder__check_end
+msgid "Check End"
+msgstr "Check final"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_mrp_routing_workcenter__check_start
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_mrp_workorder__check_start
+msgid "Check Start"
+msgstr "Check Inicial"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_mrp_workorder__check_sync_end
+msgid "Check Sync End"
+msgstr "Check Sync Final"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_mrp_workorder__check_sync_start
+msgid "Check Sync Start"
+msgstr "Check Sync Inicial"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders_lines__client_name
+msgid "Client Name"
+msgstr "Nombre del cliente"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__company_id
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.config_conex_form_view
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.config_conex_search_view
+msgid "Company"
+msgstr "Compañia"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model,name:nimetrix_sicbatch.model_config_connection
+msgid "Config Connection"
+msgstr "Configuracion de conexion"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model,name:nimetrix_sicbatch.model_config_connection_line
+msgid "Config Connection Line"
+msgstr "Linea Configuracion de conexion"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection_line__config_head_id
+msgid "Config Connexion"
+msgstr "Configuracion de conexion"
+
+#. module: nimetrix_sicbatch
+#: model:ir.ui.menu,name:nimetrix_sicbatch.menu_mrp_nimetrix
+msgid "Configuration connection routing"
+msgstr "Configuracion de conexion"
+
+#. module: nimetrix_sicbatch
+#: model:ir.actions.act_window,name:nimetrix_sicbatch.config_conex_act_window
+msgid "Configuration of connection routing"
+msgstr "Configuracion de conexion"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.config_conex_form_view
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.config_conex_tree_view
+msgid "Configuration of connexion routing"
+msgstr "Configuracion de conexion"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.config_conex_form_view
+msgid "Connection Line"
+msgstr "Linea Configuracion de conexion"
+
+#. module: nimetrix_sicbatch
+#: model:ir.ui.menu,name:nimetrix_sicbatch.config_conect_menu
+msgid "Connection Routing"
+msgstr "Configuracion de conexion"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_mrp_routing__connexion_line_r
+msgid "Connexion Line R"
+msgstr "Configuracion de conexion"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_log__create_date
+msgid "Create Date"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_log__create_uid
+msgid "Create Uid"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.actions.act_window,help:nimetrix_sicbatch.config_conex_act_window
+msgid "Create here your route connection settings."
+msgstr "Crea aqui tus registros de conexion"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__create_uid
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection_line__create_uid
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders__create_uid
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders_lines__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__create_date
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection_line__create_date
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders__create_date
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders_lines__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__database
+msgid "Data Base"
+msgstr "Base de datos"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.sicbatch_orders_form_view
+msgid "Discard"
+msgstr "Descargar"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__display_name
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection_line__display_name
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_log__display_name
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders__display_name
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders_lines__display_name
+msgid "Display Name"
+msgstr "Nombre"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields.selection,name:nimetrix_sicbatch.selection__sicbatch_log__status__do
+msgid "Done"
+msgstr "Hecho"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.routing_work_center_id
+msgid "Duration (minutes)"
+msgstr "Duracion en minutos"
+
+#. module: nimetrix_sicbatch
+#: code:addons/nimetrix_sicbatch/models/mrp_work_order.py:0
+#, python-format
+msgid "El Producto no posee Descripción"
+msgstr "El Producto no posee Descripción"
+
+#. module: nimetrix_sicbatch
+#: code:addons/nimetrix_sicbatch/models/mrp_work_order.py:0
+#, python-format
+msgid "El Producto no posee código interno"
+msgstr "El Producto no posee código interno"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields.selection,name:nimetrix_sicbatch.selection__mrp_bom__product_type__pt
+msgid "End Product"
+msgstr "Producto Final"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.mrp_custom_work_order_form_js_id
+msgid "End Sic Batch"
+msgstr "Final SicBatch"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.mrp_custom_work_order_form
+msgid "End Sicbatch"
+msgstr "Final SicBatch"
+
+#. module: nimetrix_sicbatch
+#: code:addons/nimetrix_sicbatch/models/mrp_work_order.py:0
+#, python-format
+msgid "Falta Código de referencia de la lista de materiales"
+msgstr "Falta Código de referencia de la lista de materiales"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.config_conex_search_view
+msgid "Group By"
+msgstr "Agrupado por"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__id
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection_line__id
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_log__id
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders__id
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders_lines__id
+msgid "ID"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields.selection,name:nimetrix_sicbatch.selection__sicbatch_log__status__ip
+msgid "In Progress"
+msgstr "En progreso"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model,name:nimetrix_sicbatch.model_stock_location
+msgid "Inventory Locations"
+msgstr "Ubicaciones de inventario"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__is_offline
+msgid "Is Offline"
+msgstr "Es Offline"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection____last_update
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection_line____last_update
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_log____last_update
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders____last_update
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders_lines____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__write_uid
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection_line__write_uid
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders__write_uid
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders_lines__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__write_date
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection_line__write_date
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders__write_date
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders_lines__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__lines_ids
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders__lines
+msgid "Lines"
+msgstr "Lineas"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model,name:nimetrix_sicbatch.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr "Lote/Número de serie"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.config_conex_search_view
+msgid "ModelTitle"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: nimetrix_sicbatch
+#: code:addons/nimetrix_sicbatch/models/mrp_work_order.py:0
+#, python-format
+msgid "No Procesado Aún"
+msgstr "No Procesado Aún"
+
+#. module: nimetrix_sicbatch
+#: code:addons/nimetrix_sicbatch/models/mrp_work_order.py:0
+#, python-format
+msgid "No se pudo enviar la orden a Sicbatch "
+msgstr "No se pudo enviar la orden a Sicbatch"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nes_VEimetrix_sicbatch.field_config_connection_line__operation_end_id
+msgid "Operation End"
+msgstr "Operacion final"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection_line__operation_start_id
+msgid "Operation Start"
+msgstr "Operacion inicial"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_mrp_production__order_id
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders_lines__order_id
+msgid "Order"
+msgstr "Orden"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__db_password
+msgid "Password"
+msgstr "Contraseña"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.sicbatch_orders_form_view
+msgid "Process sicbatch"
+msgstr "Procesar sicbatch"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model,name:nimetrix_sicbatch.model_product_category
+msgid "Product Category"
+msgstr "Categoría de producto"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders_lines__product_name
+msgid "Product Name"
+msgstr "Nombre del producto"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_mrp_bom__product_type
+msgid "Product Type"
+msgstr "Tipo de producto"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders_lines__product_value
+msgid "Product Value"
+msgstr "Codigo del producto"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_log__production_id
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders__production_id
+msgid "Production"
+msgstr "Produccion"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model,name:nimetrix_sicbatch.model_mrp_production
+msgid "Production Order"
+msgstr "Orden de producción"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_log__response
+msgid "Response"
+msgstr "Respuesta"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection_line__routing_id
+msgid "Routing"
+msgstr "Ruta"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.routing_work_center_id
+msgid "Routing Work Centers"
+msgstr "Centro de trabajo"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model,name:nimetrix_sicbatch.model_mrp_routing
+msgid "Routings"
+msgstr "Rutas de producción"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.config_conex_form_view
+msgid "SQL Connection String"
+msgstr "Conexion SQL"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_log__script
+msgid "Script"
+msgstr "Scrip"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders_lines__selected
+msgid "Selected"
+msgstr "Seleccionar"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields.selection,name:nimetrix_sicbatch.selection__mrp_bom__product_type__se
+msgid "Semi-Finished"
+msgstr "Semi-Finalizado"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_product_category__send_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_stock_location__send_sicbatch
+msgid "Send Sicbatch"
+msgstr "Enviar a Sicbatch"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__sequence_lot
+msgid "Sequence Lot"
+msgstr "Secuencia de lote"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__sequence_manual
+msgid "Sequence Manual"
+msgstr "Secuencia Manual"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__server
+msgid "Server"
+msgstr "Servidor"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_mrp_workorder__sic_batch_logs
+msgid "Sic Batch Logs"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model:ir.model,name:nimetrix_sicbatch.model_sicbatch_log
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.sic_batch_form_view
+msgid "SicBatch Log"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_orders_lines__sicbatch_id
+msgid "Sicbatch"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.sic_batch_tree_view
+msgid "Sicbatch Log"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_stock_production_lot__sicbatch_lot_id
+msgid "Sicbatch Lot"
+msgstr "Lote de Sicbatch"
+
+#. module: nimetrix_sicbatch
+#: model:ir.actions.act_window,name:nimetrix_sicbatch.sicbatch_orders_act_window
+#: model:ir.model,name:nimetrix_sicbatch.model_sicbatch_orders
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.nimetrix_production_form_inherit
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.sicbatch_orders_form_view
+msgid "Sicbatch Orders"
+msgstr "Ordenes de Sicbatch"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model,name:nimetrix_sicbatch.model_sicbatch_orders_lines
+msgid "Sicbatch Orders Lines"
+msgstr "Linea de Ordenes de Sicbatch"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.mrp_custom_work_order_form_js_id
+msgid "Start Sic Batch"
+msgstr "Iniciar Sicbatch"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.mrp_custom_work_order_form
+msgid "Start Sicbatch"
+msgstr "Iniciar Sicbatch"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_log__status
+msgid "Status"
+msgstr "Estado"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.config_conex_form_view
+msgid "Test connection"
+msgstr "Probar conexion"
+
+#. module: nimetrix_sicbatch
+#: code:addons/nimetrix_sicbatch/models/config_connection.py:0
+#, python-format
+msgid "The routing on the line exist"
+msgstr "La linea de ruta no existe"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.actions.act_window,help:nimetrix_sicbatch.sic_batch_act_window
+msgid "There is no examples click here to add new ModelTitle."
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.sic_batch_form_view
+msgid "Title"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.routing_work_center_id
+msgid "Total Duration"
+msgstr "Total Duracion"
+
+#. module: nimetrix_sicbatch
+#: model:ir.actions.act_window,name:nimetrix_sicbatch.sic_batch_act_window
+#: model:ir.ui.menu,name:nimetrix_sicbatch.sic_batch_log_menu
+msgid "Transactions Logs"
+msgstr "Logs de transaccion"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model,name:nimetrix_sicbatch.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_config_connection__db_user
+msgid "Username"
+msgstr "Nombre de usuario"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.config_conex_form_view
+msgid "Work Center Operations End"
+msgstr "Operacion Final"
+
+#. module: nimetrix_sicbatch
+#: model_terms:ir.ui.view,arch_db:nimetrix_sicbatch.config_conex_form_view
+msgid "Work Center Operations Start"
+msgstr "Operacion Inicial"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model,name:nimetrix_sicbatch.model_mrp_routing_workcenter
+msgid "Work Center Usage"
+msgstr "Utilización del centro de producción"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model,name:nimetrix_sicbatch.model_mrp_workorder
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_log__work_order_id
+msgid "Work Order"
+msgstr "Orden de trabajo"
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_log__write_date
+msgid "Write Date"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: model:ir.model.fields,field_description:nimetrix_sicbatch.field_sicbatch_log__write_uid
+msgid "Write Uid"
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: code:addons/nimetrix_sicbatch/models/config_connection.py:0
+#, python-format
+msgid "You are duplicating operations on the line"
+msgstr "Linea duplicada"
+
+#. module: nimetrix_sicbatch
+#: code:addons/nimetrix_sicbatch/models/mrp_work_order.py:0
+#, python-format
+msgid "You must end the process using the end sicbatch button"
+msgstr "Debes finalizar el proceso con el botón finalizar sicbatch"
+
+#. module: nimetrix_sicbatch
+#: code:addons/nimetrix_sicbatch/models/mrp_work_order.py:0
+#, python-format
+msgid "error al procesar datos de SicBatch "
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: code:addons/nimetrix_sicbatch/wizard/sicbatch_orders.py:0
+#, python-format
+msgid "error al procesar datos de Sicbatch "
+msgstr ""
+
+#. module: nimetrix_sicbatch
+#: code:addons/nimetrix_sicbatch/models/config_connection.py:0
+#, python-format
+msgid "you cannot change a work in progress center, the center is: %s"
+msgstr ""
+"No puedes cambiar un centro de trabajo en progreso, el centro de trabajo es:"
+" %s"

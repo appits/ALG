@@ -1,0 +1,14 @@
+<odoo>
+  <data>
+      <record id="product_template_ds_id" model="ir.ui.view">
+                <field name="name">Product Template</field>
+                <field name="model">product.template</field>
+                <field name="inherit_id" ref="product.product_template_only_form_view"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='type']" position="before">
+                        <field name="dosis_kgton" string="Dosis Kg / Ton"/>
+                    </xpath>
+                </field>
+        </record>
+  </data>
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="picking_warning_form_view" model="ir.ui.view">
+            <field name="name">picking_warning_form_view</field>
+            <field name="model">picking.warning</field>
+            <field name="arch" type="xml">
+                <form string="Warning">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                You want to generate inventory movements based on the selected productions ?
+                            </h1>
+                        </div>
+                        <field name="picking_list_id" invisible="1"/>
+                    </sheet>
+                    <footer>
+                       <button name="generate_movement"
+                            string="Create movemente"
+                            type="object"
+                            class="btn-primary"/>
+                        <button string="Discard"
+                            class="btn-secondary"
+                            special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="picking_warning_form_view_action" model="ir.actions.act_window">
+            <field name="name">Warning</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">picking.warning</field>
+             <field name="view_mode">form</field>
+            <field name="view_id" ref="picking_warning_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

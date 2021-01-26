@@ -1,0 +1,94 @@
+<?xml version ="1.0" encoding="utf-8" ?>
+
+<odoo>
+	<data>
+
+		<record id="sh_sale_order_config_double_approval_form_inherit" model="ir.ui.view">
+			<field name="name">res.config.setting.double.approval.form</field>
+			<field name="model">res.config.settings</field>
+			<field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+			<field name="arch" type="xml">
+
+ 				<xpath expr="//div[@data-key='sale_management']//div[1]" position="after">
+					<h2>Sale Order Double Approval</h2>					
+	                        
+                    <div class="row mt16 o_settings_container" >
+	                    <div class="col-12 col-md-6 o_setting_box">
+	 	                	<div class="o_setting_left_pane">
+	                        	<field name="double_approval"/>
+                            </div>	                        
+	                        <div class="o_setting_right_pane">
+	                        	<label for="double_approval"/>
+	                            <div class="text-muted">
+	                                Set Double Approval System
+	                            </div>
+	                        </div>
+	                    </div>
+	                    
+                        <div class="col-12 col-lg-6 o_setting_box" attrs="{'invisible':[('double_approval','!=',True)]}">
+	                    	<div class="o_setting_left_pane">
+                            </div>
+	                        <div class="o_setting_right_pane">
+	                        	<label for="double_approval_type"/>
+	                            <div class="text-muted">
+	                            	Set Double Approval Type
+                                </div>
+								<div class="mt8">
+	                        		<field name="double_approval_type" widget="radio" options="{'horizontal':true}"/>
+                                </div>                                
+                            </div>
+                        </div>
+	                    
+					</div>
+
+                    <div class="row mt16 o_settings_container" attrs="{'invisible':[('double_approval','!=',True)]}" >
+                    
+                        <div class="col-12 col-lg-6 o_setting_box">
+	                    	<div class="o_setting_left_pane">
+                            </div>
+	                        <div class="o_setting_right_pane">
+	                        	<label for="double_email_alerts_approve"/>
+	                            <div class="text-muted">
+	                            	Set Double Approval Email Notification Option
+                                </div>
+								<div class="mt8">
+	                        		<field name="double_email_alerts_approve" widget="radio" />
+                                </div>                                
+                            </div>
+                        </div>
+							
+	                    <div class="col-12 col-lg-6 o_setting_box" >
+	                    	<div class="o_setting_left_pane">
+                            </div>
+                            <div class="o_setting_right_pane" attrs="{'invisible':[('double_approval_type','=','individual') ]}">
+	                        	<label for="double_approval_amount"/>
+	                            <div class="text-muted">
+		                            Set Double Approval Maximum Amount
+	                            </div>
+								<div class="mt8">
+	                            	<field name="double_approval_amount"/>
+                                </div>                                
+	                        </div>
+	                        
+	                    	<div class="o_setting_left_pane">
+                            </div>
+                            
+                            <div class="o_setting_right_pane" attrs="{'invisible':[('double_email_alerts_approve','!=','specific_users')] , 'required':[('double_email_alerts_approve','=','specific_users')] }" >
+	                        	<label for="double_email_specific_user_id"/>
+	                            <div class="text-muted">
+		                            Set Double Approval Email Alert User
+	                            </div>
+								<div class="mt8">
+	                            	<field name="double_email_specific_user_id"/>
+                                </div>                                
+	                        </div>
+	                        
+	                    </div>                           
+					</div>			
+							
+				</xpath>
+	 		</field>	
+		</record>
+		
+		</data>
+</odoo>	

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="config_conex_form_view" model="ir.ui.view">
+            <field name="name">config_conex.form</field>
+            <field name="model">config.connection</field>
+            <field name="arch" type="xml">
+                <form string="Configuration of connexion routing">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="test_connection" string="Test connection" class="oe_stat_button"
+                                icon="fa-bolt" type="object"
+                            />
+                        </div>
+                        <div class="oe_title">
+                            <label for="company_id"/>
+                            <h1>
+                                <field name="company_id" placeholder="Company"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="SQL Connection String">
+                                <field name="server"/>
+                                <field name="database"/>
+                                <field name="is_offline"/>
+
+                                <field name="db_user"/>
+                                <field name="db_password" password="True"/>
+                            </group>
+                            <group>
+                                <field name="sequence" required="1"/>
+                                <field name="sequence_manual" required="1"/>
+                                <field name="sequence_lot" required="1"/>
+                                </group>
+                        </group>
+                        <notebook>
+                            <page string="Connection Line" name="connexion_line">
+                               <field name="lines_ids" mode="tree,kanban" context="{'default_config_head_id': id}">
+                                   <tree string="" editable="bottom">
+                                       <field name="config_head_id" invisible="1"/>
+                                       <field name="id" invisible="1"/>
+                                       <field name="routing_id" options="{'no_create': True}" attrs="{'readonly': [('id', '!=', False)]}" />
+                                       <button name=" " string="" class="btn-info" readonly="True"/>
+                                       <field name="operation_start_id" string="Work Center Operations Start" options="{'no_create': True}"/>
+                                       <button name=" " string=""  class="btn-success" readonly="True"/>
+                                       <field name="operation_end_id" string="Work Center Operations End" options="{'no_create': True}"/>
+                                   </tree>
+                               </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="config_conex_tree_view" model="ir.ui.view">
+            <field name="name">config_conex.tree</field>
+            <field name="model">config.connection</field>
+            <field name="arch" type="xml">
+                <tree string="Configuration of connexion routing">
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="config_conex_search_view" model="ir.ui.view">
+            <field name="name">ProjectName.config_conex.search</field>
+            <field name="model">config.connection</field>
+            <field name="arch" type="xml">
+                <search string="ModelTitle">
+                    <group expand="1" string="Group By">
+                        <filter string="Company" name="company_id"
+                                context="{'group_by':'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="config_conex_act_window" model="ir.actions.act_window">
+            <field name="name">Configuration of connection routing</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">config.connection</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create here your route connection settings.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

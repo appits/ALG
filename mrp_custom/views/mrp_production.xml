@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="mrp_production_form_inherit" model="ir.ui.view">
+            <field name="name">mrp_production.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+               <xpath expr="//button[@name='%(stock.action_stock_report)d']" position="after">
+                     <button class="oe_stat_button"
+                             icon="fa-truck"
+                             type="object"
+                             attrs="{'invisible':[('picks_count', '=', 0)]}"
+                             name="call_picks">
+                        <field name="picks_count" string="Picks" widget="statinfo"/>
+                     </button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="sh_sale_order_double_approval_form_inherit" model="ir.ui.view">
+			<field name="name">sale.order.double.approval.form</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+	 			<xpath expr="//header//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,approve,refuse,sale"/>
+ 	 			</xpath>
+	 			<xpath expr="//header" position="inside">
+                    <field name="hide_approve_btn" invisible="1" />
+ 	 			</xpath>
+	 			<xpath expr="//header//button[@name='action_confirm'][1]" position="replace">
+                    <button name="action_confirm" id="action_confirm" string="Confirm Sale" class="btn-primary" type="object" attrs="{'invisible': ['|',('state', 'not in', ['sent']),('state','in',['approve']) ]}" />
+ 	 			</xpath>
+	 			<xpath expr="//header//button[@name='action_confirm'][2]" position="replace">
+                     <button name="action_confirm" string="Confirm Sale" type="object" attrs="{'invisible': ['|',('state', 'not in', ['draft']),('state','in',['approve']) ]}" /> 	 			
+				</xpath>
+	 			<xpath expr="//header//button[@name='action_cancel']" position="replace">
+                     <button name="action_approve" type="object" string="Approve" attrs="{'invisible': [('hide_approve_btn','=',True) ]}"/>
+                     <button name="action_refuse" type="object" string="Refused" attrs="{'invisible': [('hide_approve_btn','=',True) ]}"/>
+                    <button name="action_cancel" states="draft,sent,approve,refuse,sale" type="object" string="Cancel"/>
+				</xpath>
+				<xpath expr="//notebook" position="inside">
+					<page string="Approve Details" name="approve_details">
+                    	<group>
+                    		<group string="Approve Information" name="approve_info">
+	                            <field name="sh_approve_by"/>
+	                            <field name="sh_approve_time"/>
+	                        </group>
+	                        <group string="Refuse Information" name="refuse_info">
+	                            <field name="sh_refuse_by"/>
+	                            <field name="sh_refuse_time"/>
+	                            <field name="sh_refuse_reason"/>
+	                        </group>
+                    	</group>						
+					</page>
+				</xpath>
+			</field>
+		</record>
+		
+		<record id="sh_sale_order_double_approval_search_inherit" model="ir.ui.view">
+			<field name="name">sale.order.double.approval.search</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+			<field name="arch" type="xml">
+	 			<xpath expr="//filter[@name='my_quotation']" position="after">
+                    <filter string="Refused" name="refuse" domain="[('state','in',['refuse'])]"/>
+ 	 			</xpath>
+ 	 		</field>
+ 	 	</record>
+	</data>	
+</odoo>

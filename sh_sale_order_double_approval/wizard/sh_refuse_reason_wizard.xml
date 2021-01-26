@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sh_refuse_reason_wizard_form" model="ir.ui.view">
+	<field name="name">sh.refuse.reason.wizard.form</field>
+	<field name="model">refuse.reason.wizard</field>
+	<field name="arch" type="xml">
+	    <form string="Add Refuse Reason of Order">
+		    <group>
+		        <field name="sh_refuse_reason_id"/>
+		        <field name="sh_refuse_comment"/>
+		    </group>
+		    <footer> 
+			    <button string='OK' name='refuse_order' type='object' class='btn-primary' />
+			    <button string='Cancel' class='btn-default' special="cancel"/>
+	        </footer>				
+	    </form>
+	</field>
+	</record>
+
+</odoo>

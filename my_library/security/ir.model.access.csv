@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_my_library_library_base_menu,my_library.library_base_menu,model_library_book,group_librarian,1,1,1,1

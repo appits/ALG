@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="routing_work_custom_center_id" model="ir.ui.view">
+            <field name="name">routin.work.center.form</field>
+            <field name="model">mrp.routing</field>
+            <field name="inherit_id" ref="mrp.mrp_routing_form_view"/>
+            <field name="priority" eval="99"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                   <field name="capacity_batch" required="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

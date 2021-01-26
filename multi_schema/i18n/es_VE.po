@@ -1,0 +1,890 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* multi_schema
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-27 22:30+0000\n"
+"PO-Revision-Date: 2020-08-27 22:30+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__account_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__account_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__account_id
+#: model_terms:ir.ui.view,arch_db:multi_schema.financial_report_layer_search
+#: model_terms:ir.ui.view,arch_db:multi_schema.profit_loss_report_layer_search
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: multi_schema
+#: model:ir.actions.act_window,name:multi_schema.acct_schema_ing_action
+msgid "Account Schema"
+msgstr "Esquema contable"
+
+#. module: multi_schema
+#: model:ir.model,name:multi_schema.model_gl_journal
+msgid "Accounting Fact Acct Entry"
+msgstr "Entradas contable en otros esquemas"
+
+#. module: multi_schema
+#: model:ir.model,name:multi_schema.model_fact_acct
+msgid "Accounting Fact Acct Schema"
+msgstr "Esquemas de cuentas contable"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.gl_journal_form_view
+msgid "Accounting entries"
+msgstr "Entradas contables"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_product_cost__accumulated_amount
+msgid "Accumulated Amount"
+msgstr "Cantidad acomulada"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_product_cost__accumulated_qty
+msgid "Accumulated Qty"
+msgstr "Cantidad acomulada"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__parameters_report__report_type__payable
+msgid "Aged Payable"
+msgstr "Cuentas por pagar"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.payable_report_layer_search
+msgid "Aged Payable Layer"
+msgstr "Cientas por pagar"
+
+#. module: multi_schema
+#: model:ir.actions.act_window,name:multi_schema.payable_layer_action
+msgid "Aged Payable Report"
+msgstr "Reporte de cuentas por pagar"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__parameters_report__report_type__receivable
+msgid "Aged Receivable"
+msgstr "Cuentas por cobrar"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.inventory_report_layer_search
+#: model_terms:ir.ui.view,arch_db:multi_schema.receivable_report_layer_search
+msgid "Aged Receivable Layer"
+msgstr "Cuentas por pagar"
+
+#. module: multi_schema
+#: model:ir.actions.act_window,name:multi_schema.receivable_layer_action
+msgid "Aged Receivable Report"
+msgstr "Reporte de cuentas por pagar"
+
+#. module: multi_schema
+#: model:ir.model,name:multi_schema.model_acct_schema
+msgid "Allow record accounting in other currency"
+msgstr "Permitir le registros de contabilidad en otra moneda"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__asset_id
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_financial__type__asset
+msgid "Asset"
+msgstr "Activo"
+
+#. module: multi_schema
+#: model:ir.model,name:multi_schema.model_account_asset
+msgid "Asset/Revenue Recognition"
+msgstr "Aceptación de pagos/Ingresos"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__balance
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__balance
+msgid "Balance"
+msgstr ""
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__parameters_report__report_type__financial
+msgid "Balance Sheet"
+msgstr "Hoja de balance"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_payable__balance_total
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_receivable__balance_total
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_inventory_valuation__balance_total
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__balance_total
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__balance_total
+#: model_terms:ir.ui.view,arch_db:multi_schema.financial_report_layer_tree
+#: model_terms:ir.ui.view,arch_db:multi_schema.inventory_valuation_report_layer_tree
+#: model_terms:ir.ui.view,arch_db:multi_schema.payable_report_layer_tree
+#: model_terms:ir.ui.view,arch_db:multi_schema.profit_report_layer_tree
+#: model_terms:ir.ui.view,arch_db:multi_schema.receivable_report_layer_tree
+msgid "Balance Total"
+msgstr ""
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_financial__sub_type__bank_and_cash
+msgid "Bank and Cash"
+msgstr "Banco y caja"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct__state__cancel
+msgid "Cancelled"
+msgstr "Cancelar"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_acct_schema__company_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__company_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_payable__company_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_receivable__company_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_inventory_valuation__company_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__company_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__company_id
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal__company_id
+#: model:ir.model.fields,field_description:multi_schema.field_multi_currency_rate__company_id
+#: model:ir.model.fields,field_description:multi_schema.field_parameters_report__company_id
+msgid "Company"
+msgstr "Compañia"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.gl_journal_form_view
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_profit_loss__sub_type__cost_r
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_profit_loss__type__cost_revenue
+msgid "Cost of Revenue"
+msgstr "Costos de ventas"
+
+#. module: multi_schema
+#: model_terms:ir.actions.act_window,help:multi_schema.gl_journal_act_window
+msgid "Create your accounting entries for each scheme here."
+msgstr "Cree sus asientos contables para cada esquema"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_acct_schema__create_uid
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__create_uid
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_payable__create_uid
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_receivable__create_uid
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_inventory_valuation__create_uid
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__create_uid
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__create_uid
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal__create_uid
+#: model:ir.model.fields,field_description:multi_schema.field_multi_currency_rate__create_uid
+#: model:ir.model.fields,field_description:multi_schema.field_parameters_report__create_uid
+#: model:ir.model.fields,field_description:multi_schema.field_product_cost__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_acct_schema__create_date
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__create_date
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_payable__create_date
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_receivable__create_date
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_inventory_valuation__create_date
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__create_date
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__create_date
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal__create_date
+#: model:ir.model.fields,field_description:multi_schema.field_multi_currency_rate__create_date
+#: model:ir.model.fields,field_description:multi_schema.field_parameters_report__create_date
+#: model:ir.model.fields,field_description:multi_schema.field_product_cost__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__credit
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__credit
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__credit
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal__credit
+msgid "Credit"
+msgstr "Credito"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_financial__sub_type__credit_card
+msgid "Credit Card"
+msgstr "Tarjeta de credito"
+
+#. module: multi_schema
+#: model:ir.actions.act_window,name:multi_schema.currency_ing_action
+#: model:ir.model,name:multi_schema.model_res_currency
+#: model:ir.model.fields,field_description:multi_schema.field_acct_schema__currency_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__currency_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_payable__currency_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_receivable__currency_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_inventory_valuation__currency_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__currency_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__currency_id
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal__currency_id
+#: model:ir.model.fields,field_description:multi_schema.field_multi_currency_rate__currency_id
+#: model:ir.ui.menu,name:multi_schema.multi_schema_currency_menu_ing
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_account_move__currency_from_id
+msgid "Currency From"
+msgstr "Moneda de"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__currency_rate
+msgid "Currency Rate"
+msgstr "Tasa de cambio"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_res_currency__currency_rates
+msgid "Currency Rates"
+msgstr "Tasa de cambios"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_financial__sub_type__current_assets
+msgid "Current Assets"
+msgstr "Activos circulantes"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_product_cost__current_cost
+msgid "Current Cost"
+msgstr "Costo actual"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.product_cost_tree_view
+msgid "Current Cost Product"
+msgstr "Costo actual del producto"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_financial__sub_type__current_liabilities
+msgid "Current Liabilities"
+msgstr "Pasivo circulante"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_financial__sub_type__current_year_earnings
+msgid "Current Year Earnings"
+msgstr "Ganancias del año actual"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct__type__out_refund
+msgid "Customer Credit Note"
+msgstr "Ganancias del año actual"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct__type__out_invoice
+msgid "Customer Invoice"
+msgstr "Factura del cliente"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__date
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal__date
+#: model:ir.model.fields,field_description:multi_schema.field_parameters_report__date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_payable__date_trx
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_receivable__date_trx
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_inventory_valuation__date_trx
+msgid "Date Trx"
+msgstr "Fecha Trx"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__debit
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__debit
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__debit
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal__debit
+msgid "Debit"
+msgstr "Debito"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_profit_loss__sub_type__depreciation
+msgid "Depreciation"
+msgstr "Depreciación"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.financial_report_form_view
+#: model_terms:ir.ui.view,arch_db:multi_schema.payable_report_form_view
+#: model_terms:ir.ui.view,arch_db:multi_schema.profit_report_form_view
+#: model_terms:ir.ui.view,arch_db:multi_schema.receivable_report_form_view
+#: model_terms:ir.ui.view,arch_db:multi_schema.stock_valuation_report_form_view
+msgid "Detail"
+msgstr "Detalle"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.parameter_report_f_form_view
+msgid "Discard"
+msgstr "Descartar"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.parameter_report_f_form_view
+msgid "Execute Report"
+msgstr "Ejecutar Reporte"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_acct_schema__display_name
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__display_name
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_payable__display_name
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_receivable__display_name
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_inventory_valuation__display_name
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__display_name
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__display_name
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal__display_name
+#: model:ir.model.fields,field_description:multi_schema.field_multi_currency_rate__display_name
+#: model:ir.model.fields,field_description:multi_schema.field_parameters_report__display_name
+#: model:ir.model.fields,field_description:multi_schema.field_product_cost__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct__state__draft
+#: model:ir.model.fields.selection,name:multi_schema.selection__gl_journal__state__draft
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__gl_journal__state__edit
+msgid "Edit"
+msgstr "Editar"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.gl_journal_form_view
+msgid "Edit Document"
+msgstr "Editar Documento"
+
+#. module: multi_schema
+#: model:ir.ui.menu,name:multi_schema.menu_entries_journal
+#: model:ir.ui.menu,name:multi_schema.menu_entries_schema_main
+msgid "Entries Accounting multi-schema"
+msgstr "Entradas contables multi esquema"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.InvoiceSchema_form_inherit
+msgid "Entries Multi Schema"
+msgstr "Entradas multi esquema"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_financial__sub_type__equity
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_financial__type__equity
+msgid "Equity"
+msgstr "Capital"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_account_move__exchange_rate
+msgid "Exchange Rate"
+msgstr "Tipo de cambio"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_account_move__execute_line
+msgid "Exchange Rate"
+msgstr "Tipo de cambio"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_profit_loss__sub_type__expenses
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_profit_loss__type__expenses
+msgid "Expenses"
+msgstr "Gastos"
+
+#. module: multi_schema
+#: model:ir.actions.act_window,name:multi_schema.fact_acct_act_window
+#: model:ir.model.fields,field_description:multi_schema.field_account_move__fact_acct_ids
+#: model:ir.model.fields,field_description:multi_schema.field_account_move_line__fact_acct_ids
+#: model:ir.ui.menu,name:multi_schema.fact_acct_menu
+#: model_terms:ir.ui.view,arch_db:multi_schema.fact_acct_form_view
+msgid "Fact Acct"
+msgstr "Asientos multi esquemas"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_account_move__fact_acct_count
+msgid "Fact Acct Count"
+msgstr "Asientos contables multi esquemas"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.fact_id_search
+msgid "Fact Acct Layer"
+msgstr "Estractos de asientos multi esquemas"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_account_move__fact_acct_rate
+msgid "Fact Acct Rate"
+msgstr "Tasa del asiento multi esquema"
+
+#. module: multi_schema
+#: model:ir.actions.act_window,name:multi_schema.report_financial_layer_action
+msgid "Financial Report"
+msgstr "Reporte financiero"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_financial__sub_type__fixed_assets
+msgid "Fixed Assets"
+msgstr "Activos fijos"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__gl_id
+msgid "Gl"
+msgstr ""
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_acct_schema__id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_payable__id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_receivable__id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_inventory_valuation__id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__id
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal__id
+#: model:ir.model.fields,field_description:multi_schema.field_multi_currency_rate__id
+#: model:ir.model.fields,field_description:multi_schema.field_parameters_report__id
+#: model:ir.model.fields,field_description:multi_schema.field_product_cost__id
+msgid "ID"
+msgstr ""
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_profit_loss__sub_type__income
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_profit_loss__type__income
+msgid "Income"
+msgstr "Ingresos"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__parameters_report__report_type__inventory
+msgid "Inventory Valuation"
+msgstr "Valoración de inventario"
+
+#. module: multi_schema
+#: model:ir.actions.act_window,name:multi_schema.inventory_layer_action
+msgid "Inventory Valuation Report"
+msgstr "Reporte de Valoración de inventario"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__journal_id
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal__journal_id
+msgid "Journal"
+msgstr "Diarios"
+
+#. module: multi_schema
+#: model:ir.model,name:multi_schema.model_account_move
+msgid "Journal Entries"
+msgstr "Asientos contables"
+
+#. module: multi_schema
+#: model:ir.actions.act_window,name:multi_schema.gl_journal_act_window
+msgid "Journal Entries Multi-Schema"
+msgstr "Asientos contables Multi esquemas"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct__type__entry
+#: model_terms:ir.ui.view,arch_db:multi_schema.gl_journal_form_view
+#: model_terms:ir.ui.view,arch_db:multi_schema.gl_journal_search_view
+#: model_terms:ir.ui.view,arch_db:multi_schema.gl_journal_tree_view
+msgid "Journal Entry"
+msgstr "Asiento contable"
+
+#. module: multi_schema
+#: model:ir.model,name:multi_schema.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_acct_schema____last_update
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct____last_update
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_payable____last_update
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_receivable____last_update
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_inventory_valuation____last_update
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial____last_update
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss____last_update
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal____last_update
+#: model:ir.model.fields,field_description:multi_schema.field_multi_currency_rate____last_update
+#: model:ir.model.fields,field_description:multi_schema.field_parameters_report____last_update
+#: model:ir.model.fields,field_description:multi_schema.field_product_cost____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_acct_schema__write_uid
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__write_uid
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_payable__write_uid
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_receivable__write_uid
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_inventory_valuation__write_uid
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__write_uid
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__write_uid
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal__write_uid
+#: model:ir.model.fields,field_description:multi_schema.field_multi_currency_rate__write_uid
+#: model:ir.model.fields,field_description:multi_schema.field_parameters_report__write_uid
+#: model:ir.model.fields,field_description:multi_schema.field_product_cost__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_acct_schema__write_date
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__write_date
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_payable__write_date
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_receivable__write_date
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_inventory_valuation__write_date
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__write_date
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__write_date
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal__write_date
+#: model:ir.model.fields,field_description:multi_schema.field_multi_currency_rate__write_date
+#: model:ir.model.fields,field_description:multi_schema.field_parameters_report__write_date
+#: model:ir.model.fields,field_description:multi_schema.field_product_cost__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_financial__type__liabilities
+msgid "Liabilities"
+msgstr "Pasivo"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__line_id
+msgid "Line"
+msgstr "Linea"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal__lines_ids
+msgid "Lines"
+msgstr "Lineas"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__move_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_payable__move_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_receivable__move_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_inventory_valuation__move_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__move_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__move_id
+#: model_terms:ir.ui.view,arch_db:multi_schema.financial_report_form_view
+#: model_terms:ir.ui.view,arch_db:multi_schema.payable_report_form_view
+#: model_terms:ir.ui.view,arch_db:multi_schema.profit_report_form_view
+#: model_terms:ir.ui.view,arch_db:multi_schema.receivable_report_form_view
+#: model_terms:ir.ui.view,arch_db:multi_schema.stock_valuation_report_form_view
+msgid "Move"
+msgstr "Movimientos"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_res_currency__multi_currency_ids
+msgid "Multi Currency"
+msgstr "Multi moneda"
+
+#. module: multi_schema
+#: model:ir.ui.menu,name:multi_schema.multi_acct_schema_menu
+msgid "Multi Schema Configurator"
+msgstr "Configuracion de multi esquemas"
+
+#. module: multi_schema
+#: model:ir.module.category,description:multi_schema.module_multi_schema
+#: model:ir.module.category,name:multi_schema.module_multi_schema
+#: model:res.groups,comment:multi_schema.multi_schema_group
+#: model:res.groups,name:multi_schema.multi_schema_group
+msgid "Multi-schema Report Group"
+msgstr "Reporte de multi esquema por grupo"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.currency_rate_form_view
+msgid "MultiCurrency Rate"
+msgstr "Tasa de multi moneda"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.acct_schema_tree_view
+msgid "MultiSchema Acct"
+msgstr "Cuenta de multi esquema"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.account_schema_form_view
+msgid "MultiSchema configuration"
+msgstr "Configutacion Multi Esquema"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.currency_rate_tree_view
+msgid "Multicurrency Rate"
+msgstr "Tasa multi moneda"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_acct_schema__name
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__name
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal__name
+#: model:ir.model.fields,field_description:multi_schema.field_multi_currency_rate__name
+#: model_terms:ir.ui.view,arch_db:multi_schema.account_schema_form_view
+#: model_terms:ir.ui.view,arch_db:multi_schema.currency_rate_form_view
+#: model_terms:ir.ui.view,arch_db:multi_schema.gl_journal_form_view
+msgid "Name"
+msgstr "Nombre"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_financial__sub_type__non_current_assets
+msgid "Non-current Assets"
+msgstr "Activo no corriente"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_financial__sub_type__non_current_liabilities
+msgid "Non-current Liabilities"
+msgstr "Pasivos no corrientes"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_account_asset__operation_currency
+msgid "Operation Currency"
+msgstr "Moneda de operación"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_profit_loss__sub_type__other_income
+msgid "Other Income"
+msgstr "Otros ingresos"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_product_product__p_cost_ids
+#: model:ir.model.fields,field_description:multi_schema.field_product_template__p_cost_ids
+msgid "P Cost"
+msgstr ""
+
+#. module: multi_schema
+#: model:ir.model,name:multi_schema.model_parameters_report
+#: model_terms:ir.ui.view,arch_db:multi_schema.parameter_report_f_form_view
+msgid "Parameters"
+msgstr ""
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__partner_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_payable__partner_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_receivable__partner_id
+#: model_terms:ir.ui.view,arch_db:multi_schema.payable_report_layer_search
+#: model_terms:ir.ui.view,arch_db:multi_schema.receivable_report_layer_search
+msgid "Parameters"
+msgstr "Parametros"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_financial__sub_type__payable
+msgid "Payable"
+msgstr "A pagar"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct__state__posted
+#: model:ir.model.fields.selection,name:multi_schema.selection__gl_journal__state__posted
+msgid "Posted"
+msgstr "Al corriente"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_financial__sub_type__prepayments
+msgid "Prepayments"
+msgstr "Anticipo"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_account_move_line__price_om
+msgid "Price Om"
+msgstr "Precio"
+
+#. module: multi_schema
+#: model:ir.model,name:multi_schema.model_product_product
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__product_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_inventory_valuation__product_id
+#: model:ir.model.fields,field_description:multi_schema.field_product_cost__product_id
+#: model_terms:ir.ui.view,arch_db:multi_schema.inventory_report_layer_search
+msgid "Product"
+msgstr "Producto"
+
+#. module: multi_schema
+#: model:ir.model,name:multi_schema.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_product_cost__product_tmp_id
+msgid "Product Tmp"
+msgstr "Plantilla de producto"
+
+#. module: multi_schema
+#: model:ir.actions.act_window,name:multi_schema.profit_financial_layer_action
+msgid "Profit And loss Report"
+msgstr "Informe de pérdidas y ganancias"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__parameters_report__report_type__profit_loss
+msgid "Profit and Loss"
+msgstr "Ganancias y Perdidas"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.profit_loss_report_layer_search
+msgid "Profit and loss Layer"
+msgstr "Ganancia y perdida"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct__type__in_receipt
+msgid "Purchase Receipt"
+msgstr "Recibo de compra"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_inventory_valuation__qty_movement
+msgid "Qty Movement"
+msgstr "Cantidad de movimiento"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__quantity
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.inventory_valuation_report_layer_tree
+msgid "Quantity Mov"
+msgstr "Cantidad de movimiento"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_account_asset__rate
+#: model:ir.model.fields,field_description:multi_schema.field_multi_currency_rate__rate
+msgid "Rate"
+msgstr "Tasa"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_multi_currency_rate__rate_date
+msgid "Rate Date"
+msgstr "Fecha de tasa"
+
+#. module: multi_schema
+#: model:ir.actions.act_window,name:multi_schema.currency_rate_action
+#: model_terms:ir.ui.view,arch_db:multi_schema.currency_rate_form_inherit
+msgid "Rates"
+msgstr "Tasas"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_financial__sub_type__receivable
+msgid "Receivable"
+msgstr "Cuenta por cobrar"
+
+#. module: multi_schema
+#: model:ir.actions.act_window,name:multi_schema.action_parameters_report
+#: model:ir.ui.menu,name:multi_schema.menu_parameter_report
+#: model:ir.ui.menu,name:multi_schema.menu_parameter_report_main
+msgid "Report Accounting multi-schema"
+msgstr "Reporte contable de múltiples esquemas"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct__type__out_receipt
+msgid "Sales Receipt"
+msgstr "Recibo de venta"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__schema_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_payable__schema_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_aged_receivable__schema_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_inventory_valuation__schema_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__schema_id
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__schema_id
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal__schema_id
+#: model:ir.model.fields,field_description:multi_schema.field_parameters_report__schema_id
+#: model:ir.model.fields,field_description:multi_schema.field_product_cost__schema_id
+#: model_terms:ir.ui.view,arch_db:multi_schema.fact_id_search
+#: model_terms:ir.ui.view,arch_db:multi_schema.parameter_report_f_form_view
+msgid "Schema"
+msgstr "Esquema"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.current_cost_product_product
+#: model_terms:ir.ui.view,arch_db:multi_schema.current_cost_product_template
+msgid "Schema Current Cost"
+msgstr "Coste actual del esquema"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.gl_journal_search_view
+msgid "Schema Entry"
+msgstr "Entrada de esquema"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__sequence_p
+msgid "Sequence P"
+msgstr ""
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__state
+#: model:ir.model.fields,field_description:multi_schema.field_gl_journal__state
+msgid "Status"
+msgstr "Estado"
+
+#. module: multi_schema
+#: model:ir.model,name:multi_schema.model_fact_acct_aged_payable
+msgid "Storage Aged Payable"
+msgstr "Almacenamiento de cuentas a pagar"
+
+#. module: multi_schema
+#: model:ir.model,name:multi_schema.model_fact_acct_aged_receivable
+msgid "Storage Aged Receivable"
+msgstr "Almacenamiento de cuentas por cobrar"
+
+#. module: multi_schema
+#: model:ir.model,name:multi_schema.model_fact_acct_inventory_valuation
+msgid "Storage Inventory Valuation"
+msgstr "Almacenaje de valoracion de inventario"
+
+#. module: multi_schema
+#: model:ir.model,name:multi_schema.model_product_cost
+msgid "Storage Profit and loss"
+msgstr "Almacenamiento de Ganancias y pérdidas"
+
+#. module: multi_schema
+#: model:ir.model,name:multi_schema.model_fact_acct_report_profit_loss
+msgid "Storage Profit and loss"
+msgstr "Almacenamiento de Ganancias y pérdidas"
+
+#. module: multi_schema
+#: model:ir.model,name:multi_schema.model_fact_acct_report_financial
+msgid "Storage Results fiscal"
+msgstr "Almacenamiento de Resultados fiscal"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__sub_type
+#: model_terms:ir.ui.view,arch_db:multi_schema.financial_report_layer_search
+#: model_terms:ir.ui.view,arch_db:multi_schema.profit_loss_report_layer_search
+msgid "Sub Type"
+msgstr "Sub typo"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_financial__sub_type__total
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct_report_profit_loss__sub_type__total
+msgid "Totals"
+msgstr "Totales"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct__type
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__sub_type
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_financial__type
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_report_profit_loss__type
+#: model:ir.model.fields,field_description:multi_schema.field_parameters_report__report_type
+#: model_terms:ir.ui.view,arch_db:multi_schema.financial_report_layer_search
+#: model_terms:ir.ui.view,arch_db:multi_schema.profit_loss_report_layer_search
+msgid "Type"
+msgstr "Tipo"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_fact_acct_inventory_valuation__unit_cost
+msgid "Unit Cost"
+msgstr "Costo unitario"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.financial_report_layer_search
+msgid "Valuation Layer"
+msgstr "Valoración de estracto"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct__type__in_invoice
+msgid "Vendor Bill"
+msgstr "Factura del proveedor"
+
+#. module: multi_schema
+#: model:ir.model.fields.selection,name:multi_schema.selection__fact_acct__type__in_refund
+msgid "Vendor Credit Note"
+msgstr "Nota de crédito del proveedor"
+
+#. module: multi_schema
+#: model:ir.model.fields,field_description:multi_schema.field_account_move_line__view_price_om
+msgid "View Price Om"
+msgstr "Ver precio en"
+
+#. module: multi_schema
+#: model:ir.model,name:multi_schema.model_multi_currency_rate
+msgid "multi.currency.rate"
+msgstr "tasa de múltiple moneda"
+
+#. module: multi_schema
+#: model_terms:ir.ui.view,arch_db:multi_schema.fact_acct_form_view
+msgid "name"
+msgstr "Nombre"

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="so_refuse_reason_form" model="ir.ui.view">
+		<field name="name">so.refuse.reason.form</field>
+		<field name="model">sh.so.refuse.reason</field>
+		<field name="arch" type="xml">
+			<form string="Sale Order Refuse Reason">
+                <sheet>
+				    <group>						
+				        <field name="name"></field>
+				    </group>
+                </sheet>		
+			</form>
+		</field>
+	</record>
+		
+	<!-- For display the quotation cancel reason menu  -->
+	<record id="so_refuse_reason_tree" model="ir.ui.view">
+		<field name="name">so.refuse.reason.tree</field>
+		<field name="model">sh.so.refuse.reason</field>
+		<field name="arch" type="xml">
+			<tree string="Sale Order Refuse Reason" >
+				<field name="name"></field>			
+			</tree>
+		</field>
+	</record>
+
+	<record id="so_sale_order_refuse_menu" model="ir.actions.act_window">
+		<field name="name">Refuse Reason</field>
+		<field name="res_model">sh.so.refuse.reason</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="so_refuse_reason_tree"></field>
+	</record>
+
+	<menuitem
+		id="menu_refuse_reasons"
+		name="Refuse Reason" 
+		parent="sale.menu_sale_config"
+		action="so_sale_order_refuse_menu"/>
+</odoo>

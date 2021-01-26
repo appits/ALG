@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="product_cost_tree_view" model="ir.ui.view">
+            <field name="name">product_cost.tree</field>
+            <field name="model">product.cost</field>
+            <field name="arch" type="xml">
+                <tree string="Current Cost Product">
+                    <field name="schema_id"/>
+                    <field name="current_cost"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="current_cost_product_template" model="ir.ui.view">
+            <field name="name">current_cost_product_template</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[@name='Product Template']/sheet[1]/notebook[1]" position="inside">
+                    <page name="Schema Current Cost" string="Schema Current Cost" groups="multi_schema.multi_schema_group">
+                        <field name="p_cost_ids" readonly="1"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="current_cost_product_product" model="ir.ui.view">
+            <field name="name">current_cost_product_product</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+               <notebook>
+                    <page name="Schema Current Cost" string="Schema Current Cost" groups="multi_schema.multi_schema_group">
+                        <field name="p_cost_ids" readonly="1"/>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+    </data>
+</odoo>

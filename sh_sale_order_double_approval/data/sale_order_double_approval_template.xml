@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data ><!--  noupdate="1"> -->   
+ 		
+ 		<record id="sh_sale_order_double_approval_mail_template" model="mail.template">
+			<field name="name">Sale Order - Approval Pending</field>
+            <field name="subject">Sale Order Approval # ${object.name}</field>
+            <field name="email_from">${object.company_id.email}</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+ 			<field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+			<p>Dear,<br/> <br/>
+				 Please confirm this <a href="${object.get_base_url()}/web?#id=${object.id}&model=sale.order">#${object.name}</a>sales order, pending for authorize confirmation. 
+			</p>
+				
+			<html>            	
+				<head>Sales Order Details</head>						
+					<table border="1" bgcolor="#ffffff" style="border: 1px solid gray;width:100%;padding-top:10px;" >
+						<thead style="background-color:#875A7B;text-decoration: none; color: #fff;font-size: 16px;">
+							<tr>
+								<th align="center">Order No.</th>
+								<th align="center">Customer</th>
+								<th align="center">Order Date</th>
+								<th align="center">Total Amount</th>
+								<th align="center">Sales Person</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><span style="margin-left:5px"> ${object.name}</span></td>
+								<td><span style="margin-left:5px"> ${object.partner_id.name}</span></td>
+								<td><span style="margin-left:5px"> ${object.date_order}</span></td>
+								<td><span style="margin-left:5px"> ${object.amount_total}</span></td>
+								<td><span style="margin-left:5px"> ${object.user_id.name}</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</html>		
+				<br/>
+				<p>Thank you</p>												
+				
+				]]></field>
+        </record>			
+ 			
+	</data>
+</odoo>	

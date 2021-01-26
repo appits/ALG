@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <report
+          id="reporte_informe_recepcion"
+          model="stock.picking"
+          string="Informe de Recepcion"
+          report_type="qweb-pdf"
+          name="reports_lanta.informe_recepcion"/>
+
+        <template id="informe_recepcion">
+            <t t-call="web.html_container">
+              <t t-foreach="docs" t-as="o">
+                <t t-if="o.type_transaction == 'incoming'">
+                   <t t-if="o.state == 'done'">
+                      <t t-call="web.external_layout">
+                        <div class="page">
+                              <div class="col-xs-7">
+                                        <p style="font-size: 12px"><strong>Informe de Recepción : </strong><span t-field="o.name"> </span></p>
+                                        <p style="font-size: 12px"><strong>Fecha : </strong><span t-field="o.date_done"/></p>
+                                        <p style="font-size: 12px"><strong>Numero de O/C : </strong><span t-field="o.origin"></span></p>
+                                        <span style="font-size: 12px"><strong>Nro. Planilla de importación : </strong></span><span t-field="o.import_form_num"> </span>
+                                        <span style="font-size: 12px"><strong>Nro. Expediente de importación : </strong></span><span t-field="o.import_dossier"/>
+                                        <span style="font-size: 12px"><strong>Fecha de importación: </strong></span><span t-field="o.import_date"></span>
+                              </div>
+                              <div>
+                                <p style="font-size: 12px"><strong>Proveedor : </strong><span t-field="o.partner_id.name"></span></p>
+                                <p style="font-size: 12px"><strong>RIF : </strong><span t-field="o.partner_id.doc_type"></span> - <span t-esc="o.partner_id.vat"></span></p>
+                                <p style="font-size: 12px"><strong>Codigo : </strong><span t-esc="o.partner_id.id"></span></p>
+                                <p style="font-size: 12px"><strong>Dirección Fiscal : </strong><span t-field="o.partner_id.street"/><span t-field="o.partner_id.city"></span> <t t-esc="o.partner_id.state_id.name" /> </p>
+                              </div>
+                              <table class="table table-bordered">
+                                   <tbody class="sale_tbody">
+                                        <thead>
+                                            <tr>
+                                                <th name="th_transporte" class="text-center" style="font-size: 12px">Transporte</th>
+                                                <th name="th_placa" class="text-center" style="font-size: 12px">Placa</th>
+                                                 <th name="th_nombre" class="text-center" style="font-size: 12px">Nombre del Conductor</th>
+                                                <th name="th_cedula" class="text-center" style="font-size: 12px">Cédula</th>
+                                            </tr>
+                                        </thead>
+                                         <td class="text-center" style="font-size: 12px">
+                                                <span t-field="o.transport" />
+                                            </td>
+                                            <td class="text-center" style="font-size: 12px">
+                                                <span t-field="o.car_plate" />
+                                            </td>
+                                            <td class="text-center" style="font-size: 12px">
+                                                <span t-field="o.date_driver" />
+                                            </td>
+                                            <td class="text-center" style="font-size: 12px">
+                                                <span t-field="o.identification_driver" />
+                                         </td>
+                                    </tbody>
+                                </table>
+                                <table class="table table-bordered">
+                                   <tbody class="sale_tbody">
+                                        <thead>
+                                            <tr>
+                                                <th name="th_Factura" class="text-center" style="font-size: 12px">Factura de Referencia</th>
+                                                <th name="th_Nota_refe" class="text-center" style="font-size: 12px">Nota de Referencia</th>
+                                            </tr>
+                                        </thead>
+                                         <td class="text-center" style="font-size: 12px">
+                                                <span t-field="o.invoice_reference" />
+                                            </td>
+                                            <td class="text-center" style="font-size: 12px">
+                                                <span t-field="o.note_reference" />
+                                            </td>
+                                    </tbody>
+                                </table>
+                        </div>
+
+
+                        <table class="table table-bordered" t-if="o.move_ids_without_package">
+                           <tbody class="sale_tbody">
+                                <thead>
+                                    <tr>
+                                        <th name="th_description_normal" class="text-left" style="font-size: 12px">Codigo</th>
+                                        <th name="th_produc_normal" class="text-left" style="font-size: 12px">Descripción</th>
+                                        <th name="th_paquete" class="text-left" style="font-size: 12px">Presentación</th>
+                                        <th name="th_cantidad_paquete" class="text-left" style="font-size: 12px">Cantidad Paquetes</th>
+                                         <th name="th_uom_normal" class="text-left" style="font-size: 12px">Unidad</th>
+                                        <th name="th_qty_normal" class="text-right" style="font-size: 12px">Cant.</th>
+                                        <th name="th_qty_normal" class="text-right" style="font-size: 12px">Lote.</th>
+                                    </tr>
+                                </thead>
+                                <t t-if="o.move_ids_without_package.move_line_nosuggest_ids">
+                                    <tr t-foreach="o.move_ids_without_package.move_line_nosuggest_ids" t-as="lot_line">
+                                        <t t-if="lot_line">
+                                            <td style="font-size: 12px">
+                                                <span t-field="lot_line.move_id.product_id.default_code" />
+                                            </td>
+                                            <td style="font-size: 12px">
+                                                <span t-field="lot_line.move_id.product_id.name" />
+                                            </td>
+                                            <td style="font-size: 12px">
+                                                <span t-field="lot_line.move_id.product_packaging_id" />
+                                            </td>
+                                            <td style="font-size: 12px">
+                                                <span t-field="lot_line.move_id.qty_packaging" style="text-align:right" />
+                                            </td>
+                                            <td style="font-size: 12px">
+                                                <span t-field="lot_line.product_uom_id.name" />
+                                            </td>
+                                            <td style="font-size: 12px">
+                                                <span t-field="lot_line.qty_done" style="text-align:right"/>
+                                            </td>
+                                            <td style="font-size: 12px">
+                                                <span t-field="lot_line.lot_id.name" />
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered">
+                           <tbody class="sale_tbody">
+                                <thead>
+                                        <th name="th_description_normal" class="text-left" align="left" style="font-size: 12px">TOTAL</th>
+                                        <td style="text-align:right; font-size: 12px">
+                                          <span t-field="o.total_qty"/>
+                                        </td>
+                                </thead>
+                            </tbody>
+                        </table>
+                         <table class="table table-bordered text-center" style="max-width: 450px;">
+                                <tr>
+                                    <th name="th_nota" class="text-left" style="font-size: 12px">Nota</th>
+                                </tr>
+                                <td style="font-size: 12px">
+                                    <span t-field="o.note" />
+                                </td>
+                         </table>
+                        <div class="footer">
+                              <table class="table table-bordered">
+                               <tbody class="sale_tbody">
+                                    <thead>
+                                       <th name="th_description_normal" class="text-left" align="left" style="font-size: 12px">Recibido Conforme</th>
+                                    </thead>
+                                </tbody>
+                            </table>
+                        </div>
+                      </t>
+                   </t>
+            	</t>
+              </t>
+            </t>
+        </template>
+     </data>
+</odoo>

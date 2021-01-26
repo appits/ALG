@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_order_information_inherit" model="ir.ui.view">
+            <field name="name">inherit_sale_order_information.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='product_id']" position="after">
+                    <field name="dose_kgton" string="Dosis Kg / Ton" readonly="1" force_save="1"/>
+                </xpath>
+                <notebook>
+                    <page string="Informacion de Entrega" name="extra">
+                        <group>
+                            <group string="Informacion de Entrega" name="other_infos">
+                                <field name="transport" string="Transporte:" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}"/>
+                                <field name="car_plate" string="Placa:" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}"/>
+                                <field name="date_driver" string="Datos del conductor:" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}"/>
+                                <field name="identification_driver" string="Cedula:" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}"/>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</odoo>

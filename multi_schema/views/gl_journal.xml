@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="gl_journal_form_view" model="ir.ui.view">
+            <field name="name">ProjectName.gl_journal.form</field>
+            <field name="model">gl.journal</field>
+            <field name="arch" type="xml">
+                <form string="Journal Entry">
+                    <header>
+                        <button name="action_confirm" string="Confirm" class="btn-primary"
+                                type="object"
+                                attrs="{'invisible': [('state', '=', 'posted')]}"/>
+                        <button name="action_edit" string="Edit Document" class="btn-primary"
+                                type="object"
+                                attrs="{'invisible': [('state', '!=', 'posted')]}"/>
+                        <field  name="state" widget="statusbar" statusbar_visible="draft,posted,edit"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Name" required="1" attrs="{'readonly':[('state','=','posted')]}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date" required="1" attrs="{'readonly':[('state','=','posted')]}"/>
+                                <field name="company_id" groups="base.group_multi_company" required="1" attrs="{'readonly':[('state','=','posted')]}"/>
+                                <field name="journal_id" options="{'no_create': True}" attrs="{'readonly':[('state','=','posted')]}"/>
+                            </group>
+                            <group>
+                                <field name="schema_id" required="1" options="{'no_create': True}" attrs="{'readonly':[('state','=','posted')]}"/>
+                                <field name="currency_id" required="1" readonly="1" force_save="1" attrs="{'readonly':[('state','=','posted')]}"/>
+                            </group>
+                            <group>
+                                <field name="debit" readonly="1" force_save="1"/>
+                            </group>
+                            <group>
+                                <field name="credit" readonly="1" force_save="1"/>
+                            </group>
+                        </group>
+                         <notebook>
+                            <page string="Accounting entries" name="fact_page">
+                               <field name="lines_ids" attrs="{'readonly':[('state','=','posted')]}" mode="tree,kanban" context="{'default_gl_id': id,
+                                                                                                                                  'default_company_id': company_id,
+                                                                                                                                  'default_currency_id': currency_id,
+                                                                                                                                  'default_schema_id': schema_id,
+                                                                                                                                  'default_journal_id': journal_id,
+                                                                                                                                  'default_date': date,
+                                                                                                                                  'default_name': name}">
+                                    <tree string="Accounting entries" editable="bottom">
+                                        <field name="company_id" groups="base.group_multi_company" required="1"/>
+                                        <field name="date" invisible="1"/>
+                                        <field name="name" invisible="1"/>
+                                        <field name="gl_id" invisible="1"/>
+                                        <field name="state" invisible="1"/>
+                                        <field name="currency_id" invisible="1" options="{'no_create': True}"/>
+                                        <field name="schema_id" invisible="1" options="{'no_create': True}"/>
+                                        <field name="type" invisible="1"/>
+                                        <field name="journal_id" invisible="1" options="{'no_create': True}"/>
+                                        <field name="account_id" required="1"/>
+                                        <field name="partner_id"/>
+                                        <field name="product_id"/>
+                                        <field name="quantity"/>
+                                        <field name="debit" required="1"/>
+                                        <field name="credit" required="1"/>
+                                    </tree>
+                               </field>
+                            </page>
+                         </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="gl_journal_tree_view" model="ir.ui.view">
+            <field name="name">ProjectName.gl_journal.tree</field>
+            <field name="model">gl.journal</field>
+            <field name="arch" type="xml">
+                <tree string="Journal Entry">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="debit"/>
+                    <field name="credit"/>
+                    <field name="schema_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="gl_journal_search_view" model="ir.ui.view">
+            <field name="name">ProjectName.gl_journal.search</field>
+            <field name="model">gl.journal</field>
+            <field name="arch" type="xml">
+                <search string="Journal Entry">
+                   <field name="schema_id"/>
+                   <filter string="Schema Entry" name="group_by_schema_id" context="{'group_by':'schema_id'}"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="gl_journal_act_window" model="ir.actions.act_window">
+            <field name="name">Journal Entries Multi-Schema</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">gl.journal</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_group_by_schema_id': 1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create your accounting entries for each scheme here.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Entries Accounting multi-schema"
+              id="menu_entries_schema_main"
+              parent="account_accountant.menu_accounting"
+              sequence="22"
+              groups="multi_schema_group"/>
+        <menuitem name="Entries Accounting multi-schema"
+                  id="menu_entries_journal"
+                  parent="menu_entries_schema_main"
+                  groups="multi_schema_group"
+                  action="gl_journal_act_window"/>
+
+    </data>
+</odoo>

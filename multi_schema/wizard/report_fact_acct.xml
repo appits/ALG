@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="parameter_report_f_form_view" model="ir.ui.view">
+            <field name="name">parameter_report_f_form_view</field>
+            <field name="model">parameters.report</field>
+            <field name="arch" type="xml">
+                <form string="Parameters">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="schema_id"/>
+                            <h1>
+                                <field name="schema_id" placeholder="Schema" required="1" options="{'no_create': True}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="report_type" required="1"/>
+                                <field name="date"
+                                       attrs="{'required':[('report_type','not in',['receivable', 'payable'])],
+                                               'invisible':[('report_type','in',['receivable', 'payable'])]}"/>
+                                <field name="company_id" required="1" options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <footer>
+                            <button name="execute_report"
+                                string="Execute Report "
+                                type="object"
+                                class="btn-primary"/>
+                            <button string="Discard"
+                                class="btn-secondary"
+                                special="cancel" />
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_parameters_report" model="ir.actions.act_window">
+            <field name="name">Report Accounting multi-schema</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">parameters.report</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="parameter_report_f_form_view"/>
+            <field name="target">new</field>
+    </record>
+
+    <menuitem name="Report Accounting multi-schema"
+              id="menu_parameter_report_main"
+              parent="account_accountant.menu_accounting"
+              sequence="21"
+              groups="multi_schema_group"/>
+    <menuitem name="Report Accounting multi-schema"
+              id="menu_parameter_report"
+              parent="menu_parameter_report_main"
+              groups="multi_schema_group"
+              action="action_parameters_report"/>
+
+    </data>
+</odoo>

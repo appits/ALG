@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+    <data noupdate="1"> 
+        <record id="group_quotation_page" model="res.groups">
+            <field name="name">Quotation page in Customer</field>
+        </record>
+    </data>
+
+    <record id="view_res_partner_extended_cft" model="ir.ui.view">
+        <field name="name">res.partner.extended</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside" >
+                <page string="Quotations Information" name="quotation_page" groups="product_price.group_quotation_page">
+                    <group>
+                        <field name="margin"/>
+                        <field name="margin_valor"/>
+                        <field name="max_diff"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+    
+</odoo>

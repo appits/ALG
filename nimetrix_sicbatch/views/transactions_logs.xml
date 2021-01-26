@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="sic_batch_form_view" model="ir.ui.view">
+            <field name="name">sic_batch_log.form</field>
+            <field name="model">sicbatch.log</field>
+            <field name="arch" type="xml">
+                <form string="SicBatch Log">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for=""/>
+                            <h1>
+                                <field name="create_date" placeholder="Title"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="create_uid"/>
+                                <field name="write_date"/>
+                                <field name="api_call"/>
+                                <field name="work_order_id"/>
+                                <field name="production_id"/>
+                            </group>
+                            <group>
+                                <field name="write_uid"/>
+                                <field name="script"/>
+                                <field name="response"/>
+                                <field name="status"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sic_batch_tree_view" model="ir.ui.view">
+            <field name="name">ProjectName.sic_batch.tree</field>
+            <field name="model">sicbatch.log</field>
+            <field name="arch" type="xml">
+                <tree string="Sicbatch Log">
+                    <field name="create_date"/>
+                    <field name="create_uid"/>
+                    <field name="write_date"/>
+                    <field name="write_uid"/>
+                    <field name="api_call"/>
+                    <field name="work_order_id"/>
+                    <field name="script"/>
+                    <field name="response"/>
+                    <field name="status"/>
+                    <field name="production_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sic_batch_act_window" model="ir.actions.act_window">
+            <field name="name">Transactions Logs</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sicbatch.log</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new ModelTitle.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Transactions Logs" id="sic_batch_log_menu" parent="menu_mrp_nimetrix" action="sic_batch_act_window"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,1278 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* reports_lanta
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-27 20:43+0000\n"
+"PO-Revision-Date: 2020-08-27 20:43+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.account_move_form_inherit
+msgid "# de Placa"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+msgid "#Und."
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid ""
+"<br/>\n"
+"                                        <span style=\"font-size: 14px\"><strong>Fecha : </strong></span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid ""
+"<br/>\n"
+"                                        <span style=\"font-size: 14px\"><strong>Numero de Pedido : </strong></span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.mrp_production
+msgid "<span align=\"left\"> Formula Creada por el Cliente</span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+msgid ""
+"<span style=\"font-size: 12px\"><strong>Fecha de importación: "
+"</strong></span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+msgid ""
+"<span style=\"font-size: 12px\"><strong>Nro. Expediente de importación : "
+"</strong></span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+msgid ""
+"<span style=\"font-size: 12px\"><strong>Nro. Planilla de importación : "
+"</strong></span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "<span style=\"font-size: 14px\"><strong>Nota de carga: </strong></span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.mrp_production
+msgid "<span>\"USO VETERINARIO\"</span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "<span><strong> C.I.: </strong> </span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "<span><strong> Firma: </strong> </span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "<span><strong> Nombre y Apellido:  </strong> </span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "<span><strong> Transporte: </strong> </span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "<span><strong>Base Imponible : </strong> </span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "<span><strong>C.I.: </strong> </span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "<span><strong>Departamento: </strong> </span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "<span><strong>Firma: </strong> </span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "<span><strong>Impuesto : </strong> </span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "<span><strong>Nombre y Apellido: </strong> </span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "<span><strong>Total : </strong> </span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.mrp_production
+msgid "<span>MANTENGASE EN UN LUGAR FRESCO Y SECO</span>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+msgid "<strong> FACTURA EN BOLIVARES</strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+msgid "<strong> FACTURA EN DOLARES</strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+msgid "<strong> Guia de despacho :</strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+msgid "<strong> Telefono : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.inventory_labels
+msgid "<strong> Ubicacion : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+msgid "<strong>Aprobado por:  </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+#: model_terms:ir.ui.view,arch_db:reports_lanta.mrp_production
+msgid "<strong>CODIGO : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.mrp_production
+msgid "<strong>CONTENIDO : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "<strong>Ciudad : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+#: model_terms:ir.ui.view,arch_db:reports_lanta.inventory_labels
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "<strong>Codigo : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "<strong>Codigo : </strong> -"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+msgid "<strong>Condiciones: </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "<strong>Despachado </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "<strong>Dirección Fiscal : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+msgid "<strong>Dirección de Entrega : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "<strong>Dirección de despacho : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid ""
+"<strong>Documento de Control Interno Solo para el Despacho y Carga de "
+"Mercancía No autoriza la salida de la misma.</strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.mrp_production
+msgid "<strong>ELABORADO   : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+msgid "<strong>Elaborado por:  </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "<strong>Factura Afectada : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+msgid "<strong>Factura Nro. : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+msgid "<strong>Facturado por:  </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+msgid "<strong>Fecha : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.inventory_labels
+msgid "<strong>Fecha Vencimiento : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "<strong>Fecha de la Factura Afectada :  </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+msgid "<strong>Fecha de vencimiento : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.inventory_labels
+msgid "<strong>Fecha elaborado : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+msgid "<strong>Forma de pago : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+msgid "<strong>Informe de Recepción : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.inventory_labels
+msgid "<strong>Lote : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+msgid "<strong>Lugar de despacho : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "<strong>Lugar y Fecha : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+msgid "<strong>Lugar y Fecha de Emisión : </strong><br/>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "<strong>Monto de la Factura Afectada :  </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "<strong>Motivo : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "<strong>Nombre y Apellido / Razón Social : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+msgid "<strong>Nombre y Apellido o Razón Social : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "<strong>Nombre y Apellido o Razón Social: : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+msgid "<strong>Nota de Carga : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+msgid "<strong>Nota de Credito Nro. : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "<strong>Nota de Debito Nro. : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+msgid "<strong>Nro. Pedido : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+msgid "<strong>Numero de O/C : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.inventory_labels
+msgid "<strong>Producto : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+msgid "<strong>Proveedor : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "<strong>RIF : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.mrp_production
+msgid "<strong>RUTA : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "<strong>Recibido </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+msgid "<strong>Recibido por:  </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+msgid "<strong>Revisado por:  </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.mrp_production
+msgid "<strong>VENCE   : </strong>"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+msgid "Activo"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "Base Imponible"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_mrp_bom
+msgid "Bill of Material"
+msgstr "Lista de materiales"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_print__bom_id
+msgid "Bom"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+#: model_terms:ir.ui.view,arch_db:reports_lanta.cancel_sequence_form_view
+msgid "CANCELAR SECUENCIA"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.inventory_labels
+msgid "CANTIDAD :<span/>"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.actions.act_window,name:reports_lanta.cancel_sequence_act_window
+#: model_terms:ir.ui.view,arch_db:reports_lanta.cancel_sequence_form_view
+msgid "Cancelar Secuencia"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Cant."
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "Cantidad"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Cantidad Paquetes"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+msgid "Cantidad de paquetes"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_account_move__car_plate
+#: model:ir.model.fields,field_description:reports_lanta.field_purchase_order__car_plate
+#: model:ir.model.fields,field_description:reports_lanta.field_sale_order__car_plate
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_picking__car_plate
+msgid "Car Plate"
+msgstr "Placa del carro"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+msgid "Cedula"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+#: model_terms:ir.ui.view,arch_db:reports_lanta.purchase_order_information
+#: model_terms:ir.ui.view,arch_db:reports_lanta.sale_order_information_inherit
+msgid "Cedula:"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print__code
+msgid "Code"
+msgstr "Codigo"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Codigo"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.partner_inherit
+msgid "Codigo Interno"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "Conceptos"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.account_move_form_inherit
+msgid "Conductor"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.inventory_labels
+msgid "Conteo N°"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_cancel_guide__create_uid
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_print__create_uid
+#: model:ir.model.fields,field_description:reports_lanta.field_office_guide__create_uid
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_cancel_guide__create_date
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_print__create_date
+#: model:ir.model.fields,field_description:reports_lanta.field_office_guide__create_date
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_office_guide__ctrl_number
+msgid "Ctrl Number"
+msgstr "Numero de Control"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Cédula"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.cancel_sequence_form_view
+msgid "DESCARTAR"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_print__date
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print__date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_account_move__date_driver
+#: model:ir.model.fields,field_description:reports_lanta.field_purchase_order__date_driver
+#: model:ir.model.fields,field_description:reports_lanta.field_sale_order__date_driver
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_picking__date_driver
+msgid "Date Driver"
+msgstr "Datos del conductor"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_print__date_f
+msgid "Date F"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+#: model_terms:ir.ui.view,arch_db:reports_lanta.purchase_order_information
+#: model_terms:ir.ui.view,arch_db:reports_lanta.sale_order_information_inherit
+msgid "Datos del conductor:"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Descripción"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.cancel_sequence_form_view
+msgid "Desea anular la guia de despacho ?"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_cancel_guide__display_name
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_print__display_name
+#: model:ir.model.fields,field_description:reports_lanta.field_office_guide__display_name
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_account_move_line__dose_kgton
+#: model:ir.model.fields,field_description:reports_lanta.field_sale_order_line__dose_kgton
+msgid "Dose Kgton"
+msgstr "Dosis Kg / Ton"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.account_move_form_inherit
+#: model_terms:ir.ui.view,arch_db:reports_lanta.sale_order_information_inherit
+msgid "Dosis Kg / Ton"
+msgstr "Dosis Kg / Ton"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "Dosís"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Estado del Transporte luego de la carga: Cumple: Si (____)  No (____)"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.mrp_production_form_inherit
+msgid "Etiqueta PT"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.actions.report,name:reports_lanta.factura_lanta
+msgid "Factura Lanta"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+msgid "Factura de Referencia"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+#: model_terms:ir.ui.view,arch_db:reports_lanta.purchase_order_information
+msgid "Fecha de importación"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.inventory_labels
+msgid "Firma:"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+msgid "Guia Despacho"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.actions.report,name:reports_lanta.reporte_guia_despacho
+msgid "Guia de Despacho"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_picking__guide_ids
+msgid "Guide"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_picking__guide_cancel_ids
+msgid "Guide Cancel"
+msgstr "Cancelar guía"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_cancel_guide__id
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_print__id
+#: model:ir.model.fields,field_description:reports_lanta.field_office_guide__id
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print__id
+msgid "ID"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_account_move__identification_driver
+#: model:ir.model.fields,field_description:reports_lanta.field_purchase_order__identification_driver
+#: model:ir.model.fields,field_description:reports_lanta.field_sale_order__identification_driver
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_picking__identification_driver
+msgid "Identification Driver"
+msgstr "Nro de identificacion del conductor"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_purchase_order__import_date
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_picking__import_date
+msgid "Import Date"
+msgstr "Fecha de importacion"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_purchase_order__import_dossier
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_picking__import_dossier
+msgid "Import Dossier"
+msgstr "Expediente de importacion"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_purchase_order__import_form_num
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_picking__import_form_num
+msgid "Import Form Num"
+msgstr "Nro Planilla de importación"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.view_inventory_form_inherit
+msgid "Imprimir Etiquetas"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "Impuesto al Valor Agregado.:(I.V.A)"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.account_move_form_inherit
+msgid "Informacion De Entrega"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+#: model_terms:ir.ui.view,arch_db:reports_lanta.purchase_order_information
+#: model_terms:ir.ui.view,arch_db:reports_lanta.sale_order_information_inherit
+msgid "Informacion de Entrega"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.actions.report,name:reports_lanta.reporte_informe_recepcion
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+msgid "Informe de Recepcion"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_stock_inventory
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print__inventory_id
+msgid "Inventory"
+msgstr "Inventario"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print__inventory_line_id
+msgid "Inventory Line"
+msgstr "Linea de inventario"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_picking__invoice_reference
+msgid "Invoice Reference"
+msgstr "Referencia de la factura"
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_account_move
+msgid "Journal Entries"
+msgstr "Asientos contables"
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.mrp_production
+msgid "LOTE :"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print__last
+msgid "Last"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_cancel_guide____last_update
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_print____last_update
+#: model:ir.model.fields,field_description:reports_lanta.field_office_guide____last_update
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_cancel_guide__write_uid
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_print__write_uid
+#: model:ir.model.fields,field_description:reports_lanta.field_office_guide__write_uid
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_cancel_guide__write_date
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_print__write_date
+#: model:ir.model.fields,field_description:reports_lanta.field_office_guide__write_date
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_account_move__loading_note
+msgid "Loading Note"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print__location_id
+msgid "Location"
+msgstr "Ubicacion"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_print__lot_id
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print__lot_id
+msgid "Lot"
+msgstr "Lote"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Lote."
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_print__mrp_id
+msgid "Mrp"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+msgid "NOTA"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid ""
+"NOTA: (E) VENTA EXENTA EN VIRTUD DEL ARTICULO 18, NUMERALES 3 Y 11 DE LA LEY"
+" DE IMPUESTO AL VALOR AGREGADO (I.V.A.)"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Nombre del Conductor"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+msgid "Nota"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.actions.report,name:reports_lanta.reporte_nota_carga
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+msgid "Nota de Carga"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.actions.report,name:reports_lanta.report_nc_lanta
+msgid "Nota de Credito Lanta"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.actions.report,name:reports_lanta.report_nd_lanta
+msgid "Nota de Debito Lanta"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+msgid "Nota de Referencia"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.account_move_form_inherit
+msgid "Nota de carga"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_picking__note_reference
+msgid "Note Reference"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_print__nro
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print__nro
+msgid "Nro"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print__nro_total
+msgid "Nro Total"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Nro de Certificados Entregados"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.account_move_form_inherit
+msgid "Nro de cedula"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+#: model_terms:ir.ui.view,arch_db:reports_lanta.purchase_order_information
+msgid "Nro. Expediente de importación"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+#: model_terms:ir.ui.view,arch_db:reports_lanta.purchase_order_information
+msgid "Nro. Planilla de importación"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_bom__numbers_bom
+msgid "Numbers Bom"
+msgstr "Numero de Etiquetas"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_inventory__numbers_labels
+msgid "Numbers Labels"
+msgstr "Numero de Etiquetas"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+msgid "Numero de Control"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.view_inventory_form_inherit
+msgid "Numero de etiquetas por producto"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Obeser.:"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_mrp_print
+#: model:ir.model,name:reports_lanta.model_stock_print
+msgid "Parameters print Reports"
+msgstr "Parámetros de impresion de informes"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_cancel_guide__picking_id
+#: model:ir.model.fields,field_description:reports_lanta.field_office_guide__picking_id
+msgid "Picking"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Placa"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+#: model_terms:ir.ui.view,arch_db:reports_lanta.purchase_order_information
+#: model_terms:ir.ui.view,arch_db:reports_lanta.sale_order_information_inherit
+msgid "Placa:"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Plataforma limpia"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "Precio Unit."
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Presencia de Coquitos:"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.purchase_order_information
+msgid "Presentacion"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Presentación"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_account_move_line__price_string
+msgid "Price String"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Procedencia del transporte:"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_office_guide__processed
+msgid "Processed"
+msgstr "Procesado"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_print__product_id
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_print__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimientos de Producto (Stock Move Line)"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_account_move_line__product_packaging_id
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_bom__product_packaging_id
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_print__product_packaging_id
+#: model:ir.model.fields,field_description:reports_lanta.field_purchase_order_line__product_packaging_id
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_move__product_packaging_id
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_move_line__product_packaging_id
+msgid "Product Packaging"
+msgstr "Empacado del producto"
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_mrp_production
+msgid "Production Order"
+msgstr "Orden de producción"
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_purchase_order
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Línea pedido de compra"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_picking__purchase_id
+msgid "Purchase Orders"
+msgstr "Pedidos de compra"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_move__qty_packaging
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_move_line__qty_packaging
+msgid "Qty Packaging"
+msgstr "Cantidad de paquete"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.mrp_production
+msgid "RIF:"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+msgid "Recibido Conforme"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.account_move_form_inherit
+msgid "Referencia Compra Factura"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.account_move_form_inherit
+msgid "Referencia Factura"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.module.category,description:reports_lanta.mudule_report_lanta_group
+msgid "Report lanta Group"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.actions.report,name:reports_lanta.report_label
+msgid "Reporte Etiquetas"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.actions.report,name:reports_lanta.report_mrp_production
+msgid "Reporte Etiquetas de Producción"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.module.category,name:reports_lanta.mudule_report_lanta_group
+#: model:res.groups,comment:reports_lanta.mudule_report_lanta_group_user
+#: model:res.groups,name:reports_lanta.mudule_report_lanta_group_user
+msgid "Reportes lanta Group"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_account_move__invoice_reverse_id
+msgid "Reversal invoice"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_account_move__invoice_reverse_purchase_id
+msgid "Reversal invoice purchase"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_mrp_print__routing_id
+msgid "Routing"
+msgstr "Ruta"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+msgid "SIN DERECHO A CREDITO FISCAL"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+msgid "Secuencias Forma Libre"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Si  (____)  No (____)"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Si (____)  No (____)"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de existencias"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "TOTAL"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+msgid "Total"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_picking__total_qty
+msgid "Total Qty"
+msgstr "Total cantidad"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_picking__transaction_main
+msgid "Transaction Main"
+msgstr "Transacción principal"
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_account_move__transport
+#: model:ir.model.fields,field_description:reports_lanta.field_purchase_order__transport
+#: model:ir.model.fields,field_description:reports_lanta.field_sale_order__transport
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_picking__transport
+msgid "Transport"
+msgstr "Transporte"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.account_move_form_inherit
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Transporte"
+msgstr ""
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.Stock_Picking_form_inherit
+#: model_terms:ir.ui.view,arch_db:reports_lanta.purchase_order_information
+#: model_terms:ir.ui.view,arch_db:reports_lanta.sale_order_information_inherit
+msgid "Transporte:"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_stock_picking__type_transaction
+msgid "Type Transaction"
+msgstr "Tipo de transaccion"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.factura_e
+#: model_terms:ir.ui.view,arch_db:reports_lanta.guia_despacho
+#: model_terms:ir.ui.view,arch_db:reports_lanta.informe_recepcion
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nc_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nd_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "Unidad"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_res_company__image_production_1920
+msgid "Variant Image"
+msgstr "Imagen variante"
+
+#. module: reports_lanta
+#: model:ir.model.fields,field_description:reports_lanta.field_res_company__image_production_2_1920
+msgid "Variant Image 2"
+msgstr "Imagen variante 2"
+
+#. module: reports_lanta
+#: model_terms:ir.ui.view,arch_db:reports_lanta.nota_carga
+msgid "____de ____"
+msgstr ""
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_cancel_guide
+msgid "cancel.guide"
+msgstr "Cancelar guia"
+
+#. module: reports_lanta
+#: model:ir.model,name:reports_lanta.model_office_guide
+msgid "office.guide"
+msgstr "Guia de oficina"
