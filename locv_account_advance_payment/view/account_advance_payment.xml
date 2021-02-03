@@ -106,9 +106,9 @@
                                     <field name="move_id" string="Movimiento" attrs="{'readonly': [('state', '=', 'available')],'invisible': [('state','!=','available')]}" />
                                 </group>
                                 <group>
-                                    <field name="date_advance" string="Fecha Anticipo" attrs="{'readonly': [('state', '!=', 'available')]}" required="1"/>
+                                    <field name="date_advance" string="Fecha Anticipo" attrs="{'readonly': [('state', '=', 'available')]}" required="1"/>
                                     <field name="currency_id" string="Tipo Moneda" attrs="{'readonly': [('state', '=', 'available')]}" options="{'no_create': True, 'no_open': True}" domain="[('active', '=', True)]"/>
-                                    <field name="amount_advance" string="Monto Anticipo" readonly="1" force_save="1"/>
+                                    <field name="amount_advance" string="Monto Anticipo"  attrs="{'readonly': [('state', '=', 'available')]}" force_save="1"/>
                                     <field name="payment_id" string="Pago" placeholder="Por ejemplo, Transferencia..." attrs="{'readonly': [('state', '=', 'available')]}"/>
                                     <field name="ref" attrs="{'readonly': [('state', '=', 'available')]}"/>
                                     <field name="rate" invisible="1"/>
