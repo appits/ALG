@@ -28,16 +28,20 @@ class AccountMoveInherit(models.Model):
 
     def action_post(self):
         var = super(AccountMoveInherit, self).action_post()
-        if self.type in ('out_invoice'):
+        # if self.type in ('out_invoice'):
+        #     if not self.nro_ctrl:
+        #         self.nro_ctrl = self._get_sequence_code()
+        #         self.write({'nro_ctrl': self.nro_ctrl})
+        # if  self.type in ('out_refund'):
+        #     if not self.nro_ctrl :
+        #         name_factc = self.reversed_entry_id.display_name
+        #         factc_affect = self.env['account.move'].search([('name','=',name_factc)])
+        #         nro_ctrl = factc_affect.nro_ctrl
+        #         self.write({'nro_ctrl': nro_ctrl})
+        if self.type:
             if not self.nro_ctrl:
                 self.nro_ctrl = self._get_sequence_code()
                 self.write({'nro_ctrl': self.nro_ctrl})
-        if  self.type in ('out_refund'):
-            if not self.nro_ctrl :
-                name_factc = self.reversed_entry_id.display_name
-                factc_affect = self.env['account.move'].search([('name','=',name_factc)])
-                nro_ctrl = factc_affect.nro_ctrl
-                self.write({'nro_ctrl': nro_ctrl})
         return var
 
     def _get_sequence_code(self):
