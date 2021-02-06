@@ -50,7 +50,6 @@ class AccountMoveLine(models.Model):
     price_string = fields.Char()
     dose_kgton = fields.Float()
 
-    @api.model
     def create(self, vals):
         result = super(AccountMoveLine, self).create(vals)
         for lines in result:
