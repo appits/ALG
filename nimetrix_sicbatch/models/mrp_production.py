@@ -1,9 +1,11 @@
 import sys
 
-from odoo import fields, models, api, _
+import requests
 
-from . import sql_connection
+from odoo import fields, models, api, _
 from odoo.exceptions import UserError
+
+from odoo.addons.nimetrix_sicbatch.models import utils
 
 
 class MrpProduction(models.Model):
@@ -24,6 +26,8 @@ class MrpProduction(models.Model):
 
     def button_mark_done(self):
         res = super(MrpProduction, self).button_mark_done()
+        config = utils.get_config(self)
+        url = config.server + "/api/sp"
         self.ensure_one()
         lines = self.env['stock.move'].search([
             ('raw_material_production_id', '=', self.id)
@@ -43,34 +47,39 @@ class MrpProduction(models.Model):
 
                     if stock.quantity <= 0:
                         try:
-                            connect, config = sql_connection.sql_connect(self)
-                            connection = True
-                            cr = connect.cursor()
-                            sp = "spLotes_Actualizar"
-                            call_sp1 = cr.execute("{CALL " + sp + " (?)}", line.sicbatch_lot.sequence_lot)
-                            cr.commit()
-                        except UserError:
-                            if connect:
-                                cr.rollback()
-                        finally:
-                            if connection:
-                                cr.close()
-                                connect.close()
+                            data = {
+                                'name': "spLotes_Actualizar",
+                                'param1': line.sicbatch_lot.sequence_lot
+                            }
+                            response = requests.post(url=url, json=data)
+                            if response.status_code == 200:
+                                connection = True
+                        except requests.exceptions.ConnectTimeout:
+                            raise UserError(_("Error al conectar a Sicbatch"))
+
         return res
 
     def call_wizard(self):
         target_form = self.env.ref('nimetrix_sicbatch.sicbatch_orders_act_window')
 
         try:
-            connect, config = sql_connection.sql_connect(self)
+            config = utils.get_config(self)
+            url = config.server + "/api/sp"
             connection = True
-            cr = connect.cursor()
             seq = config.sequence_manual
             name = config.sequence_manual.next_by_code(seq.code)
 
-            call_sp1 = cr.execute("{CALL spOrdenProduccion_Manual_GET (?)}", name)
+            data = {
+                'name': "spOrdenProduccion_Manual_GET",
+                'param1': name
+            }
 
-            rows = cr.fetchall()
+            response = requests.post(url=url, json=data)
+
+            if response != 200:
+                raise UserError(_("No se puede conectar a Sicbatch"))
+            else:
+                rows = response.json()
 
             order = self.env['sicbatch.orders'].create({
                 'production_id': self.id,
@@ -98,11 +107,5 @@ class MrpProduction(models.Model):
                 'target': 'new'
             }
 
-        except:
-            if connection:
-                cr.rollback()
-            print(sys.exc_info()[0])
-        finally:
-            if connection:
-                cr.close()
-                connect.close()
+        except requests.exceptions.ConnectTimeout:
+            raise UserError(_("No se puede conectar a Sicbatch"))

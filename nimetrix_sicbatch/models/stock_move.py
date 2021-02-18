@@ -1,10 +1,8 @@
 import sys
-
 from odoo import fields, models, api, _
-
-from . import sql_connection
 from . import utils
 from odoo.exceptions import UserError
+import requests
 
 
 class StockPicking(models.Model):
@@ -12,6 +10,10 @@ class StockPicking(models.Model):
 
     def action_done(self):
         res = super(StockPicking, self).action_done()
+        config = self.env['config.connection'].search(
+            [('company_id', '=', self.company_id.id)])
+        ws_url = config[0] + "/api/sp"
+
         for record in self:
             lines = self.env['stock.move.line'].search([
                 ('picking_id', '=', record.id)
@@ -19,41 +21,29 @@ class StockPicking(models.Model):
             for line in lines:
                 if line.product_id.product_tmpl_id.categ_id.send_sicbatch and line.location_dest_id.send_sicbatch \
                         and line.lot_id:
-                    try:
-                        connect, config = sql_connection.sql_connect(self)
-                        seq = config.sequence_lot.next_by_code(config.sequence_lot.code)
-                        connection = True
-                        cr = connect.cursor()
-                        params = (
-                            seq,
-                            line.product_id.default_code,
-                            line.product_id.name,
-                            line.lot_id.name,
-                            line.location_dest_id.id,
-                            line.location_dest_id.name
-                        )
-                        sp = "spAlmacen_MateriaPrima_Lotes_Actualizar"
-                        call_sp1 = cr.execute("{CALL " + sp + " (?,?,?,?,?,?)}", params)
 
-                        utils.file_log(self, params, sp)
-                        rows = cr.fetchone()
-                        if not rows[0]:
-                            raise UserError(sys.exc_info()[0])
+                    seq = config.sequence_lot.next_by_code(config.sequence_lot.code)
+                    params = {
+                        'name': 'spAlmacen_MateriaPrima_Lotes_Actualizar',
+                        'param1': seq,
+                        'param2': line.product_id.default_code,
+                        'param3': line.product_id.name,
+                        'param4': line.lot_id.name,
+                        'param5': line.location_dest_id.id,
+                        'param6': line.location_dest_id.name
+                    }
+                    response = requests.post(url=ws_url, json=params)
+                    if response.status_code == 200:
+
+                        utils.file_log(self, str(params), "spAlmacen_MateriaPrima_Lotes_Actualizar")
                         lot = self.env['stock.lot.sicbatch'].create({
                             'sequence_lot': seq,
                             'vendor_lot_id': line.lot_id.id,
                             'locator_to_id': line.location_dest_id.id
                         })
-                        cr.commit()
-                    except:
-                        raise ValueError(_(sys.exc_info()[0]))
-                        if connection:
-                            cr.rollback()
+                    else:
+                        raise UserError(_("No se puede conectar a sicbatch " + response.text))
 
-                    finally:
-                        if connection:
-                            cr.close()
-                            connect.close()
         return res
 
 
@@ -79,6 +69,7 @@ class StockMoveLine(models.Model):
     def create(self, vals):
         move_id = self.env['stock.move'].search([('id', '=', vals['move_id'])])
         if move_id.sicbatch_lot:
-            vals.update({'location_id': move_id.sicbatch_lot.locator_to_id.id, 'lot_id': move_id.sicbatch_lot.vendor_lot_id.id})
+            vals.update(
+                {'location_id': move_id.sicbatch_lot.locator_to_id.id, 'lot_id': move_id.sicbatch_lot.vendor_lot_id.id})
         res = super(StockMoveLine, self).create(vals)
         return res

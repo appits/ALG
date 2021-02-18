@@ -1,7 +1,7 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import AccessError, UserError, ValidationError
-
-from . import sql_connection
+import requests
+import requests.exceptions
 
 
 class ConfigConnection(models.Model):
@@ -11,7 +11,6 @@ class ConfigConnection(models.Model):
     name = fields.Char()
     company_id = fields.Many2one('res.company', string="Company", required="True")
     server = fields.Char(string="Server", required="True")
-    database = fields.Char(string="Data Base", required="True")
     db_user = fields.Char(string="Username", required="True")
     db_password = fields.Char(string="Password", required="True")
     lines_ids = fields.One2many('config.connection.line', 'config_head_id')
@@ -22,20 +21,16 @@ class ConfigConnection(models.Model):
 
     def test_connection(self):
         try:
-            msg = "Not Connected"
-            connected = False
-            connect = sql_connection.test_connect(self)
-            connected = True
-            cr = connect.cursor()
-            test = cr.execute("SELECT @@VERSION").fetchall()
-            msg = test
-            raise UserWarning(_(msg))
-        except:
-            raise UserError(_(msg))
-        finally:
-            if connected:
-                cr.close()
-                connect.close()
+            data = {
+                'name': 'spConnection'
+            }
+            connect = requests.get(url=self.server+"/api/sp", json=data)
+            if connect.status_code == 200:
+                raise UserError(_("Conectado satisfactoriamente"))
+            else:
+                raise UserError(_("No hay conexión al WebSercices"))
+        except requests.exceptions.ConnectionError as e:
+            raise UserError(_(e))
 
     @api.constrains('company_id')
     def set_name_default(self):

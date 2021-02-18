@@ -29,6 +29,11 @@ def file_log(self, params, sp):
     file1.close()
 
 
+def get_config(self):
+    config = self.env['config.connection'].search(
+        [('company_id', '=', self.company_id.id)])
+    return config
+
 
 
 

@@ -22,7 +22,6 @@
                         <group>
                             <group string="SQL Connection String">
                                 <field name="server"/>
-                                <field name="database"/>
                                 <field name="is_offline"/>
 
                                 <field name="db_user"/>
