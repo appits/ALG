@@ -46,6 +46,7 @@ class RepComprobanteIslr(models.AbstractModel):
         data = {'form': self.env['islr.wh.doc'].browse(docids)}
         res = dict()
         partner_id = data['form'].partner_id
+        total_doc = 0
         date_ret = data['form'].date_ret
         if date_ret:
             split_date = (str(date_ret).split('-'))
@@ -63,6 +64,14 @@ class RepComprobanteIslr(models.AbstractModel):
             document = partner_id.vat
 
         if data['form'].state == 'done':
+            if data['form'].currency_id.id == data['form'].company_id.currency_id.id :
+                total_doc = data['form'].invoice_ids.invoice_id.amount_total
+            elif data['form'].invoice_ids.invoice_id.currency_id != data['form'].company_id.currency_id.id:
+                tasa = data['form'].invoice_ids.invoice_id.exchange_rate
+                if tasa:
+                    total_doc = data['form'].invoice_ids.invoice_id.amount_total * tasa
+
+
             # code_code = ''
             # for code in data['form'].concept_ids.iwdi_id.islr_xml_id:
             #     code_code = code.concept_code
@@ -70,6 +79,7 @@ class RepComprobanteIslr(models.AbstractModel):
                 'data': data['form'],
                 'document': document,
                 # 'code_code': code_code,
+                'total_doc': total_doc,
                 'model': self.env['report.locv_withholding_islr.template_wh_islr'],
                 'doc_model': self.env['report.locv_withholding_islr.template_wh_islr'],
                 'lines': res,  # self.get_lines(data.get('form')),

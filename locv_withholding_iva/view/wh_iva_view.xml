@@ -156,7 +156,7 @@
                         <!--button colspan="2" name="compute_amount_wh" states="draft" string="Compute Withholding Vat" type="object" icon="terp-stock_format-scientific"/-->
                         <button name="confirm_check" type="object" states="draft" string="Confirmar"/>
                         <!--button name="wh_iva_done" states="confirmed" string="Done"/-->
-                        <button name="action_cancel" colspan="2" type="object" states="draft,done" string="Cancelar"/>
+                        <button name="action_cancel" colspan="2" type="object" states="draft,done" string="Cancelar" invisible="1"/>
                         <!--button name="set_to_draft" colspan="2" states="cancel" type="object" string="Set to draft"/-->
                         <field name="state" widget="statusbar" statusbar_visible="draft,done" statusbar_colors="{&quot;confirmed&quot;:&quot;blue&quot;}"/>
                     </header>
@@ -204,7 +204,7 @@
                     <header>
                         <button name="confirm_check" states="draft" type="object" string="Confirmar"/>
                         <!--button name="wh_iva_done" states="confirmed" string="Done" icon="gtk-execute"/-->
-                        <button name="action_cancel" states="confirmed,draft,done" type="object" string="Cancelar" />
+                        <button name="action_cancel" states="confirmed,draft,done" type="object" string="Cancelar"  invisible="1"/>
                         <!--button name="set_to_draft" states="cancel" type="object" string="Set to draft" icon="terp-stock_effects-object-colorize"/-->
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done" statusbar_colors="{&quot;confirmed&quot;:&quot;blue&quot;}"/>
                     </header>

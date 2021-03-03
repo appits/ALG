@@ -32,6 +32,9 @@ class IvaReport(models.AbstractModel):
         inv_nro_ctrl = ''
         inv_nro_fact = ''
         sum_base_additional = 0
+        rate_general = ''
+        rate_reducida = ''
+        rate_additional = ''
         sum_tax_additional = 0
         if wh_iva and len(wh_iva) ==1 :
             if wh_iva.state == 'done':
@@ -142,6 +145,7 @@ class IvaReport(models.AbstractModel):
                                                 'rate_additional': rate_additional,
                                                 'base_exent': base_exent,
                                                 })
+
                 else:
                     raise UserError(_("El comprobante de Retencion de IVA se genera solo para los Proveedores"))
             else:
@@ -156,6 +160,7 @@ class IvaReport(models.AbstractModel):
                 document = str(partner_id.identification_id)
         else:
             document = partner_id.vat
+        fecha_op = data['form'].wh_lines.invoice_id.invoice_date
         sum_base_general = self.separador_cifra(sum_base_general)
         sum_tax_general = self.separador_cifra(sum_tax_general)
         sum_base_reducida = self.separador_cifra(sum_base_reducida)
@@ -167,6 +172,10 @@ class IvaReport(models.AbstractModel):
             'model': self.env['report.locv_withholding_iva.template_wh_vat'],
             'lines': res, #self.get_lines(data.get('form')),
             #date.partner_id
+            'fecha_op': fecha_op,
+            'rate_general': str(base_amount[0].get('rate_general')[:3]) + '' +'%',
+            'rate_reducida': str(base_amount[0].get('rate_reducida')[:3]) + '' +'%',
+            'rate_additional': str(base_amount[0].get('rate_additional')[:3]) + '' +'%',
             'inv_nro_ctrl': inv_nro_ctrl,
             'inv_nro_fact': inv_nro_fact,
             'document': document,

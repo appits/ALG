@@ -89,7 +89,7 @@ class AccountMove(models.Model):
                     inv_brw.state == 'posted' and not inv_brw.date):
                 raise exceptions.except_orm(
                     _('Advertencia'),
-                    _('La fecha del documento no puede estar vacía cuando la factura es '
+                    _('La fecha del documento no puede estar vacía cuando la factura se encuentra '
                       'en estado publicado.'))
         return True
 
@@ -99,14 +99,13 @@ class AccountMove(models.Model):
         check that the date document is less or equal than the date invoice.
         @return True or raise and osv exception.
         """
-        # for inv_brw in self:
-        #     if (inv_brw.type in ('in_invoice', 'in_refund', 'out_invoice', 'out_refund') and
-        #             inv_brw.date and
-        #             not inv_brw.date <= inv_brw.invoice_date):
-        #         raise exceptions.except_orm(
-        #             _('Warning'),
-        #             _('The document date must be less or equal than the'
-        #               ' invoice date.'))
+        for inv_brw in self:
+            if (inv_brw.type in ('in_invoice', 'in_refund', 'out_invoice', 'out_refund') and
+                    inv_brw.date and not inv_brw.invoice_date <= inv_brw.date):
+                raise exceptions.except_orm(
+                    _('Warning'),
+                    _('The document date must be less or equal than the'
+                      ' invoice date.'))
         return True
 
 
@@ -259,9 +258,9 @@ class AccountMove(models.Model):
                                       'type': wh_type,
                                       'account_id': acc_id,
                                       'partner_id': acc_part_id.id,
-                                      'date_ret': inv_brw.invoice_date,
-                                      'period_id': inv_brw.invoice_date,
-                                      'date': inv_brw.invoice_date,
+                                      'date_ret': inv_brw.date,
+                                      'period_id': inv_brw.date,
+                                      'date': inv_brw.date,
                                       }
                         else:
                             acc_id = acc_part_id.property_account_payable_id.id
@@ -275,9 +274,9 @@ class AccountMove(models.Model):
                                       'type': wh_type,
                                       'account_id': acc_id,
                                       'partner_id': acc_part_id.id,
-                                      'date_ret': inv_brw.invoice_date,
-                                      'period_id': inv_brw.invoice_date,
-                                      'date': inv_brw.invoice_date,
+                                      'date_ret': inv_brw.date,
+                                      'period_id': inv_brw.date,
+                                      'date': inv_brw.date,
                                      }
                         if inv_brw.company_id.propagate_invoice_date_to_vat_withholding:
                             ret_iva['date'] = inv_brw.invoice_date
@@ -408,6 +407,7 @@ class AccountMove(models.Model):
                      'in_refund': -1}
             direction = types[invoice.type]
             print("to_wh: ",to_wh)
+            amount_ret2 = 0
             for tax_brw in to_wh:
                 if 'invoice' in invoice.type:
                     #acc = (tax_brw.tax_id.account_id and
@@ -425,21 +425,22 @@ class AccountMove(models.Model):
                         _('¡Falta una cuenta en impuestos!'),
                         _("El impuesto [% s] tiene una cuenta faltante. Por favor, complete el "
                           "campos faltantes") % (tax_brw.name))
-                res.append((0, 0, {
-                    'debit':
-                    direction * tax_brw.amount_ret < 0 and
-                    direction * tax_brw.amount_ret,
-                    'credit':
-                    direction * tax_brw.amount_ret > 0 and
-                    direction * tax_brw.amount_ret,
-                    'account_id': acc,
-                    'partner_id': acc_part_id.id,
-                    'ref': invoice.name,
-                    'date': date,
-                    'currency_id': False,
-                    'name': name,
-                    'amount_residual': direction * tax_brw.amount_ret
-                }))
+                amount_ret2 += tax_brw.amount_ret
+            res.append((0, 0, {
+                'debit':
+                    direction * amount_ret2 < 0 and
+                    direction * amount_ret2,
+                'credit':
+                    direction * amount_ret2 > 0 and
+                    direction * amount_ret2,
+                'account_id': acc,
+                'partner_id': acc_part_id.id,
+                'ref': invoice.name,
+                'date': date,
+                'name': name,
+                'amount_residual': direction * amount_ret2,
+                'currency_id': False,
+            }))
             #self.residual = self.residual - tax_brw.amount_ret
             #self.residual_company_signed = self.residual_company_signed - tax_brw.amount_ret
         return res

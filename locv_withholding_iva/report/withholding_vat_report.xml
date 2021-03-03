@@ -16,13 +16,16 @@
                 <t t-set="wh_tax_total_amount" t-value="wh_tax_total_amount+d.total_tax_ret" />
                 <table style="width:100%;">
                     <tr>
+                        <td style="width:20%;">
+                                     <img t-att-src="'data:image/png;base64,%s' %(to_text(d.company_id.logo))"  style="width:200px; height:100px; margin-top:28px; margin-bottom:0px;"/>
+                        </td>
                         <td style="width:30%;text-align:center;">
                             <p style="font-size:18px;color:red; text-align:left;">
                                 Comprobante de Retención de IVA
                             </p>
                         </td>
                         <td style="width:70%;">
-                            <p style="font-size:8px;text-align:left;">
+                            <p style="font-size:11px;text-align:left;">
                                 LEY IVA – ART. 11: “SERÁN RESPONSABLES DEL PAGO DE IMPUESTO EN CALIDAD DE AGENTES DE RETENCIÓN, LOS COMPRADORES O ADQUIRIENTES DE DETERMINADOS BIENES MUEBLES Y LOS RECEPTORES DE CIERTOS SERVICIOS A QUIENES LA ADMINISTRACIÓN TRIBUTARIA DESIGNE COMO TAL”
                             </p>
                         </td>
@@ -31,7 +34,7 @@
                 <table style="width:100%;">
                     <tr>
                         <td colspan="2">
-                            <p style="font-size:12px;text-align:left;">
+                            <p style="font-size:14px;text-align:left;">
                                 Providencia Administrativa N° SNAT/2015/0049 del 10/08/2015
                             </p>
                         </td>
@@ -112,43 +115,43 @@
                                 Nro. Factura Afectada
                             </th>
                             <th width="6%" style="text-align:center;background-color:#A9F5F2;border:1px solid #000;padding-top:10px;padding-right:10px;padding-bottom:3px;padding-left:10px">
-                                Monto Total de Documento
+                                &amp;nbsp;Monto Total de Documento&amp;nbsp;
                             </th>
                             <th width="8%" style="text-align:center;background-color:#A9F5F2;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                Compras sin Derecho a Crédito Fiscal
+                                &amp;nbsp;Compras sin Derecho a Crédito Fiscal&amp;nbsp;
                             </th>
                             <th width="8%" style="text-align:center;background-color:#A9F5F2;border:1px solid #000;padding-top:10px;padding-right:10px;padding-bottom:3px;padding-left:10px">
-                                Base Imponible
+                                &amp;nbsp;Base Imponible&amp;nbsp;
                             </th>
                             <th width="8%" style="text-align:center;background-color:#A9F5F2;border:1px solid #000;padding-top:10px;padding-right:10px;padding-bottom:3px;padding-left:10px">
                                 % Alicuota
                             </th>
                             <th width="8%" style="text-align:center;background-color:#A9F5F2;border:1px solid #000;padding-top:10px;padding-right:10px;padding-bottom:3px;padding-left:10px">
-                                Impuesto Causado
+                                &amp;nbsp;Impuesto Causado&amp;nbsp;
                             </th>
                             <th width="8%" style="text-align:center;background-color:#A9F5F2;border:1px solid #000;padding-top:10px;padding-right:10px;padding-bottom:3px;padding-left:10px">
-                                Base Reducido
+                               &amp;nbsp; Base Reducido&amp;nbsp;
                             </th>
                             <th width="8%" style="text-align:center;background-color:#A9F5F2;border:1px solid #000;padding-top:10px;padding-right:10px;padding-bottom:3px;padding-left:10px">
                                 % Alicuota Reducido
                             </th>
                             <th width="8%" style="text-align:center;background-color:#A9F5F2;border:1px solid #000;padding-top:10px;padding-right:10px;padding-bottom:3px;padding-left:10px">
-                                Impuesto Causado Reducido
+                               &amp;nbsp; Impuesto Causado Reducido&amp;nbsp;
                             </th>
                             <th width="8%" style="text-align:center;background-color:#A9F5F2;border:1px solid #000;padding-top:10px;padding-right:10px;padding-bottom:3px;padding-left:10px">
-                                Base Adicional
+                               &amp;nbsp; Base Adicional&amp;nbsp;
                             </th>
                             <th width="8%" style="text-align:center;background-color:#A9F5F2;border:1px solid #000;padding-top:10px;padding-right:10px;padding-bottom:3px;padding-left:10px">
-                                Impuesto Causado Adicional
+                              &amp;nbsp;  Impuesto Causado Adicional&amp;nbsp;
                             </th>
                             <th width="8%" style="text-align:center;background-color:#A9F5F2;border:1px solid #000;padding-top:10px;padding-right:10px;padding-bottom:3px;padding-left:10px">
                                 % Alicuota Adicional
                             </th>
                             <th width="8%" style="text-align:center;background-color:#A9F5F2;border:1px solid #000;padding-top:10px;padding-right:10px;padding-bottom:3px;padding-left:10px">
-                                % Retencion de IVA
+                               % Retencion de IVA
                             </th>
                             <th width="8%" style="text-align:center;background-color:#A9F5F2;border:1px solid #000;padding-top:10px;padding-right:10px;padding-bottom:3px;padding-left:10px">
-                                Monto del Impuesto Retenido
+                                &amp;nbsp;Monto del Impuesto Retenido&amp;nbsp;
                             </th>
                         </tr>
                         <t t-set="number" t-value="model.get_t_type(d.wh_lines.invoice_id.type)"/>
@@ -160,7 +163,7 @@
                         </t>
                         <tr>
                             <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                <span t-field="d.date_ret" t-options='{"format": "dd/MM/yyyy"}'/>
+                                <span t-field="d.wh_lines.invoice_id.invoice_date" t-options='{"format": "dd/MM/yyyy"}'/>
                             </td>
                             <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
                                 <t t-if="d.wh_lines.invoice_id.type == 'out_invoice'">
@@ -200,72 +203,50 @@
                                 </t>
                             </td>
                             <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                <span t-esc="'{:,.2f}'.format(d.wh_lines.invoice_id.amount_total * sign).replace(',', '@').replace('.', ',').replace('@', '.')"/>
+                               &amp;nbsp; <span t-esc="'{:,.2f}'.format(d.wh_lines.invoice_id.amount_total * sign).replace(',', '@').replace('.', ',').replace('@', '.')"/>&amp;nbsp;
                             </td>
                             <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                  <t t-foreach="base_amount" t-as="doc">
-                                       <span t-esc="doc['base_exent']"/>
-                                  </t>
+                                     &amp;nbsp;  <span t-esc="base_exent"/>&amp;nbsp;
                             </td>
                             <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                 <t t-foreach="base_amount" t-as="doc">
-                                    <span t-esc="doc['base_general']"/>
-                                 </t>
+                                   &amp;nbsp;  <span t-esc="sum_base_general"/>&amp;nbsp;
 
                             </td>
                             <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                 <t t-foreach="base_amount" t-as="doc">
-                                         <span t-esc="doc['rate_general']"/>
-                                </t>
+                                        <span t-esc="rate_general"/>
                             </td>
 
                             <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                <t t-foreach="base_amount" t-as="doc">
-                                    <span t-esc="doc['tax_general']"/>
-                                </t>
+                                   &amp;nbsp; <span t-esc="sum_tax_general"/>&amp;nbsp;
                             </td>
 
                            <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                 <t t-foreach="base_amount" t-as="doc">
-                                    <span t-esc="doc['base_reducida']"/>
-                                 </t>
-
+                                  &amp;nbsp;   <span t-esc="sum_base_reducida"/>&amp;nbsp;
                            </td>
                            <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                 <t t-foreach="base_amount" t-as="doc">
-                                         <span t-esc="doc['rate_reducida']"/>
-                                </t>
+                                         <span t-esc="rate_reducida"/>
                            </td>
 
                            <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                <t t-foreach="base_amount" t-as="doc">
-                                    <span t-esc="doc['tax_reducida']"/>
-                                </t>
+                                  &amp;nbsp;  <span t-esc="sum_tax_reducida"/>&amp;nbsp;
                            </td>
 
                            <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                 <t t-foreach="base_amount" t-as="doc">
-                                    <span t-esc="doc['base_additional']"/>
-                                 </t>
-
+                                    &amp;nbsp;<span t-esc="sum_base_additional"/>&amp;nbsp;
                            </td>
                            <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                 <t t-foreach="base_amount" t-as="doc">
-                                        <span t-esc="doc['rate_additional']"/>
-                                </t>
+                               <span t-esc="rate_additional"/>
                            </td>
 
                            <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                               <t t-foreach="base_amount" t-as="doc">
-                                    <span t-esc="doc['tax_additional']"/>
-                               </t>
+                                 &amp;nbsp;   <span t-esc="sum_tax_additional"/>&amp;nbsp;
                            </td>
 
                             <td width="8%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
                                 <span t-esc="'{:,.2f}'.format(d.wh_lines.wh_iva_rate * sign).replace(',', '@').replace('.', ',').replace('@', '.')"/>
                             </td>
                             <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                <span t-esc="'{:,.2f}'.format(d.total_tax_ret * sign).replace(',', '@').replace('.', ',').replace('@', '.')"/>
+                                &amp;nbsp;<span t-esc="'{:,.2f}'.format(d.total_tax_ret * sign).replace(',', '@').replace('.', ',').replace('@', '.')"/>&amp;nbsp;
                             </td>
                         </tr>
 
@@ -273,51 +254,51 @@
                             <td colspan="14" style="padding: 5px;"></td>
                         </tr>
                         <tr >
-                            <td width="44%" colspan="6" style="text-align:right;"></td>
-                            <td width="10%" style="text-align:right;border-left:1px solid;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">Total General:</td>
-                            <td width="6%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
-                                <t t-esc="'{:,.2f}'.format(doc_total_amount * sign).replace(',', '@').replace('.', ',').replace('@', '.')"/>
+                            <td width="4%" colspan="5" style="text-align:right;"></td>
+                            <td width="6%" colspan="2" style="text-align:right;border-left:1px solid;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">Total General:&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</td>
+                            <td width="10%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
+                              &amp;nbsp;  <t t-esc="'{:,.2f}'.format(doc_total_amount * sign).replace(',', '@').replace('.', ',').replace('@', '.')"/>&amp;nbsp;
                             </td>
-                            <td width="6%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
+                            <td width="10%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
 <!--                                <t t-foreach="base_amount" t-as="doc">-->
-                                    <span t-esc="base_exent"/>
+                               &amp;nbsp;     <span t-esc="base_exent"/>&amp;nbsp;
 <!--                                </t>-->
                             </td>
-                            <td width="6%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
+                            <td width="10%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
 
-                                    <span t-esc="sum_base_general"/>
+                                   &amp;nbsp; <span t-esc="sum_base_general"/>&amp;nbsp;
 
                             </td>
                             <td colspan="1" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;"></td>
-                            <td width="6%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
+                            <td width="10%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
 
-                                    <span t-esc="sum_tax_general"/>
-
-                            </td>
-                            <td width="6%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
-
-                                    <span t-esc="sum_base_reducida"/>
+                                   &amp;nbsp; <span t-esc="sum_tax_general"/>&amp;nbsp;
 
                             </td>
+                            <td width="10%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
 
-                            <td colspan="1" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;"></td>
-
-                            <td width="6%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
-
-                                    <span t-esc="sum_tax_reducida"/>
-
-                            </td>
-                            <td width="6%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
-
-                                    <span t-esc="sum_base_additional"/>
+                                  &amp;nbsp;  <span t-esc="sum_base_reducida"/>&amp;nbsp;
 
                             </td>
 
                             <td colspan="1" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;"></td>
 
-                            <td width="6%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
+                            <td width="10%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
 
-                                    <span t-esc="sum_tax_additional"/>
+                                   &amp;nbsp; <span t-esc="sum_tax_reducida"/>&amp;nbsp;
+
+                            </td>
+                            <td width="10%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
+
+                                 &amp;nbsp;   <span t-esc="sum_base_additional"/>&amp;nbsp;
+
+                            </td>
+
+                            <td colspan="1" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;"></td>
+
+                            <td width="10%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;">
+
+                                 &amp;nbsp;   <span t-esc="sum_tax_additional"/>&amp;nbsp;
 
                             </td>
 <!--                            <td colspan="2" style="text-align:center;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:3px;"></td>-->
@@ -330,7 +311,7 @@
 <!--                                <span t-esc="'{:,.2f}'.format(d.wh_lines.invoice_id.amount_tax * sign).replace(',', '@').replace('.', ',').replace('@', '.')"/>-->
 <!--                            </td>-->
                             <td width="8%" style="text-align:center;border-top:1px solid;border-bottom:1px solid;border-right:1px solid;padding-top:5px;padding-bottom:3px;">
-                                <t t-esc="'{:,.2f}'.format(wh_tax_total_amount * sign).replace(',', '@').replace('.', ',').replace('@', '.')"/>
+                               &amp;nbsp; <t t-esc="'{:,.2f}'.format(wh_tax_total_amount * sign).replace(',', '@').replace('.', ',').replace('@', '.')"/>&amp;nbsp;
                             </td>
                         </tr>
                 </table>
@@ -347,16 +328,23 @@
                 </style>
                 <table style="width:100%;margin-top:40px;">
                     <tr>
-                         <br/> <br/>
+
                         <td style="width:50%;text-align:center;padding:0px;margin:0px;">
+                             <img class="img Firma_YG" src="/locv_withholding_iva/static/src/img/Firma_YG.png" style="width:300px; height:150x; margin-top:28px; margin-bottom:0px;"/>
                             <hr/>
                             <b><span t-esc="d.company_id.partner_id.name"/></b>
                             <br/>
                             <b>Agente de Retención (Sello y Firma)</b>
+
                         </td>
 
-                        <td style="width:50%;text-align:center;padding:0px;margin:0px;">
+                    </tr>
+                    <tr>
+                        <td colspan="1">&amp;nbsp;</td>
+
+                         <td style="width:50%;text-align:center;padding:0px;margin:0px;">
                             <hr/>
+<!--                             <br/>-->
                                 <b><span t-esc="d.partner_id.name"/></b>
                             <br/>
                             <b>Firma del Beneficiario</b>
