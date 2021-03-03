@@ -16,9 +16,11 @@ class AccountMove(models.Model):
     def set_reference(self):
         for record in self:
             if record.type in ('out_refund', 'out_receipt'):
-                record.ref = record.invoice_reverse_id.invoice_number_cli
+                continue
+                #record.ref = record.invoice_reverse_id.invoice_number_cli
             elif record.type in ('in_refund', 'in_receipt'):
-                record.ref = record.invoice_reverse_purchase_id.invoice_number_pro
+                continue
+                # record.ref = record.invoice_reverse_purchase_id.invoice_number_pro
 
     @api.model
     def create(self, vals):

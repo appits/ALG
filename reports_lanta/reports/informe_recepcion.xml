@@ -25,7 +25,7 @@
                               </div>
                               <div>
                                 <p style="font-size: 12px"><strong>Proveedor : </strong><span t-field="o.partner_id.name"></span></p>
-                                <p style="font-size: 12px"><strong>RIF : </strong><span t-field="o.partner_id.doc_type"></span> - <span t-esc="o.partner_id.vat"></span></p>
+                                <p style="font-size: 12px"><strong>RIF : </strong><span t-esc="o.partner_id.vat"></span></p>
                                 <p style="font-size: 12px"><strong>Codigo : </strong><span t-esc="o.partner_id.id"></span></p>
                                 <p style="font-size: 12px"><strong>Dirección Fiscal : </strong><span t-field="o.partner_id.street"/><span t-field="o.partner_id.city"></span> <t t-esc="o.partner_id.state_id.name" /> </p>
                               </div>

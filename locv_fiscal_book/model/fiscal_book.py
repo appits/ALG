@@ -755,9 +755,13 @@ class FiscalBook(models.Model):
         inv_obj = self.env['account.move']
         issue_inv_ids = self._get_issue_invoice_ids(fb_id)
         for invoice in issue_inv_ids:
-            impuestos_exc = (invoice.amount_total + (invoice.amount_tax_signed))
-            total = invoice.amount_total
-            a_pagar = invoice.amount_total
+            tasa = 1
+            if invoice.currency_id.name == "USD":
+                tasa = self.obtener_tasa(invoice)
+            amount_total = invoice.amount_total * tasa
+            impuestos_exc = (amount_total + (invoice.amount_tax_signed))
+            total = amount_total
+            a_pagar = amount_total
 
             if invoice.type == 'in_invoice':
                 docum = invoice.supplier_invoice_number
@@ -1148,7 +1152,7 @@ class FiscalBook(models.Model):
                         values = {'iwdl_id': iwdl_brw.id,
                                   'type': t_type,
                                   'accounting_date': iwdl_brw.date_ret or False,
-                                  'emission_date': iwdl_brw.date or iwdl_brw.date_ret or False,
+                                  'emission_date': iwdl_brw.invoice_id.invoice_date or iwdl_brw.invoice_id.date or False,
                                   'doc_type': self.get_doc_type(inv_id=iwdl_brw.invoice_id.id, iwdl_id=iwdl_brw.id),
                                   'wh_number': iwdl_brw.retention_id.number or False,
                                   'get_wh_vat': iwdl_brw and iwdl_brw.amount_tax_ret or 0.0,
@@ -1179,7 +1183,7 @@ class FiscalBook(models.Model):
                                   'affected_invoice_date':
                                     fecha,
                                   'wh_rate': iwdl_brw.wh_iva_rate,
-                                  'invoice_number': iwdl_brw.invoice_id.name or "", # se agrega el campo numero de factura para las facturas fuera de periodo
+                                  'invoice_number': iwdl_brw.invoice_id.supplier_invoice_number or "", # se agrega el campo numero de factura para las facturas fuera de periodo
                                   'ctrl_number': iwdl_brw.invoice_id.nro_ctrl or "", # se agrega el campo numero de control para las facturas fuera de periodo
                                   'void_form': self.get_t_type(doc_type),
                                   'fiscal_printer': iwdl_brw.invoice_id.fiscal_printer or False,
@@ -1550,13 +1554,16 @@ class FiscalBook(models.Model):
                             raise exceptions.except_orm("Advertencia!", "En los impuestos no se encuentra el Tipo de Alicuota por favor colocar para proceder")
 
             elif fbl.invoice_id:
+                tasa = 1
+                if fbl.invoice_id.currency_id.name == "USD":
+                    tasa = self.obtener_tasa(fbl.invoice_id)
                 sign = 1 if fbl.doc_type != 'N/CR' else -1
                 for line in fbl.invoice_id.invoice_line_ids:
                     for tax in line.tax_ids:
                         busq = tax.appl_type
                         if busq:
-                            base_sum[fbl.type][busq] += line.price_subtotal * sign
-                            tax_sum[fbl.type][busq] += (line.price_total - line.price_subtotal) * sign
+                            base_sum[fbl.type][busq] += line.price_subtotal * sign * tasa
+                            tax_sum[fbl.type][busq] += (line.price_total - line.price_subtotal) * sign * tasa
                         else:
                             raise exceptions.except_orm("Advertencia!", "En los impuestos no se encuentra el Tipo de Alicuota por favor colocar para proceder")
 
@@ -1594,14 +1601,18 @@ class FiscalBook(models.Model):
                     tax_amount += amount
 
 
+
             if fbl_brw.iwdl_id.invoice_id:
                 for ait in fbl_brw.iwdl_id.tax_line:
                     base_amount += ait.base * sign
                     tax_amount += ait.amount * sign
             if fbl_brw.invoice_id:
+                tasa = 1
+                if fbl_brw.invoice_id.currency_id.name == "USD":
+                    tasa = self.obtener_tasa(fbl_brw.invoice_id)
                 for line in fbl_brw.invoice_id.invoice_line_ids:
-                    base_amount += line.price_subtotal * sign
-                    tax_amount += (line.price_total-line.price_subtotal) * sign
+                    base_amount += line.price_subtotal * sign * tasa
+                    tax_amount += (line.price_total-line.price_subtotal) * sign * tasa
 
         data['tax_amount'] = tax_amount
         data['base_amount'] = base_amount
@@ -1842,6 +1853,9 @@ class FiscalBook(models.Model):
 
 
             if fbl.invoice_id:
+                tasa = 1
+                if fbl.invoice_id.currency_id.name == "USD":
+                    tasa = self.obtener_tasa(fbl.invoice_id)
                 fiscal_book = self.browse(fb_id)
                 fiscal_taxes = self.env['fiscal.book.taxes']
                 line_taxes = {'fb_id': fb_id, 'fbl_id': fbl.id,'base_amount': 0.0 , 'tax_amount': 0.0, 'name': ' ',}
@@ -1871,15 +1885,15 @@ class FiscalBook(models.Model):
                         name = tax.name
                     if busq:
                         if (line.price_total - line.price_subtotal) == 0:
-                            base = line.price_subtotal
+                            base = line.price_subtotal * tasa
                             amount = 0
                             amount_field_data['vat_exempt'] += exento * sign
                         else:
-                            base = (line.price_subtotal)
-                            amount = (line.price_total - line.price_subtotal)
+                            base = (line.price_subtotal) * tasa
+                            amount = (line.price_total - line.price_subtotal) * tasa
 
                         if ((line.price_total - line.price_subtotal) == 0 or (line.price_total - line.price_subtotal) > 0) and line.price_total > 0:
-                            amount_field_data['total_with_iva'] += line.price_total * sign
+                            amount_field_data['total_with_iva'] += line.price_total * sign * tasa
                             if busq == 'sdcf':
                                 amount_field_data['vat_sdcf'] += base * sign
                             if busq == 'exento':
@@ -1969,11 +1983,13 @@ class FiscalBook(models.Model):
                for line in fbl_brw.iwdl_id.invoice_id.invoice_line_ids:
                    for tax in line.tax_ids:
                        busq = tax.appl_type
-
+                   tasa = 1
+                   if line.currency_id.name == "USD":
+                       tasa = self.obtener_tasa(line)
                    for field_name in field_names:
                         field_tax, field_amount = field_name[4:].split('_')
-                        base = line.price_subtotal
-                        tax_amount = (line.price_total - line.price_subtotal)
+                        base = line.price_subtotal * tasa
+                        tax_amount = (line.price_total - line.price_subtotal) * tasa
                         if busq:
                             if busq == tax_type[field_tax]:
                                     data[field_name] += field_amount == 'base' and base * sign \
@@ -1981,13 +1997,16 @@ class FiscalBook(models.Model):
                fbl_brw.write(data)
 
             if fbl_brw.invoice_id:
+                tasa = 1
+                if fbl_brw.invoice_id.currency_id.name == "USD":
+                    tasa = self.obtener_tasa(fbl_brw.invoice_id)
                 for line in fbl_brw.invoice_id.invoice_line_ids:
                     for tax in line.tax_ids:
                         busq = tax.appl_type
                     for field_name in field_names:
                         field_tax, field_amount = field_name[4:].split('_')
-                        base = line.price_subtotal
-                        tax_amount = (line.price_total - line.price_subtotal)
+                        base = line.price_subtotal * tasa
+                        tax_amount = (line.price_total - line.price_subtotal) * tasa
                         if busq:
                             if busq == tax_type[field_tax]:  # account.tax
                                 # if not fbt_brw.fbl_id.iwdl_id.invoice_id.name: #facura de account.wh.iva.line
@@ -2199,6 +2218,16 @@ class FiscalBook(models.Model):
             else:
                 res = super(FiscalBook, self).unlink()
         return res
+
+    def obtener_tasa(self, invoice):
+        fecha = invoice.date
+        tasa_id = invoice.currency_id
+        tasa = self.env['multi.currency.rate'].search([('currency_id', '=', tasa_id.id), ('rate_date', '<=', fecha)], order='id desc', limit=1)
+        if not tasa:
+            raise exceptions.except_orm("Advertencia!",
+                                        "No hay referencia de tasas registradas para moneda USD en la fecha igual o inferior de la factura %s" %(invoice.name))
+
+        return tasa.rate
 
 
 class FiscalBookLines(models.Model):

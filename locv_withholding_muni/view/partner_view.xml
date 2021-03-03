@@ -19,6 +19,9 @@
                                 <field name="property_county_wh_payable" attrs="{'required':[('wh_muni_agent','=',True)]}"/>
                                 <field name="property_county_wh_receivable"/>
                        </group>
+                       <group string="Diarios de Retención Municipal">
+                            <field name="purchase_journal_id_muni" attrs="{'required':[('wh_muni_agent','=',True)]}"/>
+                        </group>
                     </page>
                 </xpath>
             </field>

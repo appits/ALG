@@ -134,7 +134,7 @@ string="Invoice"
                 <notebook colspan="8">
                     <page string="Lineas de Libro Fiscal">
                         <field name="fbl_ids" nolabel="1" colspan="4" readonly="True">
-                            <tree string="Lineas de Libro Fiscal">
+                            <tree string="Lineas de Libro Fiscal" default_order="emission_date asc">
                                 <field name="rank"/>
                                 <field name="doc_type"/>
                                 <field name="emission_date"/>
@@ -246,7 +246,7 @@ string="Invoice"
                     </page>
                     <page string="Non-Tax Payer Detail" attrs="{'invisible': [('article_number', 'not in', ['77','78'])]}">
                         <field name="ntp_fbl_ids" nolabel="1" colspan="4" readonly="True">
-                            <tree string="Lineas de Libro Fiscal">
+                            <tree string="Lineas de Libro Fiscal" default_order="emission_date asc">
                                 <field name="parent_id"/>
                                 <field name="emission_date"/>
                                 <field name="fiscal_printer"/>
@@ -342,7 +342,7 @@ string="Invoice"
                 <notebook colspan="8">
                     <page string="Lineas de Libro Fiscal">
                         <field name="fbl_ids" nolabel="1" colspan="4" readonly="True" force_save="1">
-                            <tree string="Lineas de Libro Fiscal">
+                            <tree string="Lineas de Libro Fiscal" default_order="emission_date asc">
                                 <field name="rank"/>
                                 <field name="doc_type"/>
                                 <field name="emission_date"/>

@@ -5,7 +5,7 @@ import time
 
 #from odoo.report import report_sxw
 #from odoo.tools.translate import _
-from odoo import models, api, _
+from odoo import models, api, _, exceptions
 from odoo.exceptions import UserError, Warning, ValidationError
 
 class MuniReport(models.AbstractModel):
@@ -29,18 +29,26 @@ class MuniReport(models.AbstractModel):
         if wh_muni and len(wh_muni) ==1 :
             if wh_muni.state == 'done':
                for line_muni in  wh_muni.munici_line_ids:
-
+                    if line_muni.invoice_id.currency_id.name != self.env.company.currency_id.name:
+                        rate = line_muni.invoice_id.exchange_rate
+                        if rate:
+                            total_c = line_muni.invoice_id.amount_total*rate
+                        else:
+                            rate = self.obtener_tasa(line_muni.invoice_id)
+                            total_c = line_muni.invoice_id.amount_total*rate
+                    else:
+                        total_c = line_muni.invoice_id.amount_total
                     base_amount.append({'fecha_factura': line_muni.invoice_id.date,
                                         'nro_factura': line_muni.invoice_id.supplier_invoice_number,
                                         'nro_control': line_muni.invoice_id.nro_ctrl,
                                         'nro_debito' :'-',
                                         'nro_credito': '-',
                                         'fact_afec': '-',
-                                        'total_compra': line_muni.invoice_id.amount_total,
+                                        'total_compra': self.separador_cifra(total_c),
                                         'monto_sujeto': '',
-                                        'porc_ret': line_muni.wh_loc_rate,
-                                        'neto_pagado': line_muni.invoice_amount,
-                                        'imp_retenido': line_muni.amount,
+                                        'porc_ret': str(int(line_muni.wh_loc_rate)) + '' +'%',
+                                        'neto_pagado': self.separador_cifra(line_muni.invoice_amount),
+                                        'imp_retenido': self.separador_cifra(line_muni.amount),
                                         })
                     sum_total_compra += line_muni.invoice_id.amount_total
                     sum_monto_sujeto += line_muni.invoice_id.amount_total
@@ -80,11 +88,11 @@ class MuniReport(models.AbstractModel):
             'sum_imp_retenido' :  sum_imp_retenido,
         }
 
-    def separador_cifra(self,valor):
-        monto = '{0:,.2f}'.format(valor).replace('.', '-')
+    def separador_cifra(self, valor):
+        monto = '{0:,.2f}'.format(valor).replace('.', '/')
         monto = monto.replace(',', '.')
-        monto = monto.replace('-', ',')
-        return  monto
+        monto = monto.replace('/', ',')
+        return monto
 
     def get_period(self, date):
         if not date:
@@ -109,6 +117,17 @@ class MuniReport(models.AbstractModel):
         #    raise ValidationError ("Debe ingresar los datos de direccion en el proveedor")
             #direction = 'Sin direccion'
         return direction
+
+
+    def obtener_tasa(self, invoice):
+        tasa = []
+        fecha = invoice.date
+        tasa_id = invoice.currency_id
+        tasa = self.env['multi.currency.rate'].search([('currency_id', '=', tasa_id.id), ('rate_date', '<=', fecha)], order='id desc', limit=1)
+        if not tasa:
+            raise exceptions.except_orm("Advertencia!",
+                                        "No hay referencia de tasas registradas para moneda USD en la fecha igual o inferior de la Factura %s" %(invoice.name))
+
 
     def get_tipo_doc(self, tipo=None):
         if not tipo:

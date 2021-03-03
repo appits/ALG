@@ -184,7 +184,7 @@ class AccountMove(models.Model):
     exchange_rate = fields.Float()
     execute_line = fields.Boolean(default=False, copy=False)
 
-    @api.onchange('currency_from_id')
+    @api.onchange('currency_from_id', 'date')
     def _compute_rate(self):
         if self.currency_from_id:
             date, rate = utils.get_invoice_rate(self)

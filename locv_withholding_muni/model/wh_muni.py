@@ -134,19 +134,19 @@ class AccountWhMunici(models.Model):
         return True
 
     def get_reconciled_move(self):
+        obj_move_line = []
         awil_obj = self.env['account.wh.munici.line']
         awil_brw = awil_obj.search([('retention_id', '=', self.id)])
-
-        dominio = [('move_id', '=', awil_brw.move_id.id),
-                   ('reconciled', '=', True)]
-        obj_move_line = self.env['account.move.line'].search(dominio)
-
-        if obj_move_line:
-            raise exceptions.ValidationError(
-                (
-                    'El Comprobante ya tiene una aplicacion en la factura %s, debe desconciliar el comprobante para poder cancelar') % awil_brw.invoice_id.number)
-        else:
-            return True
+        for invoices in awil_brw.move_id:
+            dominio = [('move_id', '=', invoices.id),
+                       ('reconciled', '=', True)]
+            obj_move_line = self.env['account.move.line'].search(dominio)
+            if obj_move_line:
+                raise exceptions.ValidationError(
+                    (
+                        'El Comprobante ya tiene una aplicacion en la factura %s, debe desconciliar el comprobante para poder cancelar') % obj_move_line.ref)
+            else:
+                return True
 
     def action_cancel(self):
         """ Call cancel_move and return True
@@ -320,20 +320,18 @@ class AccountWhMunici(models.Model):
                 acc_id = (acc_part_brw.property_account_payable_id and
                           acc_part_brw.property_account_payable_id.id or False)
             if self.type and self.type == 'in_invoice' or 'in_refund':
-                journal = self.env['account.journal'].search([('type','=','purchase')])
+                journal = self.env['account.journal'].search([('id','=',acc_part_brw.purchase_journal_id_muni.id)])
                 journal1 = self.env['account.journal'].browse()
                 journal_id = journal1
                 if journal:
-                    for journal_uni in journal:
-                        if (journal_uni.name.find("Municipal") != -1) or (journal_uni.name.find("Municipal") != -1) or (journal_uni.name.find("MUNICIPAL") != -1) or (journal_uni.name.find("municipal") != -1):
-                            journal_id = journal_uni
-                            self.write({
-                                'journal_id': journal_id
-                            })
-                    if journal_id == False:
+
+                    self.write({
+                        'journal_id': journal
+                    })
+                elif journal_id == False:
                         raise exceptions.except_orm(
-                            _("No existe un Diario para la Retencion Municipal"),
-                            _("Por favor crear un Diario para la Retencion Municipal, para poder continuar"))
+                            _("No tiene un Diario asociado para la Retencion Municipal"),
+                            _("Por favor asociar el Diario en el registro del socio para poder realizar la Retencion Municipal"))
 
 
         result = {'value': {
@@ -429,7 +427,14 @@ class Accountwhmuniciline(models.Model):
     #     data = super(Accountwhmuniciline, self).default_get(field_list)
     #     self.munici_context = context
     #     return data
-
+    def obtener_tasa(self, invoice):
+        tasa = []
+        fecha = invoice.date
+        tasa_id = invoice.currency_id
+        tasa = self.env['multi.currency.rate'].search([('currency_id', '=', tasa_id.id), ('rate_date', '<=', fecha)], order='id desc', limit=1)
+        if not tasa:
+            raise exceptions.except_orm("Advertencia!",
+                                        "No hay referencia de tasas registradas para moneda USD en la fecha igual o inferior de la Factura %s" %(invoice.name))
 
     @api.onchange('invoice_id','wh_loc_rate')
     def onchange_invoice_id(self):
@@ -447,15 +452,26 @@ class Accountwhmuniciline(models.Model):
         else:
             amount_total = 0
             invoice = self.env['account.move'].browse(self.invoice_id.id)
-            for lines in invoice.invoice_line_ids:
-                for tax in lines.tax_ids:
-                    if tax.type_tax == 'municipal':
-                        amount_total = lines.price_subtotal
+            if invoice.currency_id.name == self.env.company.currency_id.name:
+                for lines in invoice.invoice_line_ids:
+                    for tax in lines.tax_ids:
+                        if tax.type_tax == 'municipal':
+                            amount_total = lines.price_subtotal
+            else:
+                for lines in invoice.invoice_line_ids:
+                    for tax in lines.tax_ids:
+                        if tax.type_tax == 'municipal':
+                            rate = invoice.exchange_rate
+                            if rate:
+                                amount_total += (lines.price_subtotal*rate)
+                            else:
+                                rate = self.obtener_tasa(invoice)
+                                amount_total += (lines.price_subtotal * rate)
 
             self.env.cr.execute('select retention_id '
-                       'from account_wh_munici_line '
-                       'where invoice_id=%s',
-                       ([self.invoice_id.id]))
+                                'from account_wh_munici_line '
+                                'where invoice_id=%s',
+                                ([self.invoice_id.id]))
             ret_ids = self._cr.fetchone()
             if bool(ret_ids):
                 ret = self.env[
@@ -471,15 +487,3 @@ class Accountwhmuniciline(models.Model):
             total = amount_total * (self.wh_loc_rate / 100.0)
             self.amount = total
             self.invoice_amount = amount_total
-            #return {'value': {'amount': total,
-             #                 'wh_loc_rate': self.wh_loc_rate}}
-    #@api.multi
-    #def unlink(self):
-    #    whm_obj = self.env['account.wh.munici']
-    #    loc_state = whm_obj.search([('id', '=',self.retention_id)]).state
-    #    if loc_state != 'cancel':
-    #        raise exceptions.except_orm(
-    #            _("Invalid Procedure!!"),
-    #            _("The withholding document needs to be in cancel state"
-    #            " to be deleted."))
-    #    return super(Accountwhmuniciline, self).unlink()

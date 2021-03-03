@@ -26,3 +26,4 @@ class ResParther(models.Model):
 
     wh_muni_agent = fields.Boolean('Se le Aplica Impuesto Municipal?')
     wh_muni = fields.Float('Porcentaje de Retencion')
+    purchase_journal_id_muni = fields.Many2one('account.journal', 'Diario Municipal')

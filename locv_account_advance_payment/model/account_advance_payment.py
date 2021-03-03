@@ -14,6 +14,7 @@ class AccountAdvancePayment(models.Model):
                              ('available', 'Disponible'),
                              ('paid', 'Pagado')]
 
+
     name = fields.Char(string='Name')
     #name_apply = fields.Char(string='Name',default=lambda self: self.env['ir.sequence'].next_by_code('apply.advance.sequence'))
     supplier = fields.Boolean(string='Supplier')
@@ -59,12 +60,30 @@ class AccountAdvancePayment(models.Model):
     tasa_anticipo = fields.Many2one('res.currency.rate', string='Tasa con la que se registró el anticipo')
     type_advance = fields.Boolean(default=False)
 
+    def obtener_tasa(self, invoice):
+        tasa = []
+        fecha = invoice.date_advance
+        if self.currency_id.name != self.env.company.currency_id.name:
+            tasa_id = invoice.currency_id
+            tasa = self.env['multi.currency.rate'].search([('currency_id', '=', tasa_id.id), ('rate_date', '<=', fecha)], order='id desc', limit=1)
+            if not tasa:
+                raise exceptions.except_orm("Advertencia!",
+                                            "No hay referencia de tasas registradas para moneda USD en la fecha igual o inferior de la Generacion del anticipo %s" %(invoice.name))
+        elif self.currency_id.name == self.env.company.currency_id.name:
+                tasa_id = self.env['res.currency'].search([('name', '=', 'USD')])
+                tasa = self.env['multi.currency.rate'].search(
+                    [('currency_id', '=', tasa_id.id), ('rate_date', '<=', fecha)], order='id desc', limit=1)
+                if not tasa:
+                    raise exceptions.except_orm("Advertencia!",
+                                                "No hay referencia de tasas registradas para moneda USD en la fecha igual o inferior de la Generacion del anticipo %s" % (
+                                                    invoice.name))
+        return tasa.rate
+
     @api.onchange('date_apply')
     def onchange_date_apply(self):
-        currency_rate = self.env['res.currency.rate'].search([
-            ('currency_id', '=', self.env.company.currency_id.id),
-            ('name', '=', self.date_apply),
-        ]).rate
+        currency_rate =  self.obtener_tasa(self)
+
+
         if self.currency_id.name == self.env.company.currency_id.name:
             if not currency_rate:
                 self.amount_available_conversion = 0
@@ -164,10 +183,7 @@ class AccountAdvancePayment(models.Model):
                 raise Warning(_('El monto a aplicar (%s) no puede ser mayor al monto de la factura (%s)') % (
                 amount_apply, amount_invoice))
         else:
-            currency_rate = self.env['res.currency.rate'].search([
-                ('currency_id', '=', self.env.company.currency_id.id),
-                ('name', '=',date_apply),
-            ]).rate
+            currency_rate = self.obtener_tasa(self)
             if amount_currency_apply == self.env.company.currency_id.id:
                 if self.currency_id.id == self.env.company.currency_id.id:
                     if not currency_rate:
@@ -241,10 +257,7 @@ class AccountAdvancePayment(models.Model):
                         vals.update({'amount_available': self.amount_available})
                     else:
                         date_apply = vals.get('date_apply') if vals.get('date_apply', False) else self.date_apply
-                        currency_rate = self.env['res.currency.rate'].search([
-                            ('currency_id', '=', self.env.company.currency_id.id),
-                            ('name', '=', date_apply),
-                        ]).rate
+                        currency_rate = self.obtener_tasa(self)
                         if amount_currency_apply == self.env.company.currency_id.id:
                             conversion = amount_apply / self.rate
                             self.amount_available = self.amount_available - conversion
@@ -262,10 +275,7 @@ class AccountAdvancePayment(models.Model):
                 if vals.get('amount_currency_apply') == self.currency_id.id:
                     self.amount_available = self.amount_advance - self.amount_apply
                 else:
-                    currency_rate = self.env['res.currency.rate'].search([
-                        ('currency_id', '=', self.env.company.currency_id.id),
-                        ('name', '=', vals.get('date_apply')),
-                    ]).rate
+                    currency_rate = self.obtener_tasa(self)
                     if vals.get('amount_currency_apply') == self.env.company.currency_id.id:
                         conversion = self.amount_apply / currency_rate
                         self.amount_available = self.amount_advance - conversion
@@ -380,15 +390,12 @@ class AccountAdvancePayment(models.Model):
             move_id = move_obj.create(vals)
             #Si el pago es en moneda extranjera $
             if self.currency_id.name != self.env.company.currency_id.name:
-                self.rate = currency_rate = self.env['res.currency.rate'].search([
-                    ('currency_id', '=', self.env.company.currency_id.id),
-                    ('name', '=', self.date_advance),
-                ]).rate
+                self.rate = currency_rate = self.obtener_tasa(self)
                 self.amount_currency_apply = self.env['res.currency'].search([
                 ('name', '=', 'USD')
                 ])
                 if not currency_rate:
-                    raise exceptions.Warning(_('Asegurese de tener la multimoneda confiurada y registrar la tasa de la fecha del anticipo'))
+                    raise exceptions.Warning(_('Asegurese de tener la multimoneda configurada y registrar la tasa de la fecha del anticipo'))
                 money = self.amount_advance
                 self.move_advance_ = {
                     'account_id': cuenta_acreedora,
@@ -487,10 +494,7 @@ class AccountAdvancePayment(models.Model):
         }
         move_apply_obj = self.env['account.move']
         move_apply_id = move_apply_obj.create(vals)
-        currency_rate = self.env['res.currency.rate'].search([
-            ('currency_id', '=', self.env.company.currency_id.id),
-            ('name', '=', self.date_apply),
-        ]).rate
+        currency_rate = self.obtener_tasa(self)
         if self.amount_currency_apply == self.env.company.currency_id:
             if self.currency_id.name == 'USD':
                 self.move_advance_ = {

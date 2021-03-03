@@ -1,5 +1,6 @@
 from odoo import fields, models, api
-
+from datetime import date
+from datetime import datetime
 
 def get_rate(self, date):
     self.env.cr.execute("SELECT max(rate_date), rate "
@@ -36,13 +37,14 @@ def get_schema_rate(self, date):
 
 
 def get_invoice_rate(self):
+    dt = datetime.combine(self.date, datetime.max.time())
     self.env.cr.execute("SELECT max(rate_date), rate "
                         "FROM multi_currency_rate "
                         "WHERE currency_id = %s "
                         "AND rate_date <= %s "
                         "GROUP BY rate_date, rate "
                         "ORDER BY rate_date desc ",
-                        [self.currency_from_id.id, self.date])
+                        [self.currency_from_id.id, dt])
 
     value = self._cr.fetchone()
 

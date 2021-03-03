@@ -26,7 +26,7 @@
                             </div>
                             <div>
                                 <p style="font-size: 12px !important;"><strong>Nombre y Apellido / Razón Social : </strong><span t-field="o.partner_id.name"></span></p>
-                                <p style="font-size: 13px"><strong>RIF : </strong><span t-field="o.partner_id.doc_type"></span> - <span t-esc="o.partner_id.vat"/></p>
+                                <p style="font-size: 13px"><strong>RIF : </strong><span t-esc="o.partner_id.vat"/></p>
                                 <p style="font-size: 12px !important;"><strong>CODIGO : </strong><span t-esc="o.partner_id.id"></span></p>
                                 <p style="font-size: 12px !important;"><strong>Dirección de Entrega : </strong><span t-field="o.partner_id.street"/></p>
                                  <p style="font-size: 12px !important;"><strong>Ciudad : </strong><span t-field="o.partner_id.city"></span> <t t-esc="o.partner_id.state_id.name" /> <t t-esc="o.partner_id.country_id.name" /></p>

@@ -18,10 +18,12 @@
                         <div class="page">
                            <div class="row">
                               <div class="col-xs-9" style="margin-left: 15px;">
-                                    <p style="font-size: 12px !important;"><strong>Factura Nro. : </strong><span t-field="o.invoice_number_cli"> </span></p>
+                                    <p style="font-size: 12px !important;"><strong>Factura Nro. : </strong><span t-field="o.name"> </span></p>
                                     <p style="font-size: 12px !important;"><strong>Lugar y Fecha de Emisión : </strong><br/><span t-field="o.company_id.city"/> <span t-field="o.invoice_date"/></p>
                                     <p style="font-size: 12px"><strong>Nombre y Apellido o Razón Social : </strong><span t-field="o.partner_id.name"></span></p>
-                                    <p style="font-size: 12px"><strong>RIF : </strong><span t-field="o.partner_id.doc_type"></span> <span t-esc="o.partner_id.vat"/></p>
+                                    <p style="font-size: 12px"><strong>RIF : </strong>
+                                        <span t-esc="o.partner_id.vat"/>
+                                    </p>
                                     <p style="font-size: 12px"><strong>Dirección Fiscal : </strong><span t-field="o.partner_id.street"/> <span t-field="o.partner_id.street2"/></p>
                                     <p style="font-size: 12px"><strong>Ciudad : </strong><span t-field="o.partner_id.city" ></span> <t t-esc="o.partner_id.state_id.name" /> </p>
                                     <p style="font-size: 12px"><strong>Lugar de despacho : </strong><span t-field="o.partner_shipping_id.name"/></p>
@@ -37,7 +39,7 @@
                                     <p style="font-size: 12px"><strong> Telefono : </strong><span t-field="o.partner_id.phone"/></p>
                                     <p style="font-size: 12px"><strong>Nro. Pedido : </strong><span t-field="o.invoice_origin"> </span></p>
                                     <p style="font-size: 12px"><strong>Nota de Carga : </strong><span t-field="o.loading_note"></span></p>
-                                    <p style="font-size: 12px"><strong>Forma de pago : </strong><span t-esc="o.x_studio_forma_de_pago"></span></p>
+<!--                                    <p style="font-size: 12px"><strong>Forma de pago : </strong><span t-esc="o.x_studio_forma_de_pago"></span></p>-->
                                     <p style="font-size: 12px !important;"><strong>Revisado por:  </strong><span t-field="o.write_uid"></span></p>
 
                               </div>
@@ -69,7 +71,7 @@
                         </table>
                           <br/>
                         <div align="center">
-                            <t t-if="o.currency_id.name == 'BS.' ">
+                            <t t-if="o.currency_id.name == 'Bs.' ">
                                 <p><strong> FACTURA EN BOLIVARES</strong></p>
                             </t>
                             <t t-else="o.currency_id.name == 'USD' ">
@@ -191,7 +193,7 @@
                                           <th style="font-size: 12px"><span  t-esc="'{0:,.2f}'.format(float(o.amount_tax))"/></th>
                                       </tr>
                                       <tr>
-                                          <t t-if="o.currency_id.name == 'BS.' ">
+                                          <t t-if="o.currency_id.name == 'Bs.' ">
                                               <th name="th_total" style="font-size: 13px">Total Factura en BS. : </th>
                                               <th style="font-size: 12px"><span t-esc="'{0:,.2f}'.format(float(o.amount_total))"/></th>
                                           </t>

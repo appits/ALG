@@ -133,7 +133,7 @@ class PurchaseBook(models.AbstractModel):
         date_end = datetime.strptime(data['form']['date_to'], DATE_FORMAT)
         datos_compras = []
         purchasebook_ids = self.env['fiscal.book.line'].search(
-            [('fb_id','=',data['form']['book_id']), ('accounting_date', '>=', date_start.strftime(DATETIME_FORMAT)), ('accounting_date', '<=', date_end.strftime(DATETIME_FORMAT))])
+            [('fb_id','=',data['form']['book_id']), ('accounting_date', '>=', date_start.strftime(DATETIME_FORMAT)), ('accounting_date', '<=', date_end.strftime(DATETIME_FORMAT))], order='emission_date asc')
         emission_date = ' '
         sum_compras_credit = 0
         sum_total_with_iva = 0
@@ -217,10 +217,13 @@ class PurchaseBook(models.AbstractModel):
             if (partner.company_type == 'company' or  partner.company_type == 'person') and (partner.people_type_company or partner.people_type_individual) and  (partner.people_type_company == 'pjdo' or partner.people_type_individual == 'pnre' or  partner.people_type_individual == 'pnnr'):
                 '####################### NO ES PROVEDOR INTERNACIONAL########################################################3'
                 if h.invoice_id:
+                    tasa = 1
+                    if h.invoice_id.currency_id.name == "USD":
+                        tasa = self.obtener_tasa(h.invoice_id)
                     if h.doc_type == 'N/DB':
-                        total = (h.invoice_id.amount_total)*-1
+                        total = (h.invoice_id.amount_total)*-1 * tasa
                     else:
-                        total = (h.invoice_id.amount_total)
+                        total = (h.invoice_id.amount_total) * tasa
                     sum_vat_reduced_base += h.vat_reduced_base  # Base Imponible de alicuota Reducida
                     sum_vat_reduced_tax += h.vat_reduced_tax  # Impuesto de IVA alicuota reducida
                     sum_vat_additional_base += h.vat_additional_base  # BASE IMPONIBLE ALICUOTA ADICIONAL
@@ -234,7 +237,8 @@ class PurchaseBook(models.AbstractModel):
                     sum_vat_general_base += h.vat_general_base # Base Imponible Alicuota general
                     sum_vat_general_tax += h.vat_general_tax   # Impuesto de IVA
                     h_vat_general_base = h.vat_general_base
-                    h_vat_general_rate = int(h.vat_general_base and h.vat_general_tax * 100 / h.vat_general_base) if h.vat_general_base else 0.0
+                    h_vat_general_rate = (h.vat_general_base and h.vat_general_tax * 100 / h.vat_general_base) if h.vat_general_base else 0.0
+                    h_vat_general_rate = round(h_vat_general_rate, 0)
                     h_vat_general_tax = h.vat_general_tax if h.vat_general_tax else 0.0
                     vat_reduced_base = h.vat_reduced_base
                     vat_reduced_rate = int(h.vat_reduced_base and h.vat_reduced_tax * 100 / h.vat_reduced_base)
@@ -247,10 +251,13 @@ class PurchaseBook(models.AbstractModel):
                     emission_date = datetime.strftime(datetime.strptime(str(h.emission_date), DEFAULT_SERVER_DATE_FORMAT),
                                                        format_new)
                 if h.iwdl_id.invoice_id:
+                    tasa = 1
+                    if h.iwdl_id.invoice_id.currency_id.name == "USD":
+                        tasa = self.obtener_tasa(h.iwdl_id.invoice_id)
                     if h.doc_type == 'N/DB':
-                        total = (h.iwdl_id.invoice_id.amount_total)*-1
+                        total = (h.iwdl_id.invoice_id.amount_total)*-1 * tasa
                     else:
-                        total = (h.iwdl_id.invoice_id.amount_total)
+                        total = (h.iwdl_id.invoice_id.amount_total) * tasa
                     sum_vat_reduced_base += h.vat_reduced_base  # Base Imponible de alicuota Reducida
                     sum_vat_reduced_tax += h.vat_reduced_tax
                     # Impuesto de IVA alicuota reducida
@@ -265,7 +272,8 @@ class PurchaseBook(models.AbstractModel):
                     sum_vat_general_base += h.vat_general_base  # Base Imponible Alicuota general
                     sum_vat_general_tax += h.vat_general_tax  # Impuesto de IVA
                     h_vat_general_base = h.vat_general_base
-                    h_vat_general_rate = int(h.vat_general_base and h.vat_general_tax * 100 / h.vat_general_base) if h.vat_general_base else 0.0
+                    h_vat_general_rate = (h.vat_general_base and h.vat_general_tax * 100 / h.vat_general_base) if h.vat_general_base else 0.0
+                    h_vat_general_rate = round(h_vat_general_rate, 0)
                     h_vat_general_tax = h.vat_general_tax if h.vat_general_tax else 0.0
                     vat_reduced_base = h.vat_reduced_base
                     vat_reduced_rate = int(h.vat_reduced_base and h.vat_reduced_tax * 100 / h.vat_reduced_base)
@@ -283,11 +291,14 @@ class PurchaseBook(models.AbstractModel):
                 '############## ES UN PROVEEDOR INTERNACIONAL ##############################################'
 
                 if h.invoice_id:
+                    tasa = 1
+                    if h.invoice_id.currency_id.name == "USD":
+                        tasa = self.obtener_tasa(h.invoice_id)
                     if h.invoice_id.fecha_importacion:
                         date_impor = h.invoice_id.fecha_importacion
                         emission_date = datetime.strftime(datetime.strptime(str(date_impor), DEFAULT_SERVER_DATE_FORMAT),
                                                        format_new)
-                        total = h.invoice_id.amount_total
+                        total = h.invoice_id.amount_total * tasa
                     else:
                         date_impor =  h.invoice_id.invoice_date
                         emission_date = datetime.strftime(
@@ -302,7 +313,10 @@ class PurchaseBook(models.AbstractModel):
                                                       format_new)
                     planilla = h.iwdl_id.invoice_id.nro_planilla_impor
                     expediente = h.iwdl_id.invoice_id.nro_expediente_impor
-                    total = h.iwdl_id.invoice_id.amount_total
+                    tasa = 1
+                    if h.iwdl_id.invoice_id.currency_id.name == "USD":
+                        tasa = self.obtener_tasa(h.iwdl_id.invoice_id)
+                    total = h.iwdl_id.invoice_id.amount_total * tasa
                 get_wh_vat = 0.0
                 vat_reduced_base = 0
                 vat_reduced_rate = 0
@@ -312,7 +326,8 @@ class PurchaseBook(models.AbstractModel):
                 vat_additional_tax = 0
                 'ALICUOTA GENERAL IMPORTACIONES'
                 vat_general_base_importaciones = h.vat_general_base
-                vat_general_rate_importaciones = int(h.vat_general_base and h.vat_general_tax * 100 / h.vat_general_base)
+                vat_general_rate_importaciones = (h.vat_general_base and h.vat_general_tax * 100 / h.vat_general_base)
+                vat_general_rate_importaciones = round(vat_general_rate_importaciones, 0)
                 vat_general_tax_importaciones = h.vat_general_tax
                 'ALICUOTA REDUCIDA IMPORTACIONES'
                 vat_reduced_base_importaciones = h.vat_reduced_base
@@ -510,6 +525,15 @@ class PurchaseBook(models.AbstractModel):
             'total_compras_credit_fiscal': total_compras_credit_fiscal,
 
         }
+    def obtener_tasa(self, invoice):
+        fecha = invoice.date
+        tasa_id = invoice.currency_id
+        tasa = self.env['multi.currency.rate'].search([('currency_id', '=', tasa_id.id), ('rate_date', '<=', fecha)], order='id desc', limit=1)
+        if not tasa:
+            raise exceptions.except_orm("Advertencia!",
+                                        "No hay referencia de tasas registradas para moneda USD en la fecha igual o inferior de la factura %s" %(invoice.name))
+
+        return tasa.rate
 #
 class FiscalBookSaleReport(models.AbstractModel):
     _name = 'report.locv_fiscal_book.report_fiscal_sale_book'

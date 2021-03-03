@@ -30,3 +30,4 @@
 
 from . import fiscal_book_wizard
 from . import change_invoice_sin_cred
+from . import libros_xls

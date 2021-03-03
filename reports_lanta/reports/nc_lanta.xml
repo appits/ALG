@@ -17,18 +17,19 @@
                       <t t-call="web.basic_layout">
                         <div class="page">
                               <div align="right">
-                                        <p style="font-size: 13px !important;"><strong>Nota de Credito Nro. : </strong><span t-field="o.refuld_number_cli"> </span></p>
+                                        <p style="font-size: 13px !important;"><strong>Nota de Credito: </strong><span t-field="o.name"> </span></p>
                                         <p style="font-size: 13px !important;"><strong>Lugar y Fecha : </strong><pr/><span t-field="o.company_id.city"/> <span t-field="o.invoice_date"/></p>
                               </div>
                               <div>
                                 <p style="font-size: 12px !important;"><strong>Nombre y Apellido o Razón Social: : </strong> <span t-field="o.partner_id.name"></span></p>
                                 <p style="font-size: 12px !important;"><strong>Codigo : </strong><span t-esc="o.partner_id.id"></span></p>
-                                <p style="font-size: 12px !important;"><strong>RIF : </strong><span t-field="o.partner_id.doc_type"></span> <span t-esc="o.partner_id.vat"/></p>
+                                <p style="font-size: 12px !important;"><strong>RIF : </strong>
+                                    <span t-esc="o.partner_id.vat"/></p>
                                 <p style="font-size: 13px"><strong>Dirección Fiscal : </strong><span t-field="o.partner_id.street"/> <span t-field="o.partner_id.street2"/></p><p style="font-size: 13px"><strong>Ciudad : </strong><span t-field="o.partner_id.city" ></span> <t t-esc="o.partner_id.state_id.name" /> </p>
-                                <p style="font-size: 12px !important;"><strong>Factura Afectada : </strong><span t-field="o.invoice_reverse_id.invoice_number_cli"> </span></p>
+                                <p style="font-size: 12px !important;"><strong>Factura Afectada : </strong><span t-field="o.invoice_reverse_id.name"> </span></p>
                                 <p style="font-size: 12px !important;"><strong>Fecha de la Factura Afectada :  </strong><span t-field="o.invoice_reverse_id.date"> </span></p>
                                 <p style="font-size: 12px !important;"><strong>Monto de la Factura Afectada :  </strong><span t-esc="'{0:,.2f}'.format(int(o.invoice_reverse_id.amount_total))"> </span></p>
-                                <p style="font-size: 12px !important;"><strong>Motivo : </strong><span t-field="o.x_studio_motivo"></span></p>
+<!--                                <p style="font-size: 12px !important;"><strong>Motivo : </strong><span t-field="o.x_studio_motivo"></span></p>-->
                               </div>
                         </div>
                         <table  class="table table-bordered" t-if="o.invoice_line_ids">

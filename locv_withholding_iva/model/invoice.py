@@ -99,14 +99,14 @@ class AccountMove(models.Model):
         check that the date document is less or equal than the date invoice.
         @return True or raise and osv exception.
         """
-        for inv_brw in self:
-            if (inv_brw.type in ('in_invoice', 'in_refund', 'out_invoice', 'out_refund') and
-                    inv_brw.date and
-                    not inv_brw.date <= inv_brw.invoice_date):
-                raise exceptions.except_orm(
-                    _('Warning'),
-                    _('The document date must be less or equal than the'
-                      ' invoice date.'))
+        # for inv_brw in self:
+        #     if (inv_brw.type in ('in_invoice', 'in_refund', 'out_invoice', 'out_refund') and
+        #             inv_brw.date and
+        #             not inv_brw.date <= inv_brw.invoice_date):
+        #         raise exceptions.except_orm(
+        #             _('Warning'),
+        #             _('The document date must be less or equal than the'
+        #               ' invoice date.'))
         return True
 
 
