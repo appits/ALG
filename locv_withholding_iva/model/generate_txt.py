@@ -1,13 +1,8 @@
 # coding: utf-8
 ###########################################################################
 
-import base64
-import time
-
 from odoo import models, fields, api, exceptions, _
-from odoo.addons import decimal_precision as dp
-
-
+import base64, time
 
 class TxtIva(models.Model):
     _name = "txt.iva"
@@ -21,7 +16,6 @@ class TxtIva(models.Model):
         fecha = time.strftime('%m/%Y')
         periods = self.env['account.period'].search([('code', '=', fecha)])
         return periods and periods[0].id or False
-
 
 
     name = fields.Char(
@@ -75,7 +69,7 @@ class TxtIva(models.Model):
 
         for txt in self.browse(self.ids):
             res[txt.id] = 0.0
-            if txt.create_date != False:
+            if txt.create_date:
                 for txt_line in txt.txt_ids:
                     if txt_line.invoice_id.type in ['out_refund', 'in_refund']:
                         res[txt.id] -= txt_line.amount_withheld
@@ -89,7 +83,7 @@ class TxtIva(models.Model):
         res = {}
         for txt in self.browse(self.ids):
             res[txt.id] = 0.0
-            if txt.create_date != False:
+            if txt.create_date:
                 for txt_line in txt.txt_ids:
                     if txt_line.invoice_id.type in ['out_refund', 'in_refund']:
                         res[txt.id] -= txt_line.untaxed
@@ -130,7 +124,6 @@ class TxtIva(models.Model):
         return True
 
 
-    
     def action_generate_lines_txt(self):
         """ Current lines are cleaned and rebuilt
         """
@@ -149,96 +142,94 @@ class TxtIva(models.Model):
                 ('date_ret', '<=', txt_brw.date_end),
                 #('period_id', '=', txt_brw.period_id.id),
                 ('state', '=', 'done'),
-                ('type', 'in', ['in_invoice', 'in_refund'])])
+                ('type', 'in', ['in_invoice', 'in_refund', 'in_debit'])])
         else:
             vouchers = voucher_obj.search([
                 ('date_ret', '>=', txt_brw.date_start),
                 ('date_ret', '<=', txt_brw.date_end),
                 #('period_id', '=', txt_brw.period_id.id),
                 ('state', '=', 'done'),
-                ('type', 'in', ['out_invoice', 'out_refund'])])
-        amount_total =0
-        base_total = 0
-        amount_exento = 0
-        amount = 0
-        base = 0
+                ('type', 'in', ['out_invoice', 'out_refund', 'in_debit'])])
+
+        amount_amount = 0
+        base_base= 0
         for voucher in vouchers:
-
+            amount = 0
+            base = 0
+            amount_total = 0
+            base_total = 0
+            total_base_exent = 0
             acc_part_id = rp_obj._find_accounting_partner(voucher.partner_id)
-            for voucher_lines in voucher.wh_lines:
-                for voucher_tax_line in voucher_lines.tax_line:
-                    amount_total += voucher_tax_line.amount_ret
-                    amount = voucher_tax_line.amount_ret
-                    base = voucher_tax_line.base
-                    base_total += voucher_tax_line.base
-                    if voucher_tax_line.wh_vat_line_id.invoice_id.type == 'in_invoice' or voucher_tax_line.wh_vat_line_id.invoice_id.type == 'in_refund':
-                        type = 'purchase'
-                    else:
-                        type = 'sale'
-                    busq = self.env['account.tax'].search([('id','=', voucher_tax_line.id_tax),('type_tax_use','=', type)])
-                    if voucher_tax_line.amount == 0 and voucher_tax_line.amount_ret == 0:
-                        amount_exento = voucher_tax_line.base
 
-                    txt_iva_obj.create(
-                        {'partner_id': acc_part_id.id,
-                         'voucher_id': voucher.id,
-                         'invoice_id': voucher_lines.invoice_id.id,
-                         'txt_id': txt_brw.id,
-                         # 'untaxed': voucher_tax_line.base,
-                         'untaxed': base,#voucher_lines.base_ret,
-                         'amount_withheld': amount,#voucher_lines.amount_tax_ret,
-                         'amount_sdcf': amount_exento,  # self.get_amount_scdf(voucher_lines),
-                         'tax_wh_iva_id': busq.name if busq else '',
-                         })
-                    busq = {}
-                    # else:
-                    #     # for voucher_tax_line in voucher_lines.tax_line:
-                    #     txt_iva_obj.create(
-                    #         {'partner_id': acc_part_id.id,
-                    #          'voucher_id': voucher.id,
-                    #          'invoice_id': voucher_lines.invoice_id.id,
-                    #          'txt_id': txt_brw.id,
-                    #          'untaxed': voucher_tax_line.base,
-                    #          'amount_withheld': voucher_tax_line.amount_ret,
-                    #          'tax_wh_iva_id': voucher_tax_line.id,
-                    #
-                    #          })
-                self.update({'amount_total_ret': amount_total,
-                             'amount_total_base': base_total})
-                if voucher_lines.invoice_id.state not in ['posted']:
-                    pass
-                # if len(voucher_lines.tax_line) > 1:
-                #     txt_iva_obj.create(
-                #         {'partner_id': acc_part_id.id,
-                #          'voucher_id': voucher.id,
-                #          'invoice_id': voucher_lines.invoice_id.id,
-                #          'txt_id': txt_brw.id,
-                #          #'untaxed': voucher_tax_line.base,
-                #          'untaxed': voucher_lines.base_ret,
-                #          'amount_withheld': voucher_lines.amount_tax_ret,
-                #          'amount_sdcf': amount_exento, #self.get_amount_scdf(voucher_lines),
-                #          'tax_wh_iva_id': self.get_alicuota_iva(voucher_lines),
-                #          })
+            for voucher_lines in voucher.wh_lines.tax_line:
+                voucher_invoice_id = voucher_lines.wh_vat_line_id.invoice_id.id
+                if voucher.type in ['in_invoice', 'in_debit']:
+                    if voucher_lines.alicuota == 0:
+                        total_base_exent +=  voucher_lines.base
+                        base_base += voucher_lines.base
+                    elif voucher_lines.alicuota == 16:
+                        amount_total += voucher_lines.amount_ret
+                        amount_amount += voucher_lines.amount_ret
+                        base_base += voucher_lines.base
+                        base_total += voucher_lines.base
+                        voucher_line_name = voucher_lines.name
+                    elif voucher_lines.alicuota == 8:
+                        amount_total += voucher_lines.amount_ret
+                        amount_amount += voucher_lines.amount_ret
+                        base_base += voucher_lines.base
+                        base_total += voucher_lines.base
+                        voucher_line_name = voucher_lines.name
+                    elif voucher_lines.alicuota == 31:
+                        amount_total += voucher_lines.amount_ret
+                        amount_amount += voucher_lines.amount_ret
+                        base_base += voucher_lines.base
+                        base_total += voucher_lines.base
+                        voucher_line_name = voucher_lines.name
+                elif voucher.type in ['in_refund']:
+                    if voucher_lines.alicuota == 0:
+                        total_base_exent -=  voucher_lines.base
+                        base_base -= voucher_lines.base
+                    elif voucher_lines.alicuota == 16:
+                        amount_total -= voucher_lines.amount_ret
+                        amount_amount -= voucher_lines.amount_ret
+                        base_base -= voucher_lines.base
+                        base_total -= voucher_lines.base
+                        voucher_line_name = voucher_lines.name
+                    elif voucher_lines.alicuota == 8:
+                        amount_total -= voucher_lines.amount_ret
+                        amount_amount -= voucher_lines.amount_ret
+                        base_base -= voucher_lines.base
+                        base_total -= voucher_lines.base
+                        voucher_line_name = voucher_lines.name
+                    elif voucher_lines.alicuota == 31:
+                        amount_total -= voucher_lines.amount_ret
+                        amount_amount -= voucher_lines.amount_ret
+                        base_base -= voucher_lines.base
+                        base_total -= voucher_lines.base
+                        voucher_line_name = voucher_lines.name
+
+            txt_iva_obj.create(
+                {'partner_id': acc_part_id.id,
+                 'voucher_id': voucher.id,
+                 'invoice_id': voucher_invoice_id,
+                 'txt_id': txt_brw.id,
+                 # 'untaxed':  voucher_lines.base,
+                 'untaxed': base_total, # voucher_lines.base_ret,
+                 'amount_withheld': amount_total, # voucher_lines.amount_tax_ret,
+                 'amount_sdcf': total_base_exent,  # self.get_amount_scdf(voucher_lines),
+                 'tax_wh_iva_id': voucher_line_name if voucher_line_name else ' ',
+                 })
 
 
-                # else:
-                #
-                #         self.update({'amount_total_ret': amount_total,
-                #                      'amount_total_base': base_total})
-
+            if voucher_lines.wh_vat_line_id.invoice_id.state not in ['posted']:
+                pass
+        self.update({'amount_total_ret': amount_amount,
+                     'amount_total_base': base_base})
         return True
-    # @api.model
-    # def get_amount_scdf(self,voucher_lines):
-    #     amount_sdcf = 0.0
-    #     line_tax_obj = self.env['account.wh.iva.line.tax']
-    #     line_tax_bw = line_tax_obj.search([('wh_vat_line_id', '=', voucher_lines.id)])
-    #
-    #     for line_tax in line_tax_bw:
-    #         if line_tax.name in ['Exento','Exento (compras)','exento','exento (compras)','Exento (Compras)']:
-    #             amount_sdcf = line_tax.base
-    #     return amount_sdcf
+
     @api.model
     def get_alicuota_iva(self,voucher_lines):
+        tax_id = 0.00
         line_tax_obj = self.env['account.wh.iva.line.tax']
         line_tax_bw = line_tax_obj.search([('wh_vat_line_id', '=', voucher_lines.id)])
 
@@ -256,8 +247,8 @@ class TxtIva(models.Model):
         rp_obj = self.env['res.partner']
         vat_company = txt.company_id.partner_id.vat
         vat_partner = txt_line.partner_id.vat
-        if vat_partner == False:
-            nationality= txt_line.partner_id.nationality
+        if not vat_partner:
+            nationality = txt_line.partner_id.nationality
             cedula = txt_line.partner_id.identification_id
             if nationality and cedula:
                 if nationality == 'V' or nationality == 'E':
@@ -270,7 +261,7 @@ class TxtIva(models.Model):
         else:
             buyer = vat_company
             vendor = vat_partner
-        return (vendor, buyer)
+        return vendor, buyer
 
     @api.model
     def get_document_affected(self, txt_line):
@@ -334,11 +325,16 @@ class TxtIva(models.Model):
         inv_type = '03'
         if txt_line.invoice_id.type in ['out_invoice', 'in_invoice'] and txt_line.invoice_id.partner_id.people_type_company != 'pjnd' :
             inv_type = '01'
-        elif txt_line.invoice_id.type in ['out_invoice', 'in_invoice'] and \
+        elif txt_line.invoice_id.type in ['out_debit', 'in_debit'] and \
                 txt_line.invoice_id.name:
             inv_type = '02'
-        if txt_line.invoice_id.partner_id.company_type == 'company' and txt_line.invoice_id.partner_id.people_type_company == 'pjnd':
+        elif txt_line.invoice_id.type in ['in_invoice']:
+            if txt_line.invoice_id.debit_origin_id:
+                inv_type = '02'
+        elif txt_line.invoice_id.partner_id.company_type == 'company' and txt_line.invoice_id.partner_id.people_type_company == 'pjnd':
             inv_type = '05'
+        elif txt_line.invoice_id.type in ['out_invoice', 'in_invoice'] and txt_line.invoice_id.partner_id.people_type_company != 'pjnd' :
+            inv_type = '01'
 
         return inv_type
 
@@ -348,7 +344,7 @@ class TxtIva(models.Model):
         res = []
         # for tax_line in txt_line.invoice_id.tax_line_ids:
         #     res.append(int(tax_line.tax_id.amount * 100))
-        return (res)
+        return res
 
     @api.model
     def get_amount_line(self, txt_line, amount_exempt):
@@ -381,7 +377,7 @@ class TxtIva(models.Model):
                 tax = tax_lines.base + tax
             else:
                 amount_doc = tax_lines.base + amount_doc
-        return (tax, amount_doc)
+        return tax, amount_doc
 
     @api.model
     def get_alicuota(self, txt_line):
@@ -406,12 +402,14 @@ class TxtIva(models.Model):
         """ Return string with data of the current document
         """
         txt_string = ''
+        # txt_all_lines = []
         rp_obj = self.env['res.partner']
+        value1 = 0
+        value2 = 0
         for txt in self:
             expediente = '0'
             vat = txt.company_id.partner_id.vat
-            vat = vat
-            amount_total11 =0
+            amount_total11 = 0
             for txt_line in txt.txt_ids:
                 vendor, buyer = self.get_buyer_vendor(txt, txt_line)
                 if txt_line.invoice_id.type in ['out_invoice','out_refund']:
@@ -432,7 +430,8 @@ class TxtIva(models.Model):
                     else:
                         buyer = ' '
                     if txt_line.partner_id.company_type == 'person':
-                        vendor = vendor
+                        if vendor:
+                            vendor = vendor.replace("-", "")
                     else:
                         if vendor:
                             vendor = vendor.replace("-", "")
@@ -442,23 +441,21 @@ class TxtIva(models.Model):
                 period = self.get_period(txt.date_start)
                 # TODO: use the start date of the period to get the period2
                 # with the 'YYYYmm'
-                operation_type = ('V' if txt_line.invoice_id.type in
-                                  ['out_invoice', 'out_refund'] else 'C')
+                operation_type = ('V' if txt_line.invoice_id.type in ['out_invoice', 'out_refund'] else 'C')
                 document_type = self.get_type_document(txt_line)
-                document_number = self.get_document_number(
-                    txt_line, 'inv_number')
-                control_number = self.get_number(
-                    txt_line.invoice_id.nro_ctrl, 'inv_ctrl', 20)
+                document_number = self.get_document_number(txt_line, 'inv_number')
+                control_number = self.get_number(txt_line.invoice_id.nro_ctrl, 'inv_ctrl', 20)
                 document_affected = self.get_document_affected(txt_line)
                 document_affected = document_affected.replace("-","") if document_affected else '0'
-                voucher_number = self.get_number(
-                    txt_line.voucher_id.number, 'vou_number', 14)
-                amount_exempt, amount_untaxed = \
-                    self.get_amount_exempt_document(txt_line)
+                voucher_number = self.get_number(txt_line.voucher_id.number, 'vou_number', 14)
+                amount_exempt, amount_untaxed = self.get_amount_exempt_document(txt_line)
+                if  document_type == '03':
 
+                    sign = -1
+                else:
+                    sign = 1
                 alicuota = float(self.get_alicuota(txt_line))
-                amount_total, amount_exempt = self.get_amount_line(
-                    txt_line, amount_exempt)
+                amount_total, amount_exempt = self.get_amount_line(txt_line, amount_exempt)
                 if txt_line.voucher_id == txt_line.invoice_id.wh_iva_id:
                     amount_total11 = txt_line.invoice_id.amount_total
                     amount_total2 = str(round(amount_total11, 2))
@@ -468,10 +465,40 @@ class TxtIva(models.Model):
                     amount_untaxed = amount_untaxed
                 txt_line.untaxed2 = str(round(txt_line.untaxed, 2))
                 txt_line.amount_withheld2 = str(round(txt_line.amount_withheld, 2))
-                amount_exempt2 = str(round(amount_exempt, 2))
+                amount_exempt2 = str(round(txt_line.amount_sdcf, 2))
                 alicuota2 = alicuota
                 if document_type == '05':
                     expediente = str(txt_line.invoice_id.nro_expediente_impor)
+
+                # txt_all_lines.append({
+                #     'txt_string': txt_string,
+                #     'buyer': buyer,
+                #     'period': period,
+                #     'invoice_date': txt_line.invoice_id.date,
+                #     'operation_type': operation_type,
+                #     'document_type': document_type,
+                #     'vendor': vendor,
+                #     'document_number': document_number,
+                #     'control_number': control_number,
+                #     'amount_total2': self.formato_cifras(amount_total2),
+                #     'amount_untaxed': self.formato_cifras(amount_untaxed),
+                #     'amount_withheld2': self.formato_cifras(txt_line.amount_withheld2),
+                #     'document_affected': document_affected,
+                #     'voucher_number': voucher_number,
+                #     'amount_exempt2': self.formato_cifras(amount_exempt2),
+                #     'alicuota2': self.formato_cifras(alicuota2),
+                #     'expediente': expediente
+                # })
+                # with_holding = self.env['account.wh.iva'].search([()])
+
+                if float(txt_line.amount_withheld2) < 0 :
+                    value1 = float(txt_line.amount_withheld2) * -1
+                else:
+                    value1 = float(txt_line.amount_withheld2)
+                if float(amount_untaxed) < 0:
+                    value2 = float(amount_untaxed) * -1
+                else:
+                    value2 = float(amount_untaxed)
                 txt_string = (
                     txt_string + buyer + '\t' + period + '\t'
                     + (str(txt_line.invoice_id.date)) + '\t' + operation_type +
@@ -479,15 +506,12 @@ class TxtIva(models.Model):
                     document_number + '\t' + control_number + '\t' +
                     self.formato_cifras(amount_total2) + '\t' +
                     #self.formato_cifras(txt_line.untaxed2) + '\t' +
-                    self.formato_cifras(amount_untaxed) + '\t' +
-                    self.formato_cifras(txt_line.amount_withheld2) + '\t' +
-                    document_affected
-                    + '\t' + voucher_number + '\t' +
-                    self.formato_cifras(amount_exempt2) + '\t' + self.formato_cifras(alicuota2)
+                    self.formato_cifras(value2) + '\t' +
+                    self.formato_cifras(value1) + '\t' + document_affected + '\t' + voucher_number
+                    + '\t' + self.formato_cifras(amount_exempt2) + '\t' + self.formato_cifras(alicuota2)
                     + '\t' + expediente + '\n')
         return txt_string
 
-    
     def _write_attachment(self, root):
         """ Encrypt txt, save it to the db and view it on the client as an
         attachment
@@ -504,9 +528,9 @@ class TxtIva(models.Model):
 #         })
         txt_name = name
         txt_file = root.encode('utf-8')
-        txt_file = base64.encodestring(txt_file)
+        txt_file = base64.encodebytes(txt_file)
         self.write({'txt_name': txt_name, 'txt_file': txt_file})
-        msg = _("File TXT %s generated.") % (name)
+        msg = _("File TXT %s generated.") % name
         self.message_post(body=msg)
 
     
@@ -519,13 +543,14 @@ class TxtIva(models.Model):
 
         return True
 
-    def formato_cifras(self,monto):
+    @staticmethod
+    def formato_cifras(monto):
         cds = '0'
         monto = str(monto)
         if monto =='0':
             monto = '0.00'
         for i in range(0, len(monto)):
-            if (monto[i] == '.'):
+            if monto[i] == '.':
                 cds = monto[i + 1:]
         if len(cds) == 2:
             imprimir0 = ''

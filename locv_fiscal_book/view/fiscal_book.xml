@@ -123,7 +123,7 @@ string="Invoice"
                     <field name="type" readonly="1"/>
                     <field name="article_number"/>
                     <!--field name="period_id" widget="selection"/-->
-                    <field name="company_id"/>
+                    <field name="company_id" options="{'no_create': True, 'no_open': True}"/>
                     <field name="time_period" />
                     <!--label for="period_start" string="Period" attrs="{'invisible': [('time_period', '!=', 'custom')]}"/-->
                     <label for="period_start" string="Periodo" invisible="1"/>
@@ -331,7 +331,7 @@ string="Invoice"
                     <field name="name"/>
                     <field name="type" readonly="1"/>
                     <!--field name="period_id" widget="selection"/-->
-                    <field name="company_id"/>
+                    <field name="company_id" options="{'no_create': True, 'no_open': True}"/>
                     <field name="time_period" />
                     <!--label for="period_start" string="Period" attrs="{'invisible': [('time_period', '!=', 'custom')]}"/-->
                     <label for="period_start" string="Periodo" invisible="1"/>

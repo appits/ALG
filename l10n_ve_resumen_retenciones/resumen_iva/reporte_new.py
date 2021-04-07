@@ -52,11 +52,11 @@ class ReportResumenIva(models.AbstractModel):
         date_actual = datetime.strptime(data['form']['date_actual'], DATE_FORMAT)
         docs=[]
         cursor_resumen = self.env['account.move'].search([
-            ('invoice_date','>=',date_from),
-            ('invoice_date','<=',date_to),
+            ('date','>=',date_from),
+            ('date','<=',date_to),
             ('state','in',('posted','cancel' )),
             ('type','in',('in_invoice','in_refund','in_receipt'))
-            ])
+            ],order="invoice_date asc")
         date_from = datetime.strftime(datetime.strptime(data['form']['date_from'], DEFAULT_SERVER_DATE_FORMAT),
                                        format_new)
         date_to = datetime.strftime(datetime.strptime(data['form']['date_to'], DEFAULT_SERVER_DATE_FORMAT), format_new)
@@ -85,12 +85,12 @@ class ReportResumenIva(models.AbstractModel):
                             alicuota_adicional_monto = (alicuota_adicional * imp.amount) / 100
                             porcentaje_alicuota_general_adicional = imp.amount
                             base_adicional = str(imp.amount) + '%'
-                        if imp.appl_type == 'sdcf':
+                        if imp.appl_type == 'exento':
                             sdcf += ali.price_subtotal
                 alicuota_general_adicional = alicuota_adicional
                 if alicuota_general_adicional > 0 and porcentaje_alicuota_general_adicional > 0:
                     alicuota_general_adicional_monto = (alicuota_general_adicional * porcentaje_alicuota_general_adicional) / 100
-                alicuota_totales = alicuota_general_monto + alicuota_reducida_monto  + alicuota_adicional_monto
+                alicuota_totales = (alicuota_general_monto * det.wh_iva_id.wh_lines.wh_iva_rate) / 100
 
 
                 # if det.wh_iva_id.type == 'in_refund' or det.wh_iva_id.type == 'in_receipt':
@@ -99,33 +99,52 @@ class ReportResumenIva(models.AbstractModel):
                 else:
                     rif_empresa = company_id.partner_id.vat
                 cont += 1
+                ref_v = ''
+                if det.type == 'in_invoice' and det.debit_origin_id:
+                    ref_v = det.debit_origin_id.supplier_invoice_number
+                if det.type == 'in_refund':
+                    ref_v = det.invoice_reverse_purchase_id.supplier_invoice_number
+                tipo_doc = ''
+                sign = 1
+                if det.wh_iva_id.type == 'in_invoice' or det.wh_iva_id.type =='out_invoice':
+                    tipo_doc = '01'
+                if det.wh_iva_id.type == 'in_refund' or det.wh_iva_id.type =='out_refund':
+                    tipo_doc = '03'
+                    sign = -1
+                if det.wh_iva_id.type == 'in_debit' or det.wh_iva_id.type =='out_debit':
+                    tipo_doc = '02'
+
+
+
+                date_factura = datetime.strftime(
+                    datetime.strptime(str(det.invoice_date), DEFAULT_SERVER_DATE_FORMAT), format_new)
                 docs.append({
                 'cont': cont,
-                'name':det.invoice_date,
+                'name':date_factura,
                 'document':det.name,
                 'partner_identification': det.partner_id.vat if det.partner_id.vat else det.partner_id.identification_id ,
                 'partner_name': det.partner_id.name,
                 'invoice_number': det.supplier_invoice_number,
-                'tipo_doc': det.wh_iva_id.type,
+                'tipo_doc': tipo_doc,
                 'invoice_ctrl_number': det.nro_ctrl,
-                'sale_total': sale_total,
-                'base_imponible': det.amount_untaxed,
-                'iva' : iva,
+                'sale_total': sale_total * sign,
+                'base_imponible': det.amount_untaxed * sign,
+                'iva' : iva * sign,
                 'iva_retenido': iva_retenido,
                 'retenido': det.wh_iva_id.name,
                 'retenido_date':det.wh_iva_id.date,
                 'state_retantion': det.wh_iva_id.state,
                 'state': det.state,
                 'currency_id':det.currency_id.id,
-                'ref':det.ref,
-                'total_exento':0,
+                'ref':ref_v,
+                'total_exento':sdcf * sign,
                 'alicuota_reducida':alicuota_reducida,
-                'alicuota_general': alicuota_general,
-                'alicuota_adicional': alicuota_adicional,
-                'alicuota_reducida_monto': alicuota_reducida_monto,
-                'alicuota_general_monto': alicuota_general_monto,
-                'alicuota_adicional_monto': alicuota_adicional_monto,
-                'alicuota_totales': alicuota_totales,
+                'alicuota_general': alicuota_general * sign,
+                'alicuota_adicional': alicuota_adicional * sign,
+                'alicuota_reducida_monto': alicuota_reducida_monto * sign,
+                'alicuota_general_monto': alicuota_general_monto  * sign,
+                'alicuota_adicional_monto': alicuota_adicional_monto * sign,
+                'alicuota_totales': alicuota_totales  * sign,
                 'base_adicional': base_adicional,
                 'base_reducida': base_reducida,
                 'base_general': base_general,

@@ -43,7 +43,7 @@ class AccountWhIvaLineTax(models.Model):
         ondelete='set null', help="Company")
     amount_ret = fields.Float(
         string='Cantidad gravada retenida',
-        store=True, compute='_get_amount_ret', inverse='_set_amount_ret',
+        store=True, compute='_get_amount_ret', digits=dp.get_precision('Withhold'), inverse='_set_amount_ret',
         help="Importe de retención de IVA")
     alicuota = fields.Float('% Alicuota del impuesto')
 
@@ -91,9 +91,7 @@ class AccountWhIvaLineTax(models.Model):
         for record in self:
             # TODO: THIS NEEDS REFACTORY IN ORDER TO COMPLY WITH THE SALE
             # WITHHOLDING
-            record.amount_ret = round(
-                (record.amount * record.wh_vat_line_id.wh_iva_rate / 100.0) +
-                0.00000001, 2)
+            record.amount_ret = (record.amount * record.wh_vat_line_id.wh_iva_rate / 100.0)
 
 
 
@@ -160,9 +158,11 @@ class AccountWhIvaLine(models.Model):
     ]
     type = fields.Selection([
         ('out_invoice', 'Factura de Cliente'),
+        ('out_refund', 'Nota de Credito'),
+        ('out_debit', 'Nota de Debito'),
         ('in_invoice', 'Factura de Proveedor'),
         ('in_refund', 'Nota de Credito'),
-        ('out_refund', 'Nota de Debito')], string='Tipo de Factura', default=_get_type)
+        ('in_debit', 'Nota de Debito')], string='Tipo de Factura', default=_get_type)
 
     check_false = fields.Boolean('false')
 
@@ -178,7 +178,7 @@ class AccountWhIvaLine(models.Model):
         partner = self.env['res.partner']
         for rec in self:
             if rec.invoice_id:
-                rate = rec.retention_id.type == 'out_invoice' and \
+                rate = rec.retention_id.type in [('out_invoice','out_refund', 'out_debit')] and \
                     partner._find_accounting_partner(
                         rec.invoice_id.company_id.partner_id).wh_iva_rate or \
                     partner._find_accounting_partner(
@@ -315,9 +315,9 @@ class AccountWhIva(models.Model):
             tyype = context.get('type')
             if not tyype:
                 res = []
-        if type and type in ('out_invoice', 'out_refund'):
+        if type and type in ('out_invoice', 'out_refund','out_debit'):
             res = partner_sale
-        elif type and type in ('in_invoice', 'in_refund'):
+        elif type and type in ('in_invoice', 'in_refund','in_debit'):
             res = partner_purchase
         return res
 
@@ -507,7 +507,7 @@ class AccountWhIva(models.Model):
                 False: write unsuccessfully.
         """
         for obj in self:
-            if obj.type in ('out_invoice', 'out_refund'):
+            if obj.type in ('out_invoice', 'out_refund', 'out_debit','in_debit', 'in_invoice','in_refund'):
                 for wh_line in obj.wh_lines:
                     if not wh_line.invoice_id.write({'wh_iva_id': obj.id}):
                         return False
@@ -567,7 +567,7 @@ class AccountWhIva(models.Model):
             if ret.wh_lines:
 
                 for line in ret.wh_lines:
-                    if line.invoice_id.type in ['in_invoice', 'in_refund']:
+                    if line.invoice_id.type in ['in_invoice', 'in_refund', 'in_debit']:
                         name = ('COMP. RET. IVA ' + (ret.number if ret.number else str()) + ' Doc. ' + (line.invoice_id.supplier_invoice_number if line.invoice_id.supplier_invoice_number else str()))
                     else:
                         name = ('COMP. RET. IVA ' + (ret.number if ret.number else str()) + ' Doc. ' + (line.invoice_id.name if line.invoice_id.name else str()))
@@ -616,7 +616,7 @@ class AccountWhIva(models.Model):
                     ret.write({'wh_lines': lines})
 
                     if (rl and line.invoice_id.type
-                            in ['out_invoice', 'out_refund']):
+                            in ['out_invoice', 'out_refund', 'out_invoice','in_invoice','in_refund','out_debit']):
                         invoice.write({'wh_iva_id': ret.id})
             return True
 
@@ -750,7 +750,7 @@ class AccountWhIva(models.Model):
 
             self.write({'date_ret': self.date_ret})
             self.action_move_create()
-            if self.type in ('in_invoice', 'in_refund'):
+            if self.type in ('in_invoice', 'in_refund', 'in_debit'):
                 if not self.number:
                     self.number = self._get_sequence_code()
                     self.write({'number': self.number})
@@ -858,9 +858,11 @@ class AccountWhIva(models.Model):
         help="Numero de Retencion de IVA")
     type = fields.Selection([
         ('out_invoice', 'Factura de Cliente'),
+        ('out_refund', 'Nota de Credito'),
+        ('out_debit', 'Nota de Debito'),
         ('in_invoice', 'Factura de Proveedor'),
         ('in_refund', 'Nota de Credito'),
-        ('out_refund','Nota de Debito')], string='Type', default=_get_type, readonly=True, help="Withholding type")
+        ('in_debit', 'Nota de Debito')], string='Type', default=_get_type, readonly=True, help="Withholding type")
     state = fields.Selection([
         ('draft', 'Borrador'),
         ('confirmed', 'Confirmado'),

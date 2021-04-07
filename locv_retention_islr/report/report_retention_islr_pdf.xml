@@ -148,7 +148,16 @@
                                     <td class="text-center" style="border: 1px solid;width:5%; "> <span t-esc="doc['tasa_porc']"/> </td>
                                     <td class="text-center" style="border: 1px solid;width:10%;"> <span t-esc="doc['impusto_retenido']"/> </td>
                                 </tr>
+
                             </t>
+                            <tr>
+                                    <td colspan="6" class="text-center" style="border: 1px solid;width:10%;"> &amp;nbsp;&amp;nbsp;&amp;nbsp;</td>
+                                    <td class="text-center" style="border: 1px solid;width:10%;"><b>TOTALES</b></td>
+                                    <td class="text-center" style="border: 1px solid;width:13%;"> <span t-esc="total_base_amount"/> </td>
+                                    <td colspan="1" class="text-center" style="border: 1px solid;width:10%;"> &amp;nbsp;&amp;nbsp;&amp;nbsp;</td>
+                                    <td class="text-center" style="border: 1px solid;width:13%;"> <span t-esc="total_amount_ret"/> </td>
+
+                                </tr>
                         </table>
                     </div>
 

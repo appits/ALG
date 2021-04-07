@@ -184,8 +184,8 @@
                               <td><span t-esc="doc['porcentaje_alicuota_general_adicional']"/></td>
                               <td><span t-esc="'{0:,.2f}'.format(doc['alicuota_general_adicional_monto']).replace(',', 'X').replace('.', ',').replace('X', '.')"/></td>
                                     <t t-set="acum_alicuota_general_adicional_monto" t-value="acum_alicuota_general_adicional_monto+doc['alicuota_general_adicional_monto']"/>
-                              <td><span t-esc="'{0:,.2f}'.format(doc['alicuota_totales']).replace(',', 'X').replace('.', ',').replace('X', '.')"/></td>
-                                    <t t-set="acum_alicuota_totales" t-value="acum_alicuota_totales+doc['alicuota_totales']"/>
+                              <td><span t-esc="'{0:,.2f}'.format(doc['iva']).replace(',', 'X').replace('.', ',').replace('X', '.')"/></td>
+                                    <t t-set="acum_alicuota_totales" t-value="acum_alicuota_totales+doc['iva']"/>
                               <td><span t-esc="doc['numero_comprobante']"/></td>
                               <td><span t-esc="doc['retenido_date']"/></td>
       			            </tr>

@@ -56,10 +56,13 @@ class RepComprobanteIslr(models.AbstractModel):
         else:
             raise Warning(_("Se necesita la Fecha para poder procesar."))
         if partner_id.company_type == 'person':
-            if partner_id.nationality == 'V' or partner_id.nationality == 'E':
-                document = str(partner_id.nationality) + str(partner_id.identification_id)
+            if partner_id.vat:
+                document = partner_id.vat
             else:
-                document = str(partner_id.identification_id)
+                if partner_id.nationality == 'V' or partner_id.nationality == 'E':
+                    document = str(partner_id.nationality) + str(partner_id.identification_id)
+                else:
+                    document = str(partner_id.identification_id)
         else:
             document = partner_id.vat
 
@@ -132,13 +135,13 @@ class RepComprobanteIslr(models.AbstractModel):
 
     def get_period(self, date):
         if not date:
-            raise Warning(_("You need date."))
+            raise Warning(_("Se necesita una fecha, por favor ingresar"))
         split_date = str(date).split('-')
         return str(split_date[1]) + '/' + str(split_date[0])
 
     def get_date(self, date):
         if not date:
-            raise Warning(_("You need date."))
+            raise Warning(_("Se necesita una fecha, por favor ingresar."))
         split_date = date.split('-')
         return str(split_date[2]) + '/' + (split_date[1]) + '/' + str(split_date[0])
 

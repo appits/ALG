@@ -56,43 +56,53 @@ class ResumenMunicipalModelo(models.Model):
         #nro_doc=self.partner_id.vat
         busca_partner = self.env['res.partner'].search([('id','=',aux)])
         if busca_partner:
-            for det in busca_partner:
-                tipo_doc=busca_partner.doc_type
-                if busca_partner.vat:
-                    nro_doc=str(busca_partner.vat)
-                else:
-                    nro_doc='0000000000'
+            if busca_partner.vat:
+                return busca_partner.vat
+            else:
+                return busca_partner.identification_id
         else:
-            nro_doc='000000000'
-            tipo_doc='V'
-        nro_doc=nro_doc.replace('V','')
-        nro_doc=nro_doc.replace('v','')
-        nro_doc=nro_doc.replace('E','')
-        nro_doc=nro_doc.replace('e','')
-        nro_doc=nro_doc.replace('G','')
-        nro_doc=nro_doc.replace('g','')
-        nro_doc=nro_doc.replace('J','')
-        nro_doc=nro_doc.replace('j','')
-        nro_doc=nro_doc.replace('P','')
-        nro_doc=nro_doc.replace('p','')
-        nro_doc=nro_doc.replace('c','')
-        nro_doc=nro_doc.replace('C','')
-        nro_doc=nro_doc.replace('-','')
-        
-        if tipo_doc=="v":
-            tipo_doc="V"
-        if tipo_doc=="e":
-            tipo_doc="E"
-        if tipo_doc=="g":
-            tipo_doc="G"
-        if tipo_doc=="j":
-            tipo_doc="J"
-        if tipo_doc=="p":
-            tipo_doc="P"
-        if tipo_doc=="c":
-            tipo_doc="C"
-        resultado=str(tipo_doc)+"-"+str(nro_doc)
-        return resultado
+            nro_doc = '000000000'
+            tipo_doc = 'V'
+            resultado=str(tipo_doc)+"-"+str(nro_doc)
+            return resultado
+        # if busca_partner:
+        #     for det in busca_partner:
+        #         tipo_doc=busca_partner.doc_type
+        #         if busca_partner.vat:
+        #             nro_doc=str(busca_partner.vat)
+        #         else:
+        #             nro_doc='0000000000'
+        # else:
+        #     nro_doc='000000000'
+        #     tipo_doc='V'
+        # nro_doc=nro_doc.replace('V','')
+        # nro_doc=nro_doc.replace('v','')
+        # nro_doc=nro_doc.replace('E','')
+        # nro_doc=nro_doc.replace('e','')
+        # nro_doc=nro_doc.replace('G','')
+        # nro_doc=nro_doc.replace('g','')
+        # nro_doc=nro_doc.replace('J','')
+        # nro_doc=nro_doc.replace('j','')
+        # nro_doc=nro_doc.replace('P','')
+        # nro_doc=nro_doc.replace('p','')
+        # nro_doc=nro_doc.replace('c','')
+        # nro_doc=nro_doc.replace('C','')
+        # nro_doc=nro_doc.replace('-','')
+        #
+        # if tipo_doc=="v":
+        #     tipo_doc="V"
+        # if tipo_doc=="e":
+        #     tipo_doc="E"
+        # if tipo_doc=="g":
+        #     tipo_doc="G"
+        # if tipo_doc=="j":
+        #     tipo_doc="J"
+        # if tipo_doc=="p":
+        #     tipo_doc="P"
+        # if tipo_doc=="c":
+        #     tipo_doc="C"
+        # resultado=str(tipo_doc)+"-"+str(nro_doc)
+        # return resultado
 
 class WizardReport_2(models.TransientModel): # aqui declaro las variables del wizar que se usaran para el filtro del pdf
     _name = 'wizard.resumen.municipal'
@@ -108,35 +118,45 @@ class WizardReport_2(models.TransientModel): # aqui declaro las variables del wi
     def rif(self,aux):
         #nro_doc=self.partner_id.vat
         busca_partner = self.env['res.partner'].search([('id','=',aux)])
-        for det in busca_partner:
-            tipo_doc=busca_partner.doc_type
-            nro_doc=str(busca_partner.vat)
-        nro_doc=nro_doc.replace('V','')
-        nro_doc=nro_doc.replace('v','')
-        nro_doc=nro_doc.replace('E','')
-        nro_doc=nro_doc.replace('e','')
-        nro_doc=nro_doc.replace('G','')
-        nro_doc=nro_doc.replace('g','')
-        nro_doc=nro_doc.replace('J','')
-        nro_doc=nro_doc.replace('j','')
-        nro_doc=nro_doc.replace('P','')
-        nro_doc=nro_doc.replace('p','')
-        nro_doc=nro_doc.replace('-','')
-        
-        if tipo_doc=="v":
-            tipo_doc="V"
-        if tipo_doc=="e":
-            tipo_doc="E"
-        if tipo_doc=="g":
-            tipo_doc="G"
-        if tipo_doc=="j":
-            tipo_doc="J"
-        if tipo_doc=="p":
-            tipo_doc="P"
-        if tipo_doc=="c":
-            tipo_doc="C"
-        resultado=str(tipo_doc)+"-"+str(nro_doc)
-        return resultado
+        if busca_partner:
+            if busca_partner.vat:
+                return busca_partner.vat
+            else:
+                return busca_partner.identification_id
+        else:
+            nro_doc = '000000000'
+            tipo_doc = 'V'
+            resultado=str(tipo_doc)+"-"+str(nro_doc)
+            return resultado
+        # for det in busca_partner:
+        #     tipo_doc=busca_partner.doc_type
+        #     nro_doc=str(busca_partner.vat)
+        # nro_doc=nro_doc.replace('V','')
+        # nro_doc=nro_doc.replace('v','')
+        # nro_doc=nro_doc.replace('E','')
+        # nro_doc=nro_doc.replace('e','')
+        # nro_doc=nro_doc.replace('G','')
+        # nro_doc=nro_doc.replace('g','')
+        # nro_doc=nro_doc.replace('J','')
+        # nro_doc=nro_doc.replace('j','')
+        # nro_doc=nro_doc.replace('P','')
+        # nro_doc=nro_doc.replace('p','')
+        # nro_doc=nro_doc.replace('-','')
+        #
+        # if tipo_doc=="v":
+        #     tipo_doc="V"
+        # if tipo_doc=="e":
+        #     tipo_doc="E"
+        # if tipo_doc=="g":
+        #     tipo_doc="G"
+        # if tipo_doc=="j":
+        #     tipo_doc="J"
+        # if tipo_doc=="p":
+        #     tipo_doc="P"
+        # if tipo_doc=="c":
+        #     tipo_doc="C"
+        # resultado=str(tipo_doc)+"-"+str(nro_doc)
+        # return resultado
 
     def periodo(self,date):
         fecha = str(date)

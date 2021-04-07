@@ -113,37 +113,22 @@
                                     <span t-esc="o['people_type']"/><!-- tipo de proveedor-->
                                 </td>
                                   <td class="text-center table-bordered" style=" border: 1px solid #000000;">
-                                    <t t-if="o['doc_type'] == 'N/DB'">
-
-                                    </t>
-                                    <t t-if="o['doc_type'] != 'N/DB'" style="font-size:6px;">
-                                        <span t-esc="o['invoice_number']"/><!--Nro. documento o factura-->
-                                    </t>
+                                    <span t-esc="o['invoice_number']"/>
                                 </td>
                                 <td class="text-center table-bordered" style=" border: 1px solid #000000;">
                                     <span t-esc="o['ctrl_number']"/><!-- Nro. de control-->
                                 </td>
                                 <td class="text-center table-bordered" style=" border: 1px solid #000000;">
-                                    <t t-if="o['doc_type'] == 'N/DB'">
-                                            <span t-esc="o['invoice_number']"/>
-                                    </t>
-                                    <t t-if="o['doc_type'] != 'N/DB'">
-
-                                    </t><!-- Nro. de Nota Crédito-->
+                                   <span t-esc="o['credit_affected']"/>
                                 </td>
                                  <td class="text-center table-bordered" style=" border: 1px solid #000000;">
-                                    <span t-esc="o['credit_affected']"/><!-- Nro. de Nota de Débito-->
+                                    <span t-esc="o['debit_affected']"/><!-- Nro. de Nota de Débito-->
                                 </td>
                                 <td class="text-center table-bordered" style=" border: 1px solid #000000;">
                                     <span t-esc="o['type']"/><!-- Tipo de Transacción-->
                                 </td>
                                 <td class="text-center table-bordered" style=" border: 1px solid #000000;">
-                                    <t t-if="o['doc_type'] == 'N/DB'">
-                                            <span t-esc="o['affected_invoice']"/>
-                                    </t>
-                                    <t t-if="o['doc_type'] != 'N/DB'">
-                                        <!--Nro. factura afectada-->
-                                    </t>
+                                    <span t-esc="o['affected_invoice']"/>
                                 </td>
                                 <td class="text-center table-bordered" style=" border: 1px solid #000000;">
                                     <span t-esc="'{0:,.2f}'.format(o['total_with_iva']).replace(',', 'X').replace('.', ',').replace('X', '.')"/><!--Total compras con IVA-->

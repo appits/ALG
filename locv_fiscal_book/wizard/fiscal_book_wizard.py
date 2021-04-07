@@ -220,7 +220,7 @@ class PurchaseBook(models.AbstractModel):
                     tasa = 1
                     if h.invoice_id.currency_id.name == "USD":
                         tasa = self.obtener_tasa(h.invoice_id)
-                    if h.doc_type == 'N/DB':
+                    if h.doc_type == 'N/CR':
                         total = (h.invoice_id.amount_total)*-1 * tasa
                     else:
                         total = (h.invoice_id.amount_total) * tasa
@@ -229,10 +229,9 @@ class PurchaseBook(models.AbstractModel):
                     sum_vat_additional_base += h.vat_additional_base  # BASE IMPONIBLE ALICUOTA ADICIONAL
 
                     sum_vat_additional_tax += h.vat_additional_tax  # IMPUESTO DE IVA ALICUOTA ADICIONAL
-                    if h.doc_type == 'N/DB':
-                        sum_total_with_iva -= total  # Total monto con IVA
-                    else:
-                        sum_total_with_iva += total
+
+                    sum_total_with_iva = h.fb_id.base_amount + h.fb_id.tax_amount# Total monto con IVA
+
                      # Total monto con IVA
                     sum_vat_general_base += h.vat_general_base # Base Imponible Alicuota general
                     sum_vat_general_tax += h.vat_general_tax   # Impuesto de IVA
@@ -254,7 +253,7 @@ class PurchaseBook(models.AbstractModel):
                     tasa = 1
                     if h.iwdl_id.invoice_id.currency_id.name == "USD":
                         tasa = self.obtener_tasa(h.iwdl_id.invoice_id)
-                    if h.doc_type == 'N/DB':
+                    if h.doc_type == 'N/CR':
                         total = (h.iwdl_id.invoice_id.amount_total)*-1 * tasa
                     else:
                         total = (h.iwdl_id.invoice_id.amount_total) * tasa
@@ -265,10 +264,9 @@ class PurchaseBook(models.AbstractModel):
                     sum_vat_additional_base += h.vat_additional_base  # BASE IMPONIBLE ALICUOTA ADICIONAL
 
                     sum_vat_additional_tax += h.vat_additional_tax  # IMPUESTO DE IVA ALICUOTA ADICIONAL
-                    if h.doc_type == 'N/DB':
-                        sum_total_with_iva -= total  # Total monto con IVA
-                    else:
-                        sum_total_with_iva += total
+
+                    sum_total_with_iva = h.fb_id.base_amount + h.fb_id.tax_amount  # Total monto con IVA
+
                     sum_vat_general_base += h.vat_general_base  # Base Imponible Alicuota general
                     sum_vat_general_tax += h.vat_general_tax  # Impuesto de IVA
                     h_vat_general_base = h.vat_general_base
@@ -307,6 +305,10 @@ class PurchaseBook(models.AbstractModel):
 
                     planilla = h.invoice_id.nro_planilla_impor
                     expediente = h.invoice_id.nro_expediente_impor
+
+
+
+
                 else:
                     date_impor = h.iwdl_id.invoice_id.fecha_importacion
                     emission_date = datetime.strftime(datetime.strptime(str(date_impor), DEFAULT_SERVER_DATE_FORMAT),
@@ -338,10 +340,7 @@ class PurchaseBook(models.AbstractModel):
                 vat_additional_rate_importaciones = int(h.vat_additional_base and h.vat_additional_tax * 100 / h.vat_additional_base)
                 vat_additional_tax_importaciones = h.vat_additional_tax
                 'Suma total compras con IVA'
-                if h.doc_type == 'N/DB':
-                    sum_total_with_iva -= total  # Total monto con IVA
-                else:
-                    sum_total_with_iva += total
+                sum_total_with_iva = h.fb_id.base_amount + h.fb_id.tax_amount
                  # Total monto con IVA
                 'SUMA TOTAL DE TODAS LAS ALICUOTAS PARA LAS IMPORTACIONES'
                 sum_vat_general_base_importaciones += h.vat_general_base + h.vat_reduced_base + h.vat_additional_base # Base Imponible Alicuota general
@@ -420,13 +419,13 @@ class PurchaseBook(models.AbstractModel):
                 'invoice_number': h.invoice_number,
                 'affected_invoice': h.affected_invoice,
                 'ctrl_number': h.ctrl_number,
-                'debit_affected': number if h.doc_type == 'N/DB' else '',
-                'credit_affected': h.invoice_number if h.doc_type == 'N/CR' else '',# h.credit_affected,
+                'debit_affected': h.debit_affected,
+                'credit_affected': h.credit_affected,# h.credit_affected,
                 'type': h.void_form,
                 'doc_type': h.doc_type,
                 'origin': origin,
                 'number': number,
-                'total_with_iva': total,
+                'total_with_iva': h.total_with_iva,
                 'vat_exempt': vat_exempt,
                 'compras_credit': compras_credit,
                 'vat_general_base': valor_base_imponible,
@@ -647,8 +646,8 @@ class FiscalBookSaleReport(models.AbstractModel):
                     'invoice_number': line.invoice_number,
                     'n_ultima_factZ': line.n_ultima_factZ,
                     'ctrl_number': line.ctrl_number,
-                    'debit_note': '',
-                    'credit_note': line.invoice_number if line.doc_type == 'N/CR' else '',
+                    'debit_note': line.debit_affected,
+                    'credit_note': line.credit_affected,
                     'type': line.void_form,
                     'affected_invoice': line.affected_invoice if line.affected_invoice else ' ',
                     'total_w_iva': line.total_with_iva if line.total_with_iva else 0,

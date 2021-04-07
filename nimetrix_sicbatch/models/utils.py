@@ -20,7 +20,7 @@ def send_log(self, record, response, status):
 
 def file_log(self, params, sp):
     text = sp+"_"+str(params)+"_"+str(self.write_date - timedelta(hours=4))
-    x_path = "/var/log/odoo/sicbatch/"
+    x_path = "/tmp/"
     if not path.exists(x_path):
         os.mkdir(x_path)
     filename = x_path+"sicbatch_"+str(self.write_date)+".log"
@@ -28,6 +28,11 @@ def file_log(self, params, sp):
     file1.write(text)
     file1.close()
 
+
+def get_config(self):
+    config = self.env['config.connection'].search(
+        [('company_id', '=', self.company_id.id)])
+    return config
 
 
 

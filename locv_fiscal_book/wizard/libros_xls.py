@@ -156,7 +156,7 @@ class FiscalBookWizard(models.TransientModel):
                     tasa = 1
                     if h.invoice_id.currency_id.name == "USD":
                         tasa = self.obtener_tasa(h.invoice_id)
-                    if h.doc_type == 'N/DB':
+                    if h.doc_type == 'N/CR':
                         total = (h.invoice_id.amount_total) * -1 * tasa
                     else:
                         total = (h.invoice_id.amount_total) * tasa
@@ -165,16 +165,15 @@ class FiscalBookWizard(models.TransientModel):
                     sum_vat_additional_base += h.vat_additional_base  # BASE IMPONIBLE ALICUOTA ADICIONAL
 
                     sum_vat_additional_tax += h.vat_additional_tax  # IMPUESTO DE IVA ALICUOTA ADICIONAL
-                    if h.doc_type == 'N/DB':
-                        sum_total_with_iva -= total  # Total monto con IVA
-                    else:
-                        sum_total_with_iva += total
+
+                    sum_total_with_iva = h.fb_id.base_amount + h.fb_id.tax_amount  # Total monto con IVA
+
                     # Total monto con IVA
                     sum_vat_general_base += h.vat_general_base  # Base Imponible Alicuota general
                     sum_vat_general_tax += h.vat_general_tax  # Impuesto de IVA
                     h_vat_general_base = h.vat_general_base
                     h_vat_general_rate = (
-                        h.vat_general_base and h.vat_general_tax * 100 / h.vat_general_base) if h.vat_general_base else 0.0
+                                h.vat_general_base and h.vat_general_tax * 100 / h.vat_general_base) if h.vat_general_base else 0.0
                     h_vat_general_rate = round(h_vat_general_rate, 0)
                     h_vat_general_tax = h.vat_general_tax if h.vat_general_tax else 0.0
                     vat_reduced_base = h.vat_reduced_base
@@ -193,7 +192,7 @@ class FiscalBookWizard(models.TransientModel):
                     tasa = 1
                     if h.iwdl_id.invoice_id.currency_id.name == "USD":
                         tasa = self.obtener_tasa(h.iwdl_id.invoice_id)
-                    if h.doc_type == 'N/DB':
+                    if h.doc_type == 'N/CR':
                         total = (h.iwdl_id.invoice_id.amount_total) * -1 * tasa
                     else:
                         total = (h.iwdl_id.invoice_id.amount_total) * tasa
@@ -204,15 +203,14 @@ class FiscalBookWizard(models.TransientModel):
                     sum_vat_additional_base += h.vat_additional_base  # BASE IMPONIBLE ALICUOTA ADICIONAL
 
                     sum_vat_additional_tax += h.vat_additional_tax  # IMPUESTO DE IVA ALICUOTA ADICIONAL
-                    if h.doc_type == 'N/DB':
-                        sum_total_with_iva -= total  # Total monto con IVA
-                    else:
-                        sum_total_with_iva += total
+
+                    sum_total_with_iva = h.fb_id.base_amount + h.fb_id.tax_amount  # Total monto con IVA
+
                     sum_vat_general_base += h.vat_general_base  # Base Imponible Alicuota general
                     sum_vat_general_tax += h.vat_general_tax  # Impuesto de IVA
                     h_vat_general_base = h.vat_general_base
                     h_vat_general_rate = (
-                        h.vat_general_base and h.vat_general_tax * 100 / h.vat_general_base) if h.vat_general_base else 0.0
+                                h.vat_general_base and h.vat_general_tax * 100 / h.vat_general_base) if h.vat_general_base else 0.0
                     h_vat_general_rate = round(h_vat_general_rate, 0)
                     h_vat_general_tax = h.vat_general_tax if h.vat_general_tax else 0.0
                     vat_reduced_base = h.vat_reduced_base
@@ -250,6 +248,10 @@ class FiscalBookWizard(models.TransientModel):
 
                     planilla = h.invoice_id.nro_planilla_impor
                     expediente = h.invoice_id.nro_expediente_impor
+
+
+
+
                 else:
                     date_impor = h.iwdl_id.invoice_id.fecha_importacion
                     emission_date = datetime.strftime(datetime.strptime(str(date_impor), DEFAULT_SERVER_DATE_FORMAT),
@@ -259,7 +261,7 @@ class FiscalBookWizard(models.TransientModel):
                     tasa = 1
                     if h.iwdl_id.invoice_id.currency_id.name == "USD":
                         tasa = self.obtener_tasa(h.iwdl_id.invoice_id)
-                    total = h.iwdl_id.invoice_id.amount_total  * tasa
+                    total = h.iwdl_id.invoice_id.amount_total * tasa
                 get_wh_vat = 0.0
                 vat_reduced_base = 0
                 vat_reduced_rate = 0
@@ -269,8 +271,8 @@ class FiscalBookWizard(models.TransientModel):
                 vat_additional_tax = 0
                 'ALICUOTA GENERAL IMPORTACIONES'
                 vat_general_base_importaciones = h.vat_general_base
-                vat_general_rate_importaciones = int(
-                    h.vat_general_base and h.vat_general_tax * 100 / h.vat_general_base)
+                vat_general_rate_importaciones = (h.vat_general_base and h.vat_general_tax * 100 / h.vat_general_base)
+                vat_general_rate_importaciones = round(vat_general_rate_importaciones, 0)
                 vat_general_tax_importaciones = h.vat_general_tax
                 'ALICUOTA REDUCIDA IMPORTACIONES'
                 vat_reduced_base_importaciones = h.vat_reduced_base
@@ -283,10 +285,7 @@ class FiscalBookWizard(models.TransientModel):
                     h.vat_additional_base and h.vat_additional_tax * 100 / h.vat_additional_base)
                 vat_additional_tax_importaciones = h.vat_additional_tax
                 'Suma total compras con IVA'
-                if h.doc_type == 'N/DB':
-                    sum_total_with_iva -= total  # Total monto con IVA
-                else:
-                    sum_total_with_iva += total
+                sum_total_with_iva = h.fb_id.base_amount + h.fb_id.tax_amount
                 # Total monto con IVA
                 'SUMA TOTAL DE TODAS LAS ALICUOTAS PARA LAS IMPORTACIONES'
                 sum_vat_general_base_importaciones += h.vat_general_base + h.vat_reduced_base + h.vat_additional_base  # Base Imponible Alicuota general
@@ -366,13 +365,13 @@ class FiscalBookWizard(models.TransientModel):
                 'invoice_number': h.invoice_number,
                 'affected_invoice': h.affected_invoice,
                 'ctrl_number': h.ctrl_number,
-                'debit_affected': number if h.doc_type == 'N/DB' else '',
-                'credit_affected': h.invoice_number if h.doc_type == 'N/CR' else '',  # h.credit_affected,
+                'debit_affected': h.affected_invoice,
+                'credit_affected': h.affected_invoice,  # h.credit_affected,
                 'type': h.void_form,
                 'doc_type': h.doc_type,
                 'origin': origin,
                 'number': number,
-                'total_with_iva': total,
+                'total_with_iva': h.total_with_iva,
                 'vat_exempt': vat_exempt,
                 'compras_credit': compras_credit,
                 'vat_general_base': valor_base_imponible,

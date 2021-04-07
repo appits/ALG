@@ -128,6 +128,7 @@ class AccountMove(models.Model):
         wil_obj = self.env['account.wh.iva.line']
         partner = self.env['res.partner']
         values = {}
+        type_invoice = ''
         for inv_brw in self:
             wh_iva_rate = (
                 inv_brw.type in ('in_invoice', 'in_refund', 'out_refund', 'out_invoice') and
@@ -135,9 +136,18 @@ class AccountMove(models.Model):
                     inv_brw.partner_id).wh_iva_rate or
                 partner._find_accounting_partner(
                     inv_brw.company_id.partner_id).wh_iva_rate)
+            if inv_brw.type in ('in_invoice', 'out_invoice', 'out_refund', 'in_refund'):
+                if inv_brw.debit_origin_id and inv_brw.type == 'out_invoice':
+                    type_invoice = 'out_debit'
+                elif inv_brw.type == 'in_invoice' and  inv_brw.debit_origin_id:
+                    type_invoice = 'in_debit'
+                elif not inv_brw.debit_origin_id and inv_brw.type in ('out_invoice','in_invoice','in_refund','out_refund') :
+                    type_invoice = inv_brw.type
+
             values = {'name':_('IVA WH - ORIGIN %s' % (inv_brw.name)),
                       'invoice_id': inv_brw.id,
                       'wh_iva_rate': wh_iva_rate,
+                      'type': type_invoice,
                       }
 
         return values and wil_obj.create(values)
@@ -186,9 +196,11 @@ class AccountMove(models.Model):
         wh_iva_obj = self.env['account.wh.iva']
         rp_obj = self.env['res.partner']
         values = {}
+        acc_id = 0
         for inv_brw in self:
+            acc_id = 0
             acc_part_id = rp_obj._find_accounting_partner(inv_brw.partner_id)
-            if inv_brw.type in ('out_invoice', 'out_refund'):
+            if inv_brw.type in ('out_invoice', 'out_refund','_out_debit'):
                 acc_id = acc_part_id.property_account_receivable_id.id
                 wh_type = 'out_invoice'
             else:
@@ -232,6 +244,8 @@ class AccountMove(models.Model):
             else:
                 # Create Lines Data
                 ret_id = {}
+                journal = 0
+                acc_id = 0
                 ret_line_id = inv.wh_iva_line_create()
                 fortnight_wh_id = inv.get_fortnight_wh_id()
                 # Add line to a WH DOC
@@ -246,33 +260,52 @@ class AccountMove(models.Model):
                     wh_iva.write({'wh_lines': [(4, ret_line_id.id)]})
                 else:
                     # Create a New WH Doc and add line
+                    type_invoice = ''
                     wh_iva_obj = self.env['account.wh.iva']
                     rp_obj = self.env['res.partner']
                     values = {}
+
                     for inv_brw in self:
                         acc_part_id = rp_obj._find_accounting_partner(inv_brw.partner_id)
-                        if inv_brw.type in ('out_invoice', 'out_refund'):
+                        if inv_brw.type in ('out_invoice', 'out_refund', '_out_debit'):
                             acc_id = acc_part_id.property_account_receivable_id.id
-                            wh_type = 'out_invoice'
+                        elif inv_brw.type in ('in_invoice', 'in_refund', '_in_debit'):
+                            acc_id = acc_part_id.property_account_payable_id.id
+
+                        if inv_brw.type in ('out_invoice', 'out_refund'):
+                            if inv_brw.debit_origin_id and inv_brw.type == 'out_invoice':
+                                type_invoice = 'out_debit'
+                                journal = acc_part_id.purchase_sales_id.id
+                            elif not inv_brw.debit_origin_id and inv_brw.type in ('out_invoice', 'out_refund'):
+                                type_invoice = inv_brw.type
+                                journal = acc_part_id.purchase_sales_id.id
                             values = {'name': _('IVA WH CLIENTE - ORIGIN %s' % (inv_brw.name)),
-                                      'type': wh_type,
+                                      'type': type_invoice,
                                       'account_id': acc_id,
                                       'partner_id': acc_part_id.id,
+                                      'journal_id': journal,
                                       'date_ret': inv_brw.date,
                                       'period_id': inv_brw.date,
                                       'date': inv_brw.date,
                                       }
                         else:
-                            acc_id = acc_part_id.property_account_payable_id.id
-                            wh_type = 'in_invoice'
+                            if inv_brw.type in ('in_invoice', 'in_refund'):
+                                if inv_brw.type == 'in_invoice' and inv_brw.debit_origin_id:
+                                    type_invoice = 'in_debit'
+                                    journal = acc_part_id.purchase_journal_id.id
+                                elif not inv_brw.debit_origin_id and inv_brw.type in ('in_refund', 'in_invoice'):
+                                    type_invoice = inv_brw.type
+                                    journal = acc_part_id.purchase_journal_id.id
+
                             if not acc_id:
                                 raise exceptions.except_orm(
                                     _('Invalid Action !'),
                                     _('You need to configure the partner with'
                                       ' withholding accounts!'))
-                            values = {'name': _('IVA WH - ORIGIN %s' % (inv_brw.name)),
-                                      'type': wh_type,
+                            values = {'name': _('IVA WH - ORIGIN %s' % (inv_brw.supplier_invoice_number)),
+                                      'type': type_invoice,
                                       'account_id': acc_id,
+                                      'journal_id': journal,
                                       'partner_id': acc_part_id.id,
                                       'date_ret': inv_brw.date,
                                       'period_id': inv_brw.date,

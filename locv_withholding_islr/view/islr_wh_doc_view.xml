@@ -79,7 +79,7 @@
             <field name="name">islr.wh.doc_tree_customers</field>
             <field name="model">islr.wh.doc</field>
             <field name="arch" type="xml">
-                <tree string="Retención de ingresos del cliente">
+                <tree string="Retención de ingresos del cliente"  create="false"  edit="true">
                     <field name="partner_id"/>
                     <field name="date_ret"/>
 <!--                    <field name="code"/>-->

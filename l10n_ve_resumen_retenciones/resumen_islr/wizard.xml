@@ -42,7 +42,7 @@
 
       <menuitem
         id="menu_resumen_islr"
-        parent="menu_retenciones"
+        parent="l10n_ve_resumen_retenciones.menu_retenciones"
         name="Resumen Retenciones ISLR"
 		    sequence="15"
         action="action_report_wizards_3"/>

@@ -154,9 +154,9 @@
                                 &amp;nbsp;Monto del Impuesto Retenido&amp;nbsp;
                             </th>
                         </tr>
-                        <t t-set="number" t-value="model.get_t_type(d.wh_lines.invoice_id.type)"/>
+                        <t t-set="number" t-value="model.get_t_type(d.wh_lines.type)"/>
                         <t t-if="number == '02-COMP'">
-                            <t t-set="sign" t-value="-1"/>
+                            <t t-set="sign" t-value="1"/>
                         </t>
                         <t t-if="number != '02-COMP'">
                             <t t-set="sign" t-value="1"/>
@@ -166,10 +166,10 @@
                                 <span t-field="d.wh_lines.invoice_id.invoice_date" t-options='{"format": "dd/MM/yyyy"}'/>
                             </td>
                             <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                <t t-if="d.wh_lines.invoice_id.type == 'out_invoice'">
+                                <t t-if="d.wh_lines.type in ('out_invoice')">
                                     <span t-esc="d.wh_lines.invoice_id.name"/>
                                 </t>
-                                <t t-if="d.wh_lines.invoice_id.type == 'in_invoice'">
+                                <t t-if="d.wh_lines.type in ('in_invoice')">
                                     <span t-esc="d.wh_lines.invoice_id.supplier_invoice_number"/>
                                 </t>
                             </td>
@@ -177,28 +177,19 @@
                                 <span t-esc="inv_nro_ctrl"/>
                             </td>
                             <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                <t t-if="d.wh_lines.invoice_id.type == 'in_refund'">
-                                </t>
-                                <t t-if="d.wh_lines.invoice_id.type == 'out_refund'">
-                                    <span t-esc="d.wh_lines.invoice_id.name"/>
-                                </t>
+                                <span t-esc="inv_debit"/>
                             </td>
                             <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                <t t-if="d.wh_lines.invoice_id.type == 'out_refund'">
-
-                                </t>
-                                <t t-if="d.wh_lines.invoice_id.type == 'in_refund'">
-                                     <span t-esc="d.wh_lines.invoice_id.supplier_invoice_number"/>
-                                </t>
+                               <span t-esc="inv_refund"/>
                             </td>
                             <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                <span t-esc="model.get_t_type(d.wh_lines.invoice_id.type)"/>
+                                <span t-esc="model.get_t_type(d.wh_lines.type)"/>
                             </td>
                             <td style="text-align:center;border:1px solid #000;padding-top:5px;padding-bottom:3px;">
-                                <t t-if="d.wh_lines.invoice_id.type == 'in_refund'">
-                                    <span t-esc="inv_nro_control"/>
+                                <t t-if="d.wh_lines.type == 'in_refund'">
+                                    <span t-esc="d.wh_lines.invoice_id.invoice_reverse_purchase_id.supplier_invoice_number"/>
                                 </t>
-                                <t t-if="d.wh_lines.invoice_id.type == 'out_refund'">
+                                <t t-if="d.wh_lines.type == 'in_debit'">
                                     <span t-esc="inv_nro_fact"/>
                                 </t>
                             </td>

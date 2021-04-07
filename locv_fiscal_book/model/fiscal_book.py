@@ -600,12 +600,12 @@ class FiscalBook(models.Model):
         local_period = self.get_time_period(self.time_period)
         ref = fb_id.company_id.id
 
-        inv_ids = inv_obj.search([('invoice_date', '>=', local_period.get('dt_from')),
-                                  ('invoice_date', '<=', local_period.get('dt_to')),
+        inv_ids = inv_obj.search([('date', '>=', local_period.get('dt_from')),
+                                  ('date', '<=', local_period.get('dt_to')),
                                   ('company_id', '=', fb_id.company_id.id),
                                   ('type', 'in', inv_type),
                                   ('state', 'in', inv_state)],
-                                 order='invoice_date asc')
+                                 order='date asc')
 
 
         if fb_id.fortnight:
@@ -649,7 +649,7 @@ class FiscalBook(models.Model):
             inv_brw = inv_obj.browse(inv_id.id)
             for invoice in inv_brw:
                 if fb_fortnight:
-                    if d_st <= invoice.invoice_date <= d_en:
+                    if d_st <= invoice.date <= d_en:
                         res.append(inv_id)
                 else:
                     local_date = d_en.splict('-')
@@ -657,7 +657,7 @@ class FiscalBook(models.Model):
                                                        DEFAULT_SERVER_DATE_FORMAT)
                     init_date = datetime.strptime(local_date[0] + '-' + local_date[1] + '-1',
                                                   DEFAULT_SERVER_DATE_FORMAT)
-                    if init_date <= invoice.invoice_date <= fortnight_date:
+                    if init_date <= invoice.date <= fortnight_date:
                         res.append(inv_id)
             # fortnight = inv_obj.search([('date_document','>=',d_st),('date_document','<=', d_en)])
             # if fb_fortnight == fortnight:
@@ -696,9 +696,24 @@ class FiscalBook(models.Model):
             # TODO METODO RELACIONADO CON MODULO l10n_ve_imex (importaciones)
             # self.update_book_customs_form(fb_brw.id)
             self.update_book_lines(fb_brw.id)
+            for lin in self.fbl_ids:
+                condi = 0
+                for lin2 in self.fbl_ids:
+                    if lin.doc_type == lin2.doc_type and lin.emission_date == lin2.emission_date and lin.ctrl_number == lin2.ctrl_number and lin.invoice_number == lin2.invoice_number:
+                        condi += 1
+                if condi > 1:
+                    lin.unlink()
+            self.reajuste_totales()
         return True
 
-    
+    def reajuste_totales(self):
+        base_amount = tax_amount = 0
+        for lin in self.fbl_ids:
+            base_amount += lin.vat_exempt + lin.vat_general_base + lin.vat_reduced_base + lin.vat_additional_base
+            tax_amount += lin.vat_general_tax + lin.vat_reduced_tax + lin.vat_additional_tax
+        self.base_amount = base_amount
+        self.tax_amount = tax_amount
+
     def update_book_invoices(self, fb_id):
         """ It relate/unrelate the invoices to the fical book.
         @param fb_id: fiscal book id
@@ -734,10 +749,10 @@ class FiscalBook(models.Model):
         #            order='invoice_date asc')
         local_period = self.get_time_period(self.time_period)
         domain = ['|', '&', (True, '=', True), ('fb_id', '=', fb_brw.id),
-                  '&', '&', '&', ('invoice_date', '>=', local_period.get('dt_from')),
-                  ('invoice_date', '<=', local_period.get('dt_to')),
+                  '&', '&', '&', ('date', '>=', local_period.get('dt_from')),
+                  ('date', '<=', local_period.get('dt_to')),
                   ('type', 'in', inv_type), ('state', 'in', inv_state)]
-        issue_inv_ids = inv_obj.search(domain, order='invoice_date asc')
+        issue_inv_ids = inv_obj.search(domain, order='date asc')
         if fb_brw.fortnight:
             issue_inv_ids = self.get_invoices_from_fortnight(fb_id, issue_inv_ids)
         if fb_brw.type == 'purchase':
@@ -957,7 +972,7 @@ class FiscalBook(models.Model):
         for inv_brw in self.issue_invoice_ids:
             iwdl_id = self._get_invoice_iwdl_id(fb_id, inv_brw)
             if iwdl_id:
-                if inv_brw.invoice_date != iwdl_id.date_ret:
+                if inv_brw.date != iwdl_id.date_ret:
                     res.append(iwdl_id)
         return res
 
@@ -1004,6 +1019,7 @@ class FiscalBook(models.Model):
         proveedor = False
         inv_siva = []
         inv_iva = []
+        fecha = ''
         for inv_brw in self.browse(fb_id).issue_invoice_ids:
 
             if inv_brw.wh_iva_id.state == 'draft' and inv_brw.state == 'posted' and inv_brw.sin_cred == False:
@@ -1101,7 +1117,7 @@ class FiscalBook(models.Model):
                 t_type = fb_brw.type == 'sale' and 'tp' or 'do'
                 for iwdl_otro1 in inv_iva:
                   #  busq = self.env['account.move'].search([('id','=',)])
-                    if iwdl_otro1 and iwdl_otro1.type == 'in_invoice':
+                    if iwdl_otro1 and iwdl_otro1.type == 'in_invoice' or iwdl_otro1 and iwdl_otro1.type == 'out_invoice' or iwdl_otro1.type == 'in_refund' or  iwdl_otro1.type == 'out_refund':
                       otro = iwdl_otro1.id
                       iwdl_ids += iwdl_obj.search([('invoice_id', '=', otro)])
 
@@ -1109,7 +1125,7 @@ class FiscalBook(models.Model):
                     # if iwdl_brw.type == 'in_invoice':
                         rp_brw = rp_obj._find_accounting_partner(iwdl_brw.retention_id.partner_id)
                         #para obtener el tipo de transacción
-
+                        local_inv_nbr =''
                         people_type = 'N/A'
                         document_v = 'N/A'
                         if rp_brw:
@@ -1118,85 +1134,93 @@ class FiscalBook(models.Model):
                                 if people_type == 'pjdo':
                                     document_v = rp_brw.vat
                             elif rp_brw.company_type == 'person':
-                                people_type = rp_brw.people_type_individual
-                                if rp_brw.nationality == 'V' or rp_brw.nationality == 'E':
-                                    document_v = str(rp_brw.nationality) + str(rp_brw.identification_id)
+                                if rp_brw.vat:
+                                    document_v = rp_brw.vat
+                                    people_type = rp_brw.people_type_individual
                                 else:
-                                    document_v = rp_brw.identification_id
+                                    people_type = rp_brw.people_type_individual
+                                    if rp_brw.nationality == 'V' or rp_brw.nationality == 'E':
+                                        document_v = str(rp_brw.nationality) + str(rp_brw.identification_id)
+                                    else:
+                                        document_v = rp_brw.identification_id
 
                         doc_type = self.get_doc_type(inv_id=iwdl_brw.invoice_id.id)
 
-
+                        note_debit = ''
+                        note_credit = ''
+                        local_inv_ndb = ''
                         if (doc_type == "N/DB" or doc_type == "N/CR"):
                             if fb_brw.type == 'sale':
                                 if iwdl_brw.invoice_id.type == 'out_refund':
                                     cliente = True
-                                    local_inv_affected = str(iwdl_brw.invoice_id.ref)[14:29] if iwdl_brw.invoice_id.ref else ''
-                            elif  iwdl_brw.invoice_id.type == 'in_refund':
-                                proveedor = True
-                                local_inv_affected = str(iwdl_brw.invoice_id.ref)[14:29] if iwdl_brw.invoice_id.ref else ''
+                                    local_inv_affected = iwdl_brw.invoice_id.invoice_reverse_id.name
+                                    fecha = iwdl_brw.invoice_id.invoice_reverse_purchase_id.date
+                                    local_inv_nbr =  iwdl_brw.invoice_id.name
+                                    local_inv_ndb = iwdl_brw.invoice_id.name
+                                elif iwdl_brw.invoice_id.type == 'out_invoice':
+                                    cliente = True
+                                    debit_account_id = self.env['account.move'].search(
+                                        [('id', '=', iwdl_brw.invoice_id.debit_origin_id.id)])
+                                    local_inv_affected = debit_account_id.name
+                                    local_inv_ndb = iwdl_brw.invoice_id.name if debit_account_id else ''
+                                    fecha = debit_account_id.date if debit_account_id else False
 
-                        if doc_type == 'N/DB' or doc_type == 'N/CR':
+
+                            elif  iwdl_brw.invoice_id.type == 'in_invoice' and doc_type == 'N/DB':
+                                proveedor = True
+                                debit_account_id = self.env['account.move'].search([('id', '=', iwdl_brw.invoice_id.debit_origin_id.id)])
+                                local_inv_affected = debit_account_id.supplier_invoice_number
+                                local_inv_nbr = iwdl_brw.invoice_id.supplier_invoice_number
+                                fecha = debit_account_id.invoice_date
+                            elif iwdl_brw.invoice_id.type == 'in_refund' and doc_type == 'N/CR':
+                                proveedor = True
+                                local_inv_affected = iwdl_brw.invoice_id.invoice_reverse_purchase_id.supplier_invoice_number
+                                fecha = iwdl_brw.invoice_id.invoice_reverse_purchase_id.invoice_date
+                                local_inv_ndb = iwdl_brw.invoice_id.supplier_invoice_number
+
+                        if doc_type == 'N/CR':
 
                             sign = -1
                         else:
                             sign = 1
-                        if (doc_type == "N/DB" or doc_type == "N/CR") and local_inv_affected:
-                            boll = True
-                        else:
-                            boll = False
-                        if boll == True:
-                            fecha =  iwdl_brw.invoice_id.date or iwdl_brw.invoice_id.invoice_date
-                        else:
-                            fecha = fb_brw.fbl_ids.affected_invoice_date
+                        invoice_number = ''
+                        if doc_type == 'FACT':
+                            invoice_number = iwdl_brw.invoice_id.supplier_invoice_number if  iwdl_brw.invoice_id.supplier_invoice_number else iwdl_brw.invoice_id.name
+
                         values = {'iwdl_id': iwdl_brw.id,
                                   'type': t_type,
                                   'accounting_date': iwdl_brw.date_ret or False,
                                   'emission_date': iwdl_brw.invoice_id.invoice_date or iwdl_brw.invoice_id.date or False,
                                   'doc_type': self.get_doc_type(inv_id=iwdl_brw.invoice_id.id, iwdl_id=iwdl_brw.id),
                                   'wh_number': iwdl_brw.retention_id.number or False,
-                                  'get_wh_vat': iwdl_brw and iwdl_brw.amount_tax_ret or 0.0,
+                                  'get_wh_vat': iwdl_brw and (iwdl_brw.amount_tax_ret)* sign or 0.0,
                                   'partner_name': rp_brw.name or 'N/A',
                                   'people_type': people_type,
-                                   'debit_affected': local_inv_affected or False,
-                                  #     inv_brw.parent_id and
-                                  #     iwdl_brw.invoice_id.type in
-                                  #     ['in_invoice', 'out_invoice'] and
-                                  #     inv_brw.parent_id.parent_id and
-                                  #     inv_brw.parent_id.number or
-                                  #     False,
-                                   'credit_affected': local_inv_affected and cliente and proveedor or False,
-                                  #     inv_brw.parent_id and
-                                  #     inv_brw.parent_id.type in
-                                  #     ['in_refund', 'out_refund'] and
-                                  #     inv_brw.parent_id.number or
-                                  #     False,
+                                  'debit_affected':  local_inv_nbr if doc_type == 'N/DB' else '',
+                                  'credit_affected':  local_inv_ndb if doc_type == 'N/CR' else '',
                                   'partner_vat': document_v,
-                                  # 'affected_invoice':
-                                  #     iwdl_brw.invoice_id.fiscal_printer and
-                                  #     iwdl_brw.invoice_id.invoice_printer or
-                                  #     (fb_brw.type == 'sale' and
-                                  #      iwdl_brw.invoice_id.supplier_invoice_number or
-                                  #      iwdl_brw.invoice_id.supplier_invoice_number),
                                   'affected_invoice':
                                       (doc_type == "N/DB" or doc_type == "N/CR") and local_inv_affected,
                                   'affected_invoice_date':
-                                    fecha,
+                                    fecha if fecha else False,
                                   'wh_rate': iwdl_brw.wh_iva_rate,
-                                  'invoice_number': iwdl_brw.invoice_id.supplier_invoice_number or "", # se agrega el campo numero de factura para las facturas fuera de periodo
+                                  'invoice_number': invoice_number, # se agrega el campo numero de factura para las facturas fuera de periodo
                                   'ctrl_number': iwdl_brw.invoice_id.nro_ctrl or "", # se agrega el campo numero de control para las facturas fuera de periodo
                                   'void_form': self.get_t_type(doc_type),
                                   'fiscal_printer': iwdl_brw.invoice_id.fiscal_printer or False,
                                   'z_report': iwdl_brw.invoice_id.z_report or False,
                                   }
                         data.append((0, 0, values))
-
+                        fecha = False
+                        local_inv_nbr = ''
 
 
         for inv_otro in inv_siva:
       #      if not self.browse(fb_id).iwdl_ids and iwdl_id == False:
             #if inv_otro.type == 'in_invoice':
                 local_inv_affected = ' '
+
+                local_inv_nbr = ''
                 people_type = 'N/A'
 
                 doc_type = self.get_doc_type(inv_id=inv_otro.id)
@@ -1217,68 +1241,67 @@ class FiscalBook(models.Model):
                         else:
                             document_v = rp_brw.identification_id
 
-        #        iwdl_brw = iwdl_id if iwdl_id and iwdl_id not in no_match_dt_iwdl_ids else False
-                local_inv_nbr = inv_otro.fiscal_printer and inv_otro.invoice_printer or (
-                                fb_brw.type == 'sale' and
-                                inv_otro.name or
-                                inv_otro.supplier_invoice_number)
-                if local_inv_nbr :
-                    local_local = local_inv_nbr
-                else:
-                    local_local = inv_otro.name
-
+                local_inv_ndb = ''
                 if (doc_type == "N/DB" or doc_type == "N/CR"):
                     if fb_brw.type == 'sale':
                         if inv_otro.type == 'out_refund':
                             cliente = True
-                            if inv_otro.nro_ctrl:
-                               busq1 = self.env['account.move'].search([('nro_ctrl', '=', inv_otro.nro_ctrl)])
-                               if busq1:
-                                   for busq2 in busq1:
-                                       if busq2.type == 'out_refund':
-                                            local_inv_affected = str(inv_otro.ref)[14:29] if inv_otro.ref else ''
-                    elif inv_otro.type == 'in_refund':
+                            local_inv_affected = inv_otro.invoice_reverse_id.name
+                            local_inv_nbr =inv_otro.name
+                            local_inv_ndb = inv_otro.name
+                            fecha = inv_otro.date
+                        elif inv_otro.type == 'out_invoice':
+                            cliente = True
+                            debit_account_id = self.env['account.move'].search(
+                                [('id', '=', inv_otro.debit_origin_id.id)])
+                            local_inv_affected = debit_account_id.name if debit_account_id else ''
+                            local_inv_ndb = inv_otro.name
+                            fecha = debit_account_id.date if debit_account_id else False
+                    elif inv_otro.type == 'in_invoice' and doc_type == 'N/DB':
                         proveedor = True
-                        local_inv_affected = str(inv_otro.ref)[14:29] if inv_otro.ref else ''
+                        debit_account_id = self.env['account.move'].search([('id', '=', inv_otro.debit_origin_id.id)])
+                        local_inv_affected = debit_account_id.supplier_invoice_number
+                        local_inv_nbr =inv_otro.supplier_invoice_number
+                        fecha = debit_account_id.invoice_date
+                    elif inv_otro.type == 'in_refund' and doc_type == 'N/CR':
+                        proveedor = True
+                        local_inv_affected = inv_otro.invoice_reverse_purchase_id.supplier_invoice_number
+                        local_inv_ndb = inv_otro.supplier_invoice_number
+                        fecha = inv_otro.invoice_date
+                invoice_number = ''
+                if doc_type == 'FACT':
+                    invoice_number = inv_otro.supplier_invoice_number if inv_otro.supplier_invoice_number else inv_otro.name
 
-                if doc_type == 'N/DB' or doc_type == 'N/CR':
+
+                if  doc_type == 'N/CR':
 
                     sign = -1
                 else:
                     sign = 1
-                if (doc_type == "N/DB" or doc_type == "N/CR") and local_inv_affected:
-                    boll = True
-                else:
-                    boll = False
-                if boll == True:
-                    fecha = inv_otro.date or inv_otro.invoice_date
-                else:
-                    fecha = fb_brw.fbl_ids.affected_invoice_date
-
 
                 values = {
                     'invoice_id': inv_otro.id,
                     'emission_date':
-                        (inv_otro.date or inv_otro.invoice_date) or
+                        (inv_otro.invoice_date or inv_otro.date) or
                         False,
                     'accounting_date':
-                        inv_otro.invoice_date or
+                        inv_otro.date or
                         False,
 
                     'type': self.get_transaction_type(
                         fb_id, inv_otro.id),
 
-                    'debit_affected': local_inv_nbr or False,
-                    'credit_affected': local_inv_nbr and (cliente or proveedor or False),
+                    'debit_affected':local_inv_nbr if doc_type == 'N/DB' else '',
+                    'credit_affected': local_inv_ndb if doc_type == 'N/CR' else '',
                     'ctrl_number':
                         not inv_otro.fiscal_printer and
                         (inv_otro.nro_ctrl if inv_otro.nro_ctrl != 'False' else ''),
                     'affected_invoice': local_inv_affected,
-                    'affected_invoice_date': fecha,
+                    'affected_invoice_date': fecha if fecha else False,
                     'partner_name': rp_brw.name or 'N/A',
                     'people_type': people_type,
                     'partner_vat': document_v,
-                    'invoice_number':self.get_number(local_local),
+                    'invoice_number': invoice_number,
                     'doc_type': doc_type,
                     #'void_form':
                     #    inv_otro.name and (
@@ -1286,7 +1309,7 @@ class FiscalBook(models.Model):
                     #            '03-ANU' or
                     #            '01-REG') or
                     #    '01-REG',
-                    'void_form': self.get_t_type(doc_type, local_local),
+                    'void_form': self.get_t_type(doc_type, local_inv_nbr),
                     'fiscal_printer': inv_otro.fiscal_printer or False,
                     'z_report': inv_otro.z_report or False,
                   #  'custom_statement': False,
@@ -1296,7 +1319,11 @@ class FiscalBook(models.Model):
                     # 'get_wh_vat': iwdl_brw  and iwdl_brw.amount_tax_ret * sign or 0.0,
                     # 'wh_rate': iwdl_brw and iwdl_brw.wh_iva_rate or 0.0,
                 }
+
                 data.append((0, 0, values))
+                fecha = False
+                local_inv_nbr = ''
+
 
 
         if data:
@@ -1798,7 +1825,7 @@ class FiscalBook(models.Model):
                     fbl.iwdl_id.invoice_id.currency_id.id,
                     fbl.iwdl_id.invoice_id.company_id.currency_id.id,
                     fbl.iwdl_id.invoice_id.invoice_date)
-                if fbl.doc_type == 'N/CR' or fbl.doc_type == 'N/DB':
+                if fbl.doc_type == 'N/CR' :
                     sign = -1
                 else:
                     sign = 1
@@ -1864,7 +1891,7 @@ class FiscalBook(models.Model):
                     fbl.invoice_id.company_id.currency_id.id,
                     fbl.invoice_id.invoice_date)
                 busq = ' '
-                if fbl.doc_type == 'N/CR' or fbl.doc_type == 'N/DB':
+                if fbl.doc_type == 'N/CR':
                     sign = -1
                 else:
                     sign = 1
@@ -1947,7 +1974,7 @@ class FiscalBook(models.Model):
         tax_type = {'reduced': 'reducido', 'general': 'general',
                     'additional': 'adicional'}
         for fbl_brw in self.fbl_ids:
-            if fbl_brw.doc_type == 'N/CR' or fbl_brw.doc_type == 'N/DB':
+            if fbl_brw.doc_type == 'N/CR':
                 sign = -1
             else:
                 sign = 1
@@ -2157,12 +2184,14 @@ class FiscalBook(models.Model):
         if inv_id:
             inv_obj = self.env['account.move']
             inv_brw = inv_obj.browse(inv_id)
-            if  inv_brw.type in ["in_refund"]:
-                res = "N/DB"
-            elif  inv_brw.type in ["out_refund"]:
+            if  inv_brw.type in ["in_invoice", "out_invoice"]:
+                if inv_brw.debit_origin_id :
+                    res = "N/DB"
+                else:
+                    res = "FACT"
+            elif  inv_brw.type in ["out_refund", "in_refund"]:
                 res = "N/CR"
-            elif inv_brw.type in ["in_invoice", "out_invoice"]:
-                res = "FACT"
+
 
             assert res, str(inv_brw) + ": Error in the definition \
                 of the document type. \n There is not type category definied for \
@@ -2220,14 +2249,18 @@ class FiscalBook(models.Model):
         return res
 
     def obtener_tasa(self, invoice):
-        fecha = invoice.date
-        tasa_id = invoice.currency_id
-        tasa = self.env['multi.currency.rate'].search([('currency_id', '=', tasa_id.id), ('rate_date', '<=', fecha)], order='id desc', limit=1)
-        if not tasa:
-            raise exceptions.except_orm("Advertencia!",
+        tasa = 1
+        if invoice.exchange_rate:
+            tasa = invoice.exchange_rate
+        else:
+            fecha = invoice.date
+            tasa_id = invoice.currency_id
+            tasa1 = self.env['multi.currency.rate'].search([('currency_id', '=', tasa_id.id), ('rate_date', '<=', fecha)], order='id desc', limit=1)
+            if not tasa1:
+                raise exceptions.except_orm("Advertencia!",
                                         "No hay referencia de tasas registradas para moneda USD en la fecha igual o inferior de la factura %s" %(invoice.name))
-
-        return tasa.rate
+            tasa = tasa1.rate
+        return tasa
 
 
 class FiscalBookLines(models.Model):

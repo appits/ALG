@@ -28,6 +28,7 @@
         'views/product_category.xml',
         'views/location.xml',
         'views/mrp_bom.xml',
-        'wizard/sicbatch_orders.xml'
+        'wizard/sicbatch_orders.xml',
+        'views/mrp_lot.xml'
     ],
 }

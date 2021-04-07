@@ -12,6 +12,41 @@ _DATETIME_FORMAT = "%Y-%m-%d"
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
+    @api.onchange('partner_id')
+    def onchange_partner_id(self):
+        if self.partner_id:
+            self.nro_ctrl = False
+            self.supplier_invoice_number = False
+
+    @api.onchange('supplier_invoice_number')
+    def onchange_supplier_invoice_number(self):
+        if self.supplier_invoice_number:
+            supplier_invoice_number_id = self._unique_invoice_per_partner('supplier_invoice_number', self.supplier_invoice_number)
+            if not supplier_invoice_number_id:
+                self.supplier_invoice_number = False
+                return {'warning': {'title': "Advertencia!",
+                                    'message': "El número de la factura del proveedor ya existe"}}
+
+    @api.onchange('nro_ctrl')
+    def onchange_nro_ctrl(self):
+        if self.nro_ctrl:
+            if not self.maq_fiscal_p:
+                nro_ctrl_id = self._unique_invoice_per_partner('nro_ctrl', self.nro_ctrl)
+                if not nro_ctrl_id:
+                    self.nro_ctrl = False
+                    return {'warning': {'title': "Advertencia!",
+                                        'message': "El número de control de la factura del proveedor ya existe"}}
+
+    @api.onchange('maq_fiscal_p')
+    def onchange_maquina_fiscal(self):
+        if self.maq_fiscal_p:
+            self.nro_ctrl = 'N/A'
+        elif not self.maq_fiscal_p:
+            if self.supplier_invoice_number:
+                self.nro_ctrl = '00-' + self.supplier_invoice_number
+            else:
+                self.nro_ctrl = False
+
     @api.model
     def _get_default_invoice_date(self):
         return fields.Date.today() if self._context.get('default_type', 'entry') in (
@@ -197,24 +232,6 @@ class AccountMove(models.Model):
 
         return super(AccountMove, self).write(vals)
 
-    @api.onchange('supplier_invoice_number')
-    def onchange_supplier_invoice_number(self):
-        if self.supplier_invoice_number:
-            supplier_invoice_number_id = self._unique_invoice_per_partner('supplier_invoice_number', self.supplier_invoice_number)
-            if not supplier_invoice_number_id:
-                self.supplier_invoice_number = False
-                return {'warning': {'title': "Advertencia!",
-                                    'message': "  El Numero de la Factura del Proveedor ya Existe  "}}
-
-    @api.onchange('nro_ctrl')
-    def onchange_nro_ctrl(self):
-        if self.nro_ctrl:
-            if self.maq_fiscal_p == False:
-                nro_ctrl_id = self._unique_invoice_per_partner('nro_ctrl',self.nro_ctrl)
-                if not nro_ctrl_id:
-                    self.nro_ctrl = False
-                    return {'warning': {'title': "Advertencia!",
-                                        'message': "  El Numero de control de la Factura del Proveedor ya Existe  "}}
 
 class AccountInvoiceTax(models.Model):
     _inherit = 'account.tax'

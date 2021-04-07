@@ -1,13 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
     <data>
-
-    <!-- 
-    =====================================================
-    XML GENERATE
-    =====================================================
-    -->
-
+    <!-- XML GENERATE -->
          <record id="view_generate_txt_iva_tree" model="ir.ui.view">
             <field name="name">generate.txt.iva.tree</field>
             <field name="model">txt.iva</field>

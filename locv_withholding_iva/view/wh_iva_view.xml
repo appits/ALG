@@ -17,10 +17,10 @@
                     <field name="name"/>
                     <field
                         name="invoice_id"
-                        context="{'type':'in_invoice' or 'out_invoice'}"  options="{'no_quick_create': True, 'no_create_edit' : True}"
+                        context="{'type':'in_invoice' or 'out_invoice' or 'in_refund' or 'out_refund' or 'in_debit' or 'out_debit'}"  options="{'no_quick_create': True, 'no_create_edit' : True}"
                         />
                     <field name="type" invisible="1"/>
-                    <field name="supplier_invoice_number" attrs="{'invisible': ['|',('supplier_invoice_number', '=', ' '),('type','!=', 'in_invoice'),]}"/>
+                    <field name="supplier_invoice_number" attrs="{'invisible': ['|',('supplier_invoice_number', '=', ' '),('type','in', ('out_invoice','out_refund','out_debit'))]}"/>
                     <field name="nro_ctrl"/>
                     <!--<field name="retention_rate" />-->
                     <field name="amount_tax_ret" sum="Wh total" readonly="1" force_save="1"/>
@@ -41,12 +41,12 @@
                         <page string="Factura retenida">
                             <group colspan="4">
                             <field
-                                name="invoice_id" context="{'type':'in_invoice' or 'out_invoice'}"  options="{'no_quick_create': True, 'no_create_edit' : True}"
+                                name="invoice_id" context="{'type':'in_invoice' or 'out_invoice' or 'in_refund' or 'out_refund' or 'in_debit' or 'out_debit'}"  options="{'no_quick_create': True, 'no_create_edit' : True}"
                                  />
                                 <!-- domain="[('state', '=', 'open'), ('wh_iva', '=', False), ('type', '=', parent.type), '|', ('partner_id','=',parent.partner_id), ('partner_id','child_of',parent.partner_id)]"
                                 on_change="invoice_id_change(invoice_id)"-->
                                  <field name="type" />
-                                <field name="supplier_invoice_number" attrs="{'invisible': ['|',('supplier_invoice_number', '=', ' '),('type','!=', 'in_invoice'),]}"/>
+                                <field name="supplier_invoice_number" attrs="{'invisible': ['|',('supplier_invoice_number', '=', ' '),('type','in', ('out_invoice','out_refund','out_debit'))]}"/>
                                 <field name="nro_ctrl"/>
                                 <field name="name"/>
                                 <field name="move_id"/>
@@ -259,8 +259,8 @@
             <field name="type">ir.actions.act_window</field>
 <!--            <field name="view_type">form</field>-->
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('type','=','out_invoice')]</field>
-            <field name="context">{'type':'out_invoice'}</field>
+            <field name="domain">[('type','in',('out_invoice','out_refund','out_debit'))]</field>
+            <field name="context">{'type':'out_invoice' or 'out_refund' or 'out_debit'}</field>
 <!--            <field name="search_view_id" ref="view_wh_iva_filter"/>-->
             <field name="help">Con el IVA de retención de clientes puede crear y administrar la retención de documentos emitidos a sus clientes. ODOO también puede generar retenciones de documentos automáticamente de las facturas. Para la retención debe agregar las facturas, procesarlas y luego validar el documento.</field>
         </record>
@@ -287,8 +287,8 @@
             <field name="type">ir.actions.act_window</field>
 <!--            <field name="view_type">form</field>-->
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('type','=','in_invoice')]</field>
-            <field name="context">{'type':'in_invoice'}</field>
+            <field name="domain">[('type','in',('in_invoice','in_refund','in_debit'))]</field>
+            <field name="context">{'type':'in_invoice' or 'in_refund' or 'in_debit'}</field>
 <!--            <field name="search_view_id" ref="view_wh_iva_filter"/>-->
             <field name="help">Con el Proveedor de retención de IVA puede crear y administrar la retención de documentos emitidos a sus clientes. Odoo también puede generar retenciones de documentos automáticamente de las facturas. Para la retención debe agregar las facturas, procesarlas y luego validar el documento.</field>
         </record>

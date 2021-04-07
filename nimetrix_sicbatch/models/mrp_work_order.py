@@ -1,11 +1,12 @@
 import functools
 import sys
 
+import requests
+
 from odoo import fields, models, api, _
 from datetime import date
 from odoo.exceptions import UserError
 
-from . import sql_connection
 from . import utils
 
 
@@ -62,6 +63,7 @@ class MrpWorkorder_Extension(models.Model):
                         _('You must end the process using the end sicbatch button'))
             return res
 '''
+
     def call_start_work_order(self):
         connection = False
         monitoring = ""
@@ -74,19 +76,25 @@ class MrpWorkorder_Extension(models.Model):
                 raise UserError(_('El Producto no posee Descripción'))
             try:
                 monitoring = "Starting connection"
-                cnxn, config = sql_connection.sql_connect(record)
+                config = get_config(self)
                 if not config.is_offline:
+                    url = config.server
                     monitoring = "Send spReceta_Actualizar"
                     connection = True
-                    cursor = cnxn.cursor()
-                    params = (
-                        record.production_id.bom_id.product_tmpl_id.default_code,
-                        record.production_id.bom_id.product_tmpl_id.default_code,
-                        record.production_id.bom_id.product_tmpl_id.name,
-                        record.production_id.bom_id.product_tmpl_id.description)
-                    call_sp1 = cursor.execute("{CALL spReceta_Actualizar (?,?,?,?)}", params)
-                    row = cursor.fetchall()
-                    utils.send_log(self, record, row, 'IP')
+
+                    params = {
+                        'name': 'spReceta_Actualizar',
+                        'param1': record.production_id.bom_id.product_tmpl_id.default_code,
+                        'param2': record.production_id.bom_id.product_tmpl_id.default_code,
+                        'param3': record.production_id.bom_id.product_tmpl_id.name,
+                        'param4': record.production_id.bom_id.product_tmpl_id.description
+                    }
+                    response = requests.post(url=url, json=params, timeout=8)
+
+                    if response.status_code != 200:
+                        raise UserError(_("No se puede conectar a sicbatch " + response.text))
+
+                    utils.send_log(self, record, response.text, 'IP')
 
                     stock_move_line = record.env['stock.move'].search(
                         [('raw_material_production_id', '=', record.production_id.id)
@@ -97,12 +105,17 @@ class MrpWorkorder_Extension(models.Model):
                             continue
                         lines = lines + 1
                         monitoring = line.product_id.product_tmpl_id.default_code + "_" + line.product_id.product_tmpl_id.name
-                        cursor.execute("{CALL spDetalleReceta_Actualizar (?,?,?,?)}", (
-                            record.production_id.bom_id.product_tmpl_id.default_code,
-                            line.product_id.product_tmpl_id.default_code,
-                            line.product_qty,
-                            lines
-                        ))
+                        data = {
+                            'name': 'spDetalleReceta_Actualizar',
+                            'param1': record.production_id.bom_id.product_tmpl_id.default_code,
+                            'param2': line.product_id.product_tmpl_id.default_code,
+                            'param3': line.product_qty,
+                            'param4': lines
+                        }
+                        response = requests.post(url=url, json=data, timeout=8)
+
+                        if response.status_code != 200:
+                            raise UserError(_("Cannot connect to sicbatch, error: " + response.text))
 
                     production = record.env['mrp.production'].search(
                         [('id', '=', record.production_id.id)])
@@ -119,22 +132,24 @@ class MrpWorkorder_Extension(models.Model):
                     if production.routing_id.capacity_batch > 0:
                         batch = int(round(production.product_qty / production.routing_id.capacity_batch))
 
-                    params = (
-                        production.id,
-                        production.bom_id.product_tmpl_id.default_code,
-                        partner_id.id,
-                        partner_id.name,
-                        production.product_qty,
-                        batch,
-                        production.bom_id.product_type
-                    )
+                    params = {
+                        'name': 'spOrdenProduccion_Actualizar',
+                        'param1': production.id,
+                        'param2': production.bom_id.product_tmpl_id.default_code,
+                        'param3': partner_id.id if partner_id else production.company_id.partner_id.id,
+                        'param4': partner_id.name if partner_id else production.company_id.partner_id.name,
+                        'param5': production.product_qty,
+                        'param6': batch,
+                        'param7': production.bom_id.product_type
+                    }
                     monitoring = "send spOrdenProduccion_Actualizar"
-                    call_sp1 = cursor.execute("{CALL spOrdenProduccion_Actualizar  (?,?,?,?,?,?,?)}", params)
-                    row = cursor.fetchall()
-                    utils.send_log(self, record, row, 'IP')
+                    response = requests.post(url, json=params, timeout=8)
+                    if response.status_code != 200:
+                        raise UserError(_("Cannot connect to the sicbatch, error: " + response.text))
+
+                    utils.send_log(self, record, response.text, 'IP')
                     record.button_start()
                     # record.action_continue()
-                    cursor.commit()
                     record.check_sync_start = False
                     record.message_post(body="Process Sicbatch Started")
                     config_line = record.env['config.connection.line'].search(
@@ -147,13 +162,7 @@ class MrpWorkorder_Extension(models.Model):
                     record.do_finish()
                     return
             except Exception as e:
-                if connection:
-                    cursor.rollback()
-                    raise UserError(_('No se pudo enviar la orden a Sicbatch ' + monitoring+" error:"+str(e)))
-            finally:
-                if connection:
-                    cursor.close()
-                    cnxn.close()
+                raise UserError(_('No se pudo enviar la orden a Sicbatch - Monitoreo ' + monitoring + " error:" + str(e)))
 
     def call_end_work_order(self):
         connection = False
@@ -163,45 +172,56 @@ class MrpWorkorder_Extension(models.Model):
                 record.action_generate_serial()
             try:
                 msg = 'Error en conexión'
-                connect, config = sql_connection.sql_connect(record)
+                config = get_config(self)
+                url = config.server
                 if not config.is_offline:
                     connection = True
-                    cr = connect.cursor()
-                    call_sp1 = cr.execute("{CALL spResultOrden (?,?)}", record.production_id.id,
-                                          record.production_id.bom_id.product_type)
-                    rows = cr.fetchall()
-                    if len(rows) == 0:
+
+                    data = {
+                        'name': 'spResultOrden',
+                        'param1': record.production_id.id,
+                        'param2': record.production_id.bom_id.product_type
+                    }
+                    response = requests.post(url=url, json=data)
+
+                    if response.status_code != 200:
+                        raise UserError(_("Cannot connect to sicbatch, error: "+response.text))
+
+                    if len(response.json()) == 0:
                         raise UserError(_("No Procesado Aún"))
 
                     for rec in record.raw_workorder_line_ids:
                         record.button_start()
-                        utils.send_log(self, record, rows, 'IP')
+                        utils.send_log(self, record, response.text, 'IP')
 
-                        for row in rows:
-                            if row[0] == 0:
-                                raise UserError(_("No Procesado Aún"))
-                            if rec.product_id.default_code != row[2].strip():
+                        for resp in response.json():
+
+                            if resp['Result'] == 0:
+                                raise UserError(_('No procesado aún'))
+
+                            if rec.product_id.default_code != resp['BoMid'].strip():
                                 continue
-                            qty = row[4]
+                            qty = float(resp['Consumed'])
                             if not qty:
                                 raise UserError(_(msg))
 
                             lot = rec.env['stock.lot.sicbatch'].search([
-                                ('sequence_lot', '=', str(row[6]).strip())
+                                ('sequence_lot', '=', resp['LoteId'].strip())
                             ])
 
                             if not lot:
-                                raise UserError(_("No encontre el lote Sicbatch"))
+                                raise UserError(_("No encontre el lote Sicbatch "+resp['LoteId'].strip()))
 
                             if not rec.check_ids:
                                 continue
 
                             rec.lot_id = lot.vendor_lot_id.id
-                            rec.qty_done = row[3]
-                            rec.qty_to_consume = row[3]
-                            rec.qty_reserved = row[3]
+                            rec.qty_done = qty
+                            rec.qty_to_consume = qty
+                            rec.qty_reserved = qty
                             rec.sicbatch_lot_id = lot.id
                             rec.move_id.location_id = lot.locator_to_id
+                            rec.move_id.sicbatch_lot = lot.id
                             rec.move_id.sicbatch_lot = lot.id
                             if rec.check_ids:
                                 rec.check_ids.lot_id = lot.vendor_lot_id
@@ -209,22 +229,31 @@ class MrpWorkorder_Extension(models.Model):
 
                     record.check_sync_end = False
                     record.do_finish()
-                    cr.commit()
+
+                    data = {
+                        'name': 'spCloseProduction',
+                        'param1': record.production_id.id,
+                        'param2': record.production_id.bom_id.product_type
+                    }
+
+                    res = requests.post(url=url, json=data, timeout=4)
+
+                    if res.status_code != 200:
+                        raise UserError(_("No se pudo cerrar la orden de producción"))
 
                     close_logs = record.env['sicbatch.log'].search([
                         ('production_id', '=', record.production_id.id)])
                     for log in close_logs:
                         log.status = 'DO'
             except Exception as e:
-                if connection:
-                    cr.rollback()
-                    raise UserError(_('error al procesar datos de SicBatch ' + str(e)))
-
-            finally:
-                if connection:
-                    cr.close()
-                    connect.close()
+                raise UserError(_('error al procesar datos de SicBatch ' + str(e)))
         return
+
+
+def get_config(self):
+    config = self.env['config.connection'].search(
+        [('company_id', '=', self.company_id.id)])
+    return config
 
 
 class MrpWorkOrderLine(models.Model):

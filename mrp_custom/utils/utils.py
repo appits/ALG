@@ -102,5 +102,6 @@ def create_production(self, name, product_id, product_tmpl_id, product_uom_id, p
                                                     'bom_id': bom_id,
                                                     'picking_type_id': picking_type_id,
                                                     'location_src_id': location_src_id,
-                                                    'location_dest_id': location_dest_id})
+                                                    'location_dest_id': location_dest_id,
+                                                    'order_id': self.id})
     return production

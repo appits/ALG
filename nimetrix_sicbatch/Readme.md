@@ -4,14 +4,6 @@ _Clone el proyecto dentro de su carpeta custom-addons_
 
 ### Pre-requisitos 📋
 
-_Instalar pyodbc libreria _
-
-En Ubuntu 
-
-sudo apt-get install -y python-pyodbc
-
- pip3 install pyodbc
- 
  
 ## Odoo
 

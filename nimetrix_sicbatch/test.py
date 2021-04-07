@@ -1,15 +1,15 @@
-#import pyodbc 
-# Some other example server values are
-# server = 'localhost\sqlexpress' # for a named instance
-# server = 'myserver,port' # to specify an alternate port
-#DESDE ACA COMENTE POR TEMA DE LIBRERIA pyodbc
-# server = 'tcp:52.36.41.94' 
-# database = 'Sicbatch2012' 
-# username = 'Sicbatch' 
-# password = 'zaq1XSW@' 
-# cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
-# cursor = cnxn.cursor()
-# myrows = cursor.execute("SELECT @@VERSION").fetchall()
-# print(myrows)
-# cursor.close()
-# cnxn.close()
+
+import requests
+
+data = {
+   "name": "spResultOrden",
+   "param1": "1585",
+   "param2": "SE"
+}
+
+res = requests.post(url="https://lanta.ingeint.com/api/sp", json=data, timeout=8)
+
+rows = len(res.json())
+
+for rec in res.json():
+    print(rec)

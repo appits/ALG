@@ -159,7 +159,7 @@
             <field eval="'079'" name="code"/>
             <field eval="1" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.33" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
             <field eval="100.00" name="base"/>
             <field eval="3.00" name="wh_perc"/>
             <field eval="2.50" name="subtract"/>
@@ -204,7 +204,7 @@
             <field eval="'077'" name="code"/>
             <field eval="1" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.33" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
             <field eval="100.00" name="base"/>
             <field eval="3.00" name="wh_perc"/>
             <field eval="2.50" name="subtract"/>
@@ -226,7 +226,7 @@
             <field eval="'075'" name="code"/>
             <field eval="1" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.33" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
             <field eval="100.00" name="base"/>
             <field eval="3.00" name="wh_perc"/>
             <field eval="2.50" name="subtract"/>
@@ -248,7 +248,7 @@
             <field eval="'073'" name="code"/>
             <field eval="1" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.33" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
             <field eval="100.00" name="base"/>
             <field eval="3.00" name="wh_perc"/>
             <field eval="2.50" name="subtract"/>
@@ -271,7 +271,7 @@
             <field eval="'069'" name="code"/>
             <field eval="1" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.33" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
             <field eval="100.00" name="base"/>
             <field eval="1.00" name="wh_perc"/>
             <field eval="0.83" name="subtract"/>
@@ -293,7 +293,7 @@
             <field eval="'065'" name="code"/>
             <field eval="1" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.33" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
             <field eval="100.00" name="base"/>
             <field eval="3.00" name="wh_perc"/>
             <field eval="2.50" name="subtract"/>
@@ -337,7 +337,7 @@
             <field eval="'061'" name="code"/>
             <field eval="1" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.33" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
             <field eval="100.00" name="base"/>
             <field eval="3.00" name="wh_perc"/>
             <field eval="2.50" name="subtract"/>
@@ -381,7 +381,7 @@
             <field eval="'057'" name="code"/>
             <field eval="1" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.33" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
             <field eval="100.00" name="base"/>
             <field eval="3.00" name="wh_perc"/>
             <field eval="2.50" name="subtract"/>
@@ -414,7 +414,7 @@
             <field eval="'049'" name="code"/>
             <field eval="1" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.33" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
             <field eval="100.00" name="base"/>
             <field eval="3.00" name="wh_perc"/>
             <field eval="2.50" name="subtract"/>
@@ -602,7 +602,7 @@
             <field eval="'025'" name="code"/>
             <field eval="1" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.33" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
             <field eval="100.00" name="base"/>
             <field eval="3.00" name="wh_perc"/>
             <field eval="2.50" name="subtract"/>
@@ -657,7 +657,7 @@
             <field eval="'014'" name="code"/>
             <field eval="1" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.33" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
             <field eval="100.00" name="base"/>
             <field eval="3.00" name="wh_perc"/>
             <field eval="2.50" name="subtract"/>
@@ -701,7 +701,7 @@
             <field eval="'010'" name="code"/>
             <field eval="1" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.33" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
             <field eval="100.00" name="base"/>
             <field eval="3.00" name="wh_perc"/>
             <field eval="2.50" name="subtract"/>
@@ -723,7 +723,7 @@
             <field eval="'012'" name="code"/>
             <field eval="1" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.33" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
             <field eval="100.00" name="base"/>
             <field eval="3.00" name="wh_perc"/>
             <field eval="2.50" name="subtract"/>
@@ -745,7 +745,7 @@
             <field eval="'006'" name="code"/>
             <field eval="1" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.33" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
             <field eval="100.00" name="base"/>
             <field eval="3.00" name="wh_perc"/>
             <field eval="2.53" name="subtract"/>
@@ -778,7 +778,7 @@
 			<field eval="'002'" name="code"/>
 			<field eval="1" name="nature"/>
 			<field eval="1" name="residence"/>
-			<field eval="83.33" name="minimum"/>
+			<field eval="83.3334" name="minimum"/>
 			<field eval="100.00" name="base"/>
 			<field eval="3.00" name="wh_perc"/>
 			<field eval="2.53" name="subtract"/>
@@ -811,7 +811,7 @@
 			<field eval="'018'" name="code"/>
 			<field eval="1" name="nature"/>
 			<field eval="1" name="residence"/>
-			<field eval="83.33" name="minimum"/>
+			<field eval="83.3334" name="minimum"/>
 			<field eval="100.0" name="base"/>
 			<field eval="3.0" name="wh_perc"/>
 			<field eval="2.5333" name="subtract"/>
@@ -833,7 +833,7 @@
 			<field eval="'020'" name="code"/>
 			<field eval="0" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.33" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
 			<field eval="100.0" name="base"/>
             <field eval="5.0" name="wh_perc"/>
             <field eval="0" name="subtract"/>
@@ -855,7 +855,7 @@
 			<field eval="'053'" name="code"/>
 			<field eval="1" name="nature"/>
 			<field eval="1" name="residence"/>
-			<field eval="83.3333" name="minimum"/>
+			<field eval="83.3334" name="minimum"/>
 			<field eval="100.0" name="base"/>
 			<field eval="1.0" name="wh_perc"/>
 			<field eval="0.83333" name="subtract"/>
@@ -910,7 +910,7 @@
 			<field eval="'084'" name="code"/>
 			<field eval="0" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.3333" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
 			<field eval="100.0" name="base"/>
             <field eval="5.0" name="wh_perc"/>
             <field eval="0" name="subtract"/>
@@ -932,7 +932,7 @@
 			<field eval="'059'" name="code"/>
 			<field eval="0" name="nature"/>
             <field eval="1" name="residence"/>
-            <field eval="83.3333" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
 			<field eval="100.0" name="base"/>
             <field eval="5.0" name="wh_perc"/>
             <field eval="0" name="subtract"/>
@@ -943,7 +943,7 @@
 			<field eval="'001'" name="code"/>
 			<field eval="1" name="nature"/>
 			<field eval="1" name="residence"/>
-            <field eval="83.3333" name="minimum"/>
+            <field eval="83.3334" name="minimum"/>
             <field eval="0" name="subtract"/>
             <field eval="0" name="wh_perc"/>
             <field eval="100" name="base"/>
@@ -954,7 +954,7 @@
 			<field eval="'071'" name="code"/>
 			<field eval="1" name="nature"/>
 			<field eval="1" name="residence"/>
-			<field eval="83.33333" name="minimum"/>
+			<field eval="83.3334" name="minimum"/>
 			<field eval="100.0" name="base"/>
 			<field eval="1.0" name="wh_perc"/>
 			<field eval="0.83333" name="subtract"/>

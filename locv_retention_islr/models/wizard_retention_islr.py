@@ -158,7 +158,9 @@ class RetentionISLR(models.Model):
 
         for concept_line in islr_concept_line:
             if concept_line.invoice_id.partner_id.company_type == 'person':
-                if concept_line.invoice_id.partner_id.nationality == 'V' or concept_line.invoice_id.partner_id.nationality == 'E':
+                if concept_line.invoice_id.partner_id.vat:
+                    document = concept_line.invoice_id.partner_id.vat
+                elif concept_line.invoice_id.partner_id.nationality == 'V' or concept_line.invoice_id.partner_id.nationality == 'E':
                     document = str(concept_line.invoice_id.partner_id.nationality) + str(
                         concept_line.invoice_id.partner_id.identification_id)
                 else:
@@ -177,7 +179,7 @@ class RetentionISLR(models.Model):
             writer.write_merge(row, row, 1, 1,   fecha_inicio, line_content_style_2)
             writer.write_merge(row, row, 2,3,    concept_line.invoice_id.partner_id.name, line_content_style_2)
             writer.write_merge(row, row, 4, 4,   document, line_content_style_2)
-            writer.write_merge(row, row, 5, 5,   concept_line.invoice_id.name, line_content_style_2)
+            writer.write_merge(row, row, 5, 5,   concept_line.invoice_id.supplier_invoice_number, line_content_style_2)
             writer.write_merge(row, row, 6, 6,   nro_control, line_content_style_2)
             writer.write_merge(row, row, 7, 7,   concept_line.concept_id.display_name, line_content_style_2)
             writer.write_merge(row, row, 8, 8,  cod_concepto, line_content_style_2)
@@ -343,6 +345,8 @@ class ReportRetentionISLR(models.AbstractModel):
             })'''
 
         docs = []
+        total_base_amount = 0
+        total_amount_ret = 0
         for concept_line in islr_concept_line:
             if concept_line.invoice_id:
                 if concept_line.invoice_id.nro_ctrl:
@@ -355,7 +359,9 @@ class ReportRetentionISLR(models.AbstractModel):
                     if cod.wh_perc == concept_line.retencion_islr:
                         cod_concepto = cod.code
                 if  concept_line.invoice_id.partner_id.company_type == 'person':
-                    if concept_line.invoice_id.partner_id.nationality == 'V' or concept_line.invoice_id.partner_id.nationality == 'E':
+                    if concept_line.invoice_id.partner_id.vat:
+                        document = concept_line.invoice_id.partner_id.vat
+                    elif concept_line.invoice_id.partner_id.nationality == 'V' or concept_line.invoice_id.partner_id.nationality == 'E':
                         document = str(concept_line.invoice_id.partner_id.nationality) + str(concept_line.invoice_id.partner_id.identification_id)
                     else:
                         document = str(concept_line.invoice_id.partner_id.identification_id)
@@ -366,13 +372,15 @@ class ReportRetentionISLR(models.AbstractModel):
                     'name': concept_line.concept_id.display_name,
                     'proveedor': concept_line.invoice_id.partner_id.name,
                     'rif': document,
-                    'factura': concept_line.invoice_id.name,
+                    'factura': concept_line.invoice_id.supplier_invoice_number,
                     'control': nro_control,
                     'cod_concepto': cod_concepto,
                     'monto_suj_retencion': self.separador_cifra(concept_line.base_amount),
                     'tasa_porc': concept_line.retencion_islr,
                     'impusto_retenido': self.separador_cifra(concept_line.amount),
                 })
+                total_base_amount +=  concept_line.base_amount
+                total_amount_ret += concept_line.amount
 
 
         return {
@@ -383,6 +391,8 @@ class ReportRetentionISLR(models.AbstractModel):
             'today': today,
             'company': company,
             'docs': docs,
+            'total_base_amount': total_base_amount,
+            'total_amount_ret':  total_amount_ret,
             }
 
     def separador_cifra(self, valor):

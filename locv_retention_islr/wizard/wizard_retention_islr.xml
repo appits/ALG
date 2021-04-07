@@ -8,7 +8,7 @@
                         <field invisible="1" name="state"/>
                         <div states="choose">
                             <group colspan="2" col="2">
-                                <field name="company" string="Empresa"/>
+                                <field name="company" string="Empresa" options="{'no_create': True, 'no_open': True}"/>
                             </group>
                             <group colspan="2" col="2">
                                 <group>

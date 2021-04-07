@@ -31,48 +31,48 @@ class IvaReport(models.AbstractModel):
         sum_tax_reducida = 0
         inv_nro_ctrl = ''
         inv_nro_fact = ''
+        inv_refund = ''
+        inv_debit = ''
         sum_base_additional = 0
         rate_general = ''
         rate_reducida = ''
+        valor = ''
+        valor2 = ''
         rate_additional = ''
         sum_tax_additional = 0
         if wh_iva and len(wh_iva) ==1 :
             if wh_iva.state == 'done':
-                if (wh_iva.type == 'in_invoice' or wh_iva.type == 'in_refund'):
+                if (wh_iva.type == 'in_invoice' or wh_iva.type == 'in_refund' or wh_iva.type =='in_debit'):
                     if wh_iva.wh_lines:
                         base_product = 0
                         total_base_product = 0
                         total_base_exent = 0
                         total_amount_product = 0
+
                         base_exent = ' '
-                    if wh_iva.wh_lines.invoice_id.type == 'in_refund':
-                        fact_afectted = str(wh_iva.wh_lines.invoice_id.ref)[14:29] if wh_iva.wh_lines.invoice_id.ref else ''
-                        inv_refund = self.env['account.move'].search([('name','=', fact_afectted)])
-                        inv_nro_fact = inv_refund.supplier_invoice_number
-                        inv_nota = inv_refund.supplier_invoice_number
-                        inv_nro_ctrl = inv_refund.nro_ctrl
-                    elif wh_iva.wh_lines.invoice_id.type == 'in_invoice':
-                        inv_nro_ctrl = wh_iva.wh_lines.invoice_id.nro_ctrl
+
+                    if wh_iva.wh_lines.type == 'in_invoice' or wh_iva.wh_lines.type == 'in_refund' or wh_iva.wh_lines.type == 'in_debit':
+
 
                         res_ali = []
                         total_alicuota = 0
+                        base_product = 0
+                        total_base_product = 0
 
+                        total_amount_product = 0
+
+                        base_general = 0
+                        tax_general = 0
+                        rate_general = ''
+                        base_reducida = 0
+                        tax_reducida = 0
+                        rate_reducida = ''
+                        base_additional = 0
+                        tax_additional = 0
+                        rate_additional = ' '
                         for line_tax in wh_iva.wh_lines.tax_line:
-                            base_exent = ' '
-                            base_product = 0
-                            total_base_product = 0
-                            total_base_exent = 0
-                            total_amount_product = 0
-                            base_exent = ' '
-                            base_general = 0
-                            tax_general = 0
-                            rate_general = ''
-                            base_reducida = 0
-                            tax_reducida = 0
-                            rate_reducida = ''
-                            base_additional = 0
-                            tax_additional = 0
-                            rate_additional = ' '
+
+
                             if not ((line_tax.alicuota == 16) and not (line_tax.alicuota == 8) and not (line_tax.alicuota == 31)) and line_tax.alicuota == 0:
                                 total_base_exent +=  line_tax.base
                                 base_exent = self.separador_cifra(total_base_exent)
@@ -85,7 +85,7 @@ class IvaReport(models.AbstractModel):
                                 sum_tax_general += line_tax.amount
                             if line_tax.alicuota == 8:
                                 base_reducida = line_tax.base
-                                tax_reducida = line_tax.amount
+                                tax_reducida = line_tax.amount_ret
                                 rate_reducida = str(line_tax.alicuota)[0:1] + ' %'
                                 sum_base_reducida += line_tax.base
                                 sum_tax_reducida += line_tax.amount
@@ -101,50 +101,61 @@ class IvaReport(models.AbstractModel):
                             total_amount_product += line_tax.amount
                             amount_product = self.separador_cifra(total_amount_product)
 
-
-                            # if line_tax.alicuota and not line_tax.alicuota == 0:
-                            #   total_alicuota = line_tax.alicuota
-                            #   alicuota = self.separador_cifra(total_alicuota)
                             if base_general > 0:
-                                base_general = self.separador_cifra(base_general)
+                                base_general2 = self.separador_cifra(base_general)
                             else:
-                                base_general = ' '
+                                base_general2 = ' '
                             if tax_general > 0:
-                                tax_general = self.separador_cifra(tax_general)
+                                tax_general2 = self.separador_cifra(tax_general)
                             else:
-                                tax_general = ''
+                                tax_general2 = ''
 
                             ######################3
                             if base_reducida > 0:
-                                base_reducida = self.separador_cifra(base_reducida)
+                                base_reducida2 = self.separador_cifra(base_reducida)
                             else:
-                                base_reducida = ' '
+                                base_reducida2 = ' '
                             if tax_reducida >0:
-                                tax_reducida = self.separador_cifra(tax_reducida)
+                                tax_reducida2 = self.separador_cifra(tax_reducida)
                             else:
-                                tax_reducida = ' '
+                                tax_reducida2 = ' '
 
                             ###################3
                             if base_additional > 0:
-                                base_additional = self.separador_cifra(base_additional)
+                                base_additional2 = self.separador_cifra(base_additional)
                             else:
-                                base_additional = ' '
+                                base_additional2 = ' '
                             if tax_additional > 0:
-                                tax_additional = self.separador_cifra(tax_additional)
+                                tax_additional2 = self.separador_cifra(tax_additional)
                             else:
-                                tax_additional = ''
+                                tax_additional2 = ''
 
-                            base_amount.append({'base_general':base_general,
-                                                'tax_general' :tax_general,
+                            base_amount.append({'base_general':base_general2,
+                                                'tax_general' :tax_general2,
                                                 'rate_general': rate_general,
-                                                'base_reducida': base_reducida,
-                                                'tax_reducida': tax_reducida,
+                                                'base_reducida': base_reducida2,
+                                                'tax_reducida': tax_reducida2,
                                                 'rate_reducida': rate_reducida,
-                                                'base_additional': base_additional,
-                                                'tax_additional': tax_additional,
+                                                'base_additional': base_additional2,
+                                                'tax_additional': tax_additional2,
                                                 'rate_additional': rate_additional,
                                                 'base_exent': base_exent,
                                                 })
+
+
+
+
+                    if wh_iva.wh_lines.invoice_id.type == 'in_refund':
+                        inv_refund = wh_iva.wh_lines.invoice_id.supplier_invoice_number
+                        inv_nro_fact = wh_iva.wh_lines.invoice_id.invoice_reverse_purchase_id.supplier_invoice_number
+                        inv_nro_ctrl = wh_iva.wh_lines.invoice_id.nro_ctrl
+                    elif wh_iva.wh_lines.type == 'in_debit':
+                        factura_origin = self.env['account.move'].search([('id','=', wh_iva.wh_lines.invoice_id.debit_origin_id.id)])
+                        inv_debit = wh_iva.wh_lines.invoice_id.supplier_invoice_number
+                        inv_nro_fact = factura_origin.supplier_invoice_number
+                        inv_nro_ctrl = wh_iva.wh_lines.invoice_id.nro_ctrl
+                    elif  wh_iva.wh_lines.type == 'in_invoice':
+                        inv_nro_ctrl = wh_iva.wh_lines.invoice_id.nro_ctrl
 
                 else:
                     raise UserError(_("El comprobante de Retencion de IVA se genera solo para los Proveedores"))
@@ -154,12 +165,18 @@ class IvaReport(models.AbstractModel):
             raise UserError(_("Solo puede seleccionar una Retencion de IVA a la vez, Por favor Seleccione una y proceda a Imprimir"))
         partner_id = data['form'].partner_id
         if partner_id.company_type == 'person':
-            if partner_id.nationality == 'V' or partner_id.nationality == 'E':
-                document = str(partner_id.nationality) + str(partner_id.identification_id)
+            if partner_id.vat:
+                document = partner_id.vat
             else:
-                document = str(partner_id.identification_id)
+                if partner_id.nationality == 'V' or partner_id.nationality == 'E':
+                    document = str(partner_id.nationality) + str(partner_id.identification_id)
+                else:
+                    document = str(partner_id.identification_id)
         else:
-            document = partner_id.vat
+            if partner_id.vat:
+                document = partner_id.vat
+            else:
+                document = 'N/A'
         fecha_op = data['form'].wh_lines.invoice_id.invoice_date
         sum_base_general = self.separador_cifra(sum_base_general)
         sum_tax_general = self.separador_cifra(sum_tax_general)
@@ -173,11 +190,13 @@ class IvaReport(models.AbstractModel):
             'lines': res, #self.get_lines(data.get('form')),
             #date.partner_id
             'fecha_op': fecha_op,
-            'rate_general': str(base_amount[0].get('rate_general')[:3]) + '' +'%',
-            'rate_reducida': str(base_amount[0].get('rate_reducida')[:3]) + '' +'%',
-            'rate_additional': str(base_amount[0].get('rate_additional')[:3]) + '' +'%',
+            'rate_general': rate_general,
+            'rate_reducida': rate_reducida,
+            'rate_additional': rate_additional,
             'inv_nro_ctrl': inv_nro_ctrl,
             'inv_nro_fact': inv_nro_fact,
+            'inv_refund': inv_refund,
+            'inv_debit':inv_debit,
             'document': document,
             'base_amount': base_amount,
             'base_product': base_product,
@@ -231,11 +250,13 @@ class IvaReport(models.AbstractModel):
     def get_t_type(self, doc_type=None, name=None):
         tt = ''
         if doc_type:
-            if doc_type == "out_refund" or doc_type == "in_refund":
+            if doc_type == "in_debit" or doc_type == "out_debit":
                 tt = '02-COMP'
             elif name and name.find('PAPELANULADO') >= 0:
                 tt = '03-ANU'
-            else:
+            if doc_type == "out_refund" or doc_type == "in_refund":
+                tt = '02-COMP'
+            elif doc_type == "in_invoice" or doc_type == "out_invoice":
                 tt = '01-REG'
         return tt
 

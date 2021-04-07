@@ -21,7 +21,7 @@
                      </xpath>
                      <xpath expr="//field[@name='partner_id']" position="after">
                             <field name="rif" string="RIF"
-                                   attrs="{'invisible':[ '|', '|', ('type', 'not in',  ('out_invoice', 'out_refund', 'out_receipt','in_invoice', 'in_refund', 'in_receipt')),('company_type1', '=', 'person'), ('people_type_company1','=','pjnd')]}"
+                                   attrs="{'invisible':[ '|', ('type', 'not in',  ('out_invoice', 'out_refund', 'out_receipt','in_invoice', 'in_refund', 'in_receipt')), ('people_type_company1','=','pjnd')]}"
                             />
 
                             <field name="nationality1" string="Tipo de Documento"  attrs="{'invisible':['|', ('type', 'not in',  ('out_invoice', 'out_refund', 'out_receipt','in_invoice', 'in_refund', 'in_receipt')),('company_type1', '=', 'company')]}"/>
