@@ -14,6 +14,8 @@ class SaleOrderLine(models.Model):
         bom_obj = self.env['mrp.bom']
         operation_cost = vendor_price = 0
         for line in self:
+            if not bool(line.order_id.partner_id): 
+                continue
             vendor_prices = pro_vendor.search([('product_tmpl_id', '=', line.product_id.product_tmpl_id.id), ('date_end', '>=', fields.Date.today()-timedelta(days=line.company_id.days)), ('date_end', '>=', fields.Date.today())])
             if vendor_prices:
                 vendor_price = max(vendor_prices.mapped('price')) 
@@ -30,7 +32,7 @@ class SaleOrderLine(models.Model):
                         duration_expected = operation_cycle * operation.time_cycle + operation.workcenter_id.time_stop + operation.workcenter_id.time_start
                         total = ((duration_expected / 60.0) * operation.workcenter_id.costs_hour)
 
-                        new_total += self.env.company.currency_id.round(total)
+                        new_total += self.order_id.currency_id.round(total)
                     operation_cost = new_total
             
             total_price = vendor_price + operation_cost
