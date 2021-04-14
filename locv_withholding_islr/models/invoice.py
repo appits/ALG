@@ -123,11 +123,10 @@ class AccountMove(models.Model):
             for concep in self.invoice_line_ids:
                 if concep.concept_id.withholdable == True:
                     if self.state == 'posted':
-                        for ilids in self.invoice_line_ids:
-                            self.check_invoice_type()
-                            self.check_withholdable_concept()
-                            islr_wh_doc_id = self._create_islr_wh_doc()
-                            islr_wh_doc_id and self.write({'islr_wh_doc_id': islr_wh_doc_id.id})
+                        self.check_invoice_type()
+                        self.check_withholdable_concept()
+                        islr_wh_doc_id = self._create_islr_wh_doc()
+                        islr_wh_doc_id and self.write({'islr_wh_doc_id': islr_wh_doc_id.id})
         return var
 
     # BEGIN OF REWRITING ISLR
