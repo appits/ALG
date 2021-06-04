@@ -5,6 +5,7 @@ class Location (models.Model):
     _inherit = 'stock.location'
 
     send_sicbatch = fields.Boolean()
+    tolva_id = fields.Integer()
 
 
     

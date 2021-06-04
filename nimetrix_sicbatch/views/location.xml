@@ -10,6 +10,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='removal_strategy_id']" position="after">
                     <field name="send_sicbatch"/>
+                    <field name="tolva_id"/>
                 </xpath>
             </field>
         </record>

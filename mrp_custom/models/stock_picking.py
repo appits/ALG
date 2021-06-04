@@ -37,50 +37,45 @@ class StockPicking(models.Model):
 
     def action_done(self):
         res = super(StockPicking, self).action_done()
-        location_to_id = self.env['stock.location'].search([('transit_location', '=', True)])
-        validation = 0
-        for location_validation in location_to_id:
-            validation += 1
+        location_to_id = self.env['stock.location'].search([('transit_location', '=', True)], limit=1)
+        if not location_to_id:
+            raise UserError('No una ubicacion de transinto por defecto')
 
-        if location_to_id:
-            if validation == 1:
-                if self.generated_by_picking_list:
-                    picking_id = self.env['stock.picking'].create({'partner_id': self.company_id.partner_id.id,
-                                                                   'move_type': 'direct',
-                                                                   'state': 'draft',
-                                                                   'related_picking_id': self.id,
-                                                                   'generated_by_related': True,
-                                                                   'location_id': self.location_dest_id.id,
-                                                                   'location_dest_id': self.location_dest_id.id,
-                                                                   'picking_type_id': self.picking_type_id.id,
-                                                                   'company_id': self.company_id.id,
-                                                                   'production_ids': self.production_ids})
-                    for picking_line in self.move_ids_without_package:
-                        picking_line.env['stock.move'].create({'name': picking_line.product_id.name,
-                                                               'state': picking_id.state,
-                                                               'priority': '1',
-                                                               'location_id': picking_line.location_dest_id.id,
-                                                               'location_dest_id': location_validation.id,
-                                                               'picking_type_id': picking_id.picking_type_id.id,
-                                                               'partner_id': picking_id.partner_id.id,
-                                                               'company_id': picking_id.company_id.id,
-                                                               'product_id': picking_line.product_id.id,
-                                                               'description_picking': picking_line.product_id.name,
-                                                               'product_uom_qty': picking_line.product_uom_qty,
-                                                               'product_uom': picking_line.product_uom.id,
-                                                               'picking_id': picking_id.id,
-                                                               'procure_method': 'make_to_stock',
-                                                               'reference': picking_id.name,
-                                                               'unit_factor': 1})
-                    self.related_picking_id = picking_id.id
+        if self.generated_by_picking_list:
+            picking_id = self.env['stock.picking'].create({'partner_id': self.company_id.partner_id.id,
+                                                           'move_type': 'direct',
+                                                           'state': 'draft',
+                                                           'related_picking_id': self.id,
+                                                           'generated_by_related': True,
+                                                           'location_id': self.location_dest_id.id,
+                                                           'location_dest_id': self.location_dest_id.id,
+                                                           'picking_type_id': self.picking_type_id.id,
+                                                           'company_id': self.company_id.id,
+                                                           'production_ids': self.production_ids})
+            for picking_line in self.move_ids_without_package:
+                location_validation = picking_line.product_id.location_picking_id
+                if not picking_line.product_id.location_picking_id:
+                    location_validation = location_to_id
+                picking_line.env['stock.move'].create({'name': picking_line.product_id.name,
+                                                       'state': picking_id.state,
+                                                       'priority': '1',
+                                                       'location_id': picking_line.location_dest_id.id,
+                                                       'location_dest_id': location_validation.id,
+                                                       'picking_type_id': picking_id.picking_type_id.id,
+                                                       'partner_id': picking_id.partner_id.id,
+                                                       'company_id': picking_id.company_id.id,
+                                                       'product_id': picking_line.product_id.id,
+                                                       'description_picking': picking_line.product_id.name,
+                                                       'product_uom_qty': picking_line.product_uom_qty,
+                                                       'product_uom': picking_line.product_uom.id,
+                                                       'picking_id': picking_id.id,
+                                                       'procure_method': 'make_to_stock',
+                                                       'reference': picking_id.name,
+                                                       'unit_factor': 1})
+            self.related_picking_id = picking_id.id
 
-                    for production in self.production_ids:
-                        production.write({'pick_ids': [(4, picking_id.id, _)]})
-            else:
-                raise ValidationError(_('You cannot have more than one temporary location, please validate'))
-
-        else:
-            raise ValidationError(_('you must configure a transient location'))
+            for production in self.production_ids:
+                production.write({'pick_ids': [(4, picking_id.id, _)]})
 
         return res
 

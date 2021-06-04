@@ -345,7 +345,7 @@
                                                     
                                                         <td class="text-center" style="font-size:12px;"><span t-field="line.name"/></td>
                                                         <td class="text-center" style="font-size:12px;"><span t-field="line.date_uid"/></td>
-                                                        <td class="text-center" style="font-size:12px;"><span t-field="line.invoice_ids.invoice_id.name"/></td>
+                                                        <td class="text-center" style="font-size:12px;"><span t-field="line.invoice_ids.invoice_id.supplier_invoice_number"/></td>
                                                         <td class="text-center" style="font-size:12px;"><span t-field="line.invoice_ids.invoice_id.nro_ctrl"/></td>
                                                         <td class="text-center" style="font-size:12px;"><span t-field="concep.concept_id.name"/></td>
                                                         <t t-if="line.invoice_ids.invoice_id.type != 'in_invoice'">

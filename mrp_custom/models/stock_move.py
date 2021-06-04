@@ -10,7 +10,8 @@ class StockMove(models.Model):
         res = super(StockMove, self).create(vals)
         for record in res:
             if record.raw_material_production_id:
-                if record.product_id.bom_ids and record.product_id.product_tmpl_id.generate_production:
+                if record.product_id.bom_ids and record.product_id.generate_production \
+                        or record.product_id.bom_ids and record.product_id.plan_production:
                     utils.generate_production(record,
                                               record.product_id,
                                               record.product_uom_qty,

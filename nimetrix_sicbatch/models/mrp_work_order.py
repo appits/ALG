@@ -104,13 +104,14 @@ class MrpWorkorder_Extension(models.Model):
                         if not line.product_id.product_tmpl_id.categ_id.send_sicbatch:
                             continue
                         lines = lines + 1
-                        monitoring = line.product_id.product_tmpl_id.default_code + "_" + line.product_id.product_tmpl_id.name
+                        monitoring = "spDetalleReceta_Actualizar: "+line.product_id.product_tmpl_id.default_code + "_" +line.product_id.product_tmpl_id.name
                         data = {
                             'name': 'spDetalleReceta_Actualizar',
                             'param1': record.production_id.bom_id.product_tmpl_id.default_code,
                             'param2': line.product_id.product_tmpl_id.default_code,
                             'param3': line.product_qty,
-                            'param4': lines
+                            'param4': lines,
+                            'param5': line.product_id.product_tmpl_id.name
                         }
                         response = requests.post(url=url, json=data, timeout=8)
 
@@ -129,8 +130,8 @@ class MrpWorkorder_Extension(models.Model):
 
                     batch = 1
 
-                    if production.routing_id.capacity_batch > 0:
-                        batch = int(round(production.product_qty / production.routing_id.capacity_batch))
+                    if production.bom_id.product_type == 'PT' and production.bom_id.capacity_batch > 0:
+                        batch = int(round(production.product_qty / production.bom_id.capacity_batch))
 
                     params = {
                         'name': 'spOrdenProduccion_Actualizar',

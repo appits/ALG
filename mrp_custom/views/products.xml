@@ -9,7 +9,14 @@
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='route_ids']" position="after">
-                        <field name="generate_production"/>
+                    <field name="generate_production"/>
+                    <field name="plan_production" attrs="{'invisible': [('generate_production', '=', True)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='tracking']" position="after">
+                    <field name="location_picking_id" string="Ubicacion de Envios"/>
+                </xpath>
+                    <xpath expr="//field[@name='uom_po_id']" position="after">
+                    <field name="is_micro_manual"/>
                 </xpath>
             </field>
         </record>
@@ -21,10 +28,10 @@
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
               <xpath expr="//field[@name='route_ids']" position="after">
-                        <field name="generate_production" readonly="1"/>
+                    <field name="generate_production" readonly="1"/>
+                    <field name="plan_production" attrs="{'invisible': [('generate_production', '=', True)]}"/>
                 </xpath>
             </field>
         </record>
-
     </data>
 </odoo>
