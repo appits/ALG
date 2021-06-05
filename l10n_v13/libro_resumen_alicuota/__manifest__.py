@@ -16,7 +16,9 @@
         'base',
         'account',
         'account_accountant',
-        'vat_retention',
+        'locv_withholding_iva',
+        'locv_withholding_islr',
+        #'vat_retention',
         #'isrl_retention',
     ],
 

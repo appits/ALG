@@ -11,6 +11,7 @@
                 <xpath expr="//field[@name='removal_strategy_id']" position="after">
                     <field name="send_sicbatch"/>
                     <field name="tolva_id"/>
+                    <field name="tolva_etiqueta"/>
                 </xpath>
             </field>
         </record>

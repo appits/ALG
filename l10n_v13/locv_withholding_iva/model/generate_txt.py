@@ -450,6 +450,7 @@ class TxtIva(models.Model):
                 voucher_number = self.get_number(txt_line.voucher_id.number, 'vou_number', 14)
                 amount_exempt, amount_untaxed = self.get_amount_exempt_document(txt_line)
                 if  document_type == '03':
+                    document_affected = str(txt_line.invoice_id.reversed_entry_id.supplier_invoice_number)
 
                     sign = -1
                 else:

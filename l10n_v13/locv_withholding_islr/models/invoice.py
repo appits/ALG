@@ -114,20 +114,31 @@ class AccountMove(models.Model):
             * \'No exceda la tasa, línea XML generada\' se utiliza cuando el usuario crea la factura, una factura no supera la tarifa mínima.''')
 
 
+
+    @api.model
+    def create(self,vals):
+         
+        if vals.get('islr_wh_doc_id'):
+            vals['islr_wh_doc_id']=False 
+
+        return super(AccountMove, self).create(vals)
     
     def action_post(self):
         var = super(AccountMove, self).action_post()
         #if var:
         #    self._compute_retenida()
         if self.company_id.partner_id.islr_withholding_agent and self.partner_id.islr_withholding_agent:
-            for concep in self.invoice_line_ids:
-                if concep.concept_id.withholdable == True:
-                    if self.state == 'posted':
-                        self.check_invoice_type()
-                        self.check_withholdable_concept()
-                        islr_wh_doc_id = self._create_islr_wh_doc()
-                        islr_wh_doc_id and self.write({'islr_wh_doc_id': islr_wh_doc_id.id})
+            search_withholdable=self.invoice_line_ids.filtered(lambda r: (r.concept_id.withholdable == True) )
+            if self.state == 'posted' and search_withholdable:
+                self.check_invoice_type()
+                self.check_withholdable_concept()
+                islr_wh_doc_id = self._create_islr_wh_doc()
+                islr_wh_doc_id and self.write({'islr_wh_doc_id': islr_wh_doc_id.id})
+ 
+        
         return var
+
+
 
     # BEGIN OF REWRITING ISLR
     def check_invoice_type(self):
@@ -147,9 +158,11 @@ class AccountMove(models.Model):
         invoice line'''
         iwdi_obj = self.env['islr.wh.doc.invoices']
         return iwdi_obj._get_concepts(ids)
+        
 
-
-    @api.model
+        
+        
+        
     def _create_doc_invoices(self,islr_wh_doc_id):
         """ This method link the invoices to be withheld
         with the withholding document.
@@ -179,13 +192,13 @@ class AccountMove(models.Model):
         acc_part_id = rp_obj._find_accounting_partner(self.partner_id)
 
         res = False
-        if self.type in ('out_refund', 'in_refund'):
-            return False
-        if not (self.type in ('out_invoice', 'in_invoice') and rp_obj._find_accounting_partner(self.company_id.partner_id).islr_withholding_agent):
+        # ~ if self.type in ('out_refund', 'in_refund'):
+            # ~ return False
+        if not (self.type in ('out_invoice', 'in_invoice','in_refund') and rp_obj._find_accounting_partner(self.company_id.partner_id).islr_withholding_agent):
             return True
 
         context['type'] = self.type
-        wh_ret_code = wh_doc_obj.retencion_seq_get()
+        wh_ret_code = wh_doc_obj.retencion_seq_get(self.type)
 
         if wh_ret_code:
             journal = wh_doc_obj._get_journal(self.partner_id)
@@ -209,7 +222,7 @@ class AccountMove(models.Model):
                 'date_ret':self.date
             }
             if self.company_id.propagate_invoice_date_to_income_withholding:
-                values['date_uid'] = self.invoice_date
+                values['date_uid'] = self.date_invoice
 
             islr_wh_doc_id = wh_doc_obj.create(values)
             iwdi_id = self._create_doc_invoices(islr_wh_doc_id)
@@ -326,17 +339,16 @@ class AccountMove(models.Model):
         direction = types[inv_brw.type]
 
         for iwdl_brw in to_wh:
-            rec = iwdl_brw.islr_wh_doc_id.journal_id.default_debit_account_id
-                #concept_id.property_retencion_islr_receivable
-            pay = iwdl_brw.islr_wh_doc_id.journal_id.default_debit_account_id
+            rec = iwdl_brw.concept_id.property_retencion_islr_receivable
+            pay = iwdl_brw.concept_id.property_retencion_islr_payable
             if inv_brw.type in ('out_invoice', 'out_refund'):
                 acc = rec and rec.id or False
             else:
                 acc = pay and pay.id or False
             if not acc:
                 raise exceptions.except_orm(_('Falta la cuenta en el impuesto!'),
-                                        _("El diario de [%s] tiene las cuentas faltantes. Por favor, rellene los campos que faltan para poder continuar"
-                                          ) % (iwdl_brw.islr_wh_doc_id.journal_id.name,))
+                                        _("El impuesto [%s] tiene una cuenta que falta. Por favor, rellene los campos que faltan"
+                                          ) % (iwdl_brw.concept_id.name,))
 
             res.append((0, 0, {
                 'debit': direction * iwdl_brw.amount < 0 and - direction *

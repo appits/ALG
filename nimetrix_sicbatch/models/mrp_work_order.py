@@ -72,8 +72,6 @@ class MrpWorkorder_Extension(models.Model):
                 raise UserError(_('Falta Código de referencia de la lista de materiales'))
             if not record.production_id.bom_id.product_tmpl_id.default_code:
                 raise UserError(_('El Producto no posee código interno'))
-            if not record.production_id.bom_id.product_tmpl_id.description:
-                raise UserError(_('El Producto no posee Descripción'))
             try:
                 monitoring = "Starting connection"
                 config = get_config(self)
@@ -87,7 +85,7 @@ class MrpWorkorder_Extension(models.Model):
                         'param1': record.production_id.bom_id.product_tmpl_id.default_code,
                         'param2': record.production_id.bom_id.product_tmpl_id.default_code,
                         'param3': record.production_id.bom_id.product_tmpl_id.name,
-                        'param4': record.production_id.bom_id.product_tmpl_id.description
+                        'param4': record.production_id.bom_id.product_tmpl_id.name
                     }
                     response = requests.post(url=url, json=params, timeout=8)
 

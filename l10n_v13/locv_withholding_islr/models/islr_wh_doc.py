@@ -31,6 +31,17 @@ class IslrWhDoc(models.Model):
         inv_type = self._context.get('type', 'in_invoice')
         return inv_type
 
+    '''@api.model
+    def _get_journal(self):
+
+        """ Return a iva journal depending of invoice type
+        """
+        
+        partner_id = self._context.get('uid')
+        partner = self.env['res.partner'].search([('id', '=', partner_id)])
+        purchase_journal_id = partner.purchase_journal_id.id
+        res = self.env['account.journal'].search([('id', '=', purchase_journal_id)])
+        return res'''
 
     @api.model
     def _get_journal(self,partner_id=None):
@@ -42,36 +53,42 @@ class IslrWhDoc(models.Model):
         #user_obj = self.env['res.users']
         #company_id = user_obj.browse(self._uid).company_id.id
         filtro = partner_id
-        type = self._context.get('default_type')
-        res = []
         if not partner_id:
 
             #partner_id = self.env['res.partner'].search([('id', '=', self._context.get('uid'))])
             company = self.env.user.sudo().company_id
             filtro = company.partner_id
-
-        if type in ('out_invoice', 'out_refund'):
+        if self._context.get('type') in ('out_invoice', 'out_refund'):
             res = filtro.sale_islr_journal_id
                 #journal_obj.search([('type', '=', 'islr_sale'),
                  #                     ('company_id', '=', company_id)], limit=1)
-        if type in ('in_invoice', 'in_refund'):
+        else:
             res = filtro.purchase_islr_journal_id
                 #journal_obj.search([(
                 #'type', '=', 'islr_purchase')], limit=1)
         if res:
             return res
         else:
-            if type:
-                raise exceptions.except_orm(
-                    _('Configuracion Incompleta.'),
-                    _("No se encuentra un diario para ejecutar la retención ISLR"
-                      " automáticamente, cree uno en vendedor/proveedor > "
-                      "contabilidad > Diario de retencion ISLR"))
-                return False
-            else:
-                res = filtro.purchase_islr_journal_id
-                return res
+            raise exceptions.except_orm(
+                _('Configuration Incomplete.'),
+                _("No se encuentra un diario para ejecutar la retención ISLR"
+                  " automáticamente, cree uno en vendedor/proveedor > "
+                  "contabilidad > Diario de retencion ISLR"))
+            return False
 
+
+        '''context = dict(self._context or {})
+        type_inv = context.get('type', 'in_invoice')
+        type2journal = {'out_invoice': 'islr_sale',
+                        'in_invoice': 'islr_purchase'}
+        journal_obj = self.env['account.journal']
+        user = self.env['res.users'].browse()
+        company_id = context.get('company_id', user.company_id.id)
+        domain = [('company_id', '=', company_id)]
+        domain += [('type', '=', type2journal.get(
+            type_inv, 'islr_purchase'))]
+        res = journal_obj.search(domain, limit=1)
+        return res and res[0] or False'''
 
     @api.model
     def _get_currency(self):
@@ -100,9 +117,16 @@ class IslrWhDoc(models.Model):
         return res_company
     # @api.onchange('date_ret')
 
-    def retencion_seq_get(self):
+    def retencion_seq_get(self,type_islr):
         #TODO REVISAR ESTA SECUENCIA SALTA UN NUMERO
         local_number = self.env['ir.sequence'].next_by_code('islr.wh.doc')
+        if type_islr=='in_refund':
+            local_number = self.env['ir.sequence'].next_by_code('islr.wh.doc.in_refund')
+            
+        if type_islr=='out_refund':
+            local_number = self.env['ir.sequence'].next_by_code('islr.wh.doc.out_refund')
+        
+            
         if local_number and self.date_ret:
             account_month = self.date_ret.split('-')[1]
             if not account_month == local_number[4:6]:
@@ -483,16 +507,16 @@ class IslrWhDoc(models.Model):
         self.account_id = acc_id
         self.invoice_ids = res_wh_lines
 
-    # @api.onchange('date_ret','date_uid')
-    # def on_change_date_ret(self):
-    #     res = {}
-    #     if self.date_ret:
-    #         if not self.date_uid:
-    #             res.update({'date_uid': self.date_ret})
-    #   #      obj_per = self.env('account.period')
-    #      #   per_id = obj_per.find( date_ret)
-    #      #   res.update({'period_id': per_id and per_id[0]})
-    #     return {'value': res}
+    @api.onchange('date_ret','date_uid')
+    def on_change_date_ret(self):
+        res = {}
+        if self.date_ret:
+            if not self.date_uid:
+                res.update({'date_uid': self.date_ret})
+      #      obj_per = self.env('account.period')
+         #   per_id = obj_per.find( date_ret)
+         #   res.update({'period_id': per_id and per_id[0]})
+        return {'value': res}
 
     @api.model_create_multi
     def create(self,vals):
@@ -668,7 +692,7 @@ class IslrWhDoc(models.Model):
         ret.refresh()
         if ret.type in ('in_invoice', 'in_refund'):
             self.write({
-                'date_ret': ret.date_ret})
+                'date_ret': ret.date_uid})
         else:
             if not ret.date_ret:
                 self.write({
@@ -680,13 +704,29 @@ class IslrWhDoc(models.Model):
      #   period_id = ret.period_id and ret.period_id.id or False
         journal_id = ret.journal_id.id
 
+        '''
+        if not period_id:
+            period_ids = self.env('account.period').search(
+
+                [('date_start', '<=',
+                  ret.date_ret or time.strftime('%Y-%m-%d')),
+                 ('date_stop', '>=',
+                  ret.date_ret or time.strftime('%Y-%m-%d'))])
+            if len(period_ids):
+                period_id = period_ids[0]
+            else:
+                raise exceptions.except_orm(
+                    _('Warning !'),
+                    _("Not found a fiscal period to date: '%s' please check!")
+                    % (ret.date_ret or time.strftime('%Y-%m-%d')))
+        '''
         ut_obj = self.env['l10n.ut']
         for line in ret.invoice_ids:
             if ret.type in ('in_invoice', 'in_refund'):
                 name = 'COMP. RET. ISLR ' + ret.name + \
                     ' Doc. ' + (line.invoice_id.supplier_invoice_number or '')
             else:
-                name = 'COMP. RET. ISLR ' + ret.name + \
+                name = 'COMP. RET. ISLR ' + ret.number + \
                     ' Doc. ' + (line.invoice_id.display_name or '')
             writeoff_account_id = False
             writeoff_journal_id = False
@@ -1002,7 +1042,7 @@ class IslrWhDocInvoices(models.Model):
                 res[ret_line.id]['currency_base_ret'] += f_xc(line.base_amount)
         return res
 
-    sustraendo = fields.Float('Sustraendo')
+
 
     islr_wh_doc_id= fields.Many2one(
             'islr.wh.doc', 'Retener documento', ondelete='cascade',
@@ -1114,7 +1154,14 @@ class IslrWhDocInvoices(models.Model):
 
     @api.model
     def _get_wh(self, iwdl_id, concept_id):
-
+        """ Return a dictionary containing all the values of the retention of an
+        invoice line.
+        @param concept_id: Withholding reason
+        """
+        # TODO: Change the signature of this method
+        # This record already has the concept_id built-in
+        #context = self._context or {}
+        #ids = isinstance(self.ids, (int)) and [self.ids] or self.ids
         ixwl_obj = self.env['islr.xml.wh.line']
         iwdl_obj = self.env['islr.wh.doc.line']
         #iwdl_brw = iwdl_obj.browse(iwdl_id)
@@ -1135,7 +1182,18 @@ class IslrWhDocInvoices(models.Model):
         #nature = False
 
         concept_id = iwdl_id.concept_id.id
-
+        # rate_base,rate_minimum,rate_wh_perc,rate_subtract,rate_code,rate_id,
+        # rate_name
+        # Add a Key in context to store date of ret fot U.T. value
+        # determination
+        # TODO: Future me, this context update need to be checked with the
+        # other date in the withholding in order to take into account the
+        # Retención de ingresos del cliente.
+        #context.update({
+        #    'wh_islr_date_ret':
+        #    iwdl_brw.islr_wh_doc_id.date_uid or
+        #    iwdl_brw.islr_wh_doc_id.date_ret or False
+        #})
         base = 0
         wh_concept = 0.0
 
@@ -1149,7 +1207,10 @@ class IslrWhDocInvoices(models.Model):
             for line in iwdl_id.xml_ids:
                 base += f_xc(line.account_invoice_line_id.price_subtotal)
 
-
+            # rate_base, rate_minimum, rate_wh_perc, rate_subtract, rate_code,
+            # rate_id, rate_name, rate2 = self._get_rate(
+            #    cr, uid, ail_brw.concept_id.id, residence, nature, base=base,
+            #    inv_brw=ail_brw.move_id, context=context)
             rate_tuple = self._get_rate(concept_id, residence, nature, base=base,
                 inv_brw=iwdl_id.invoice_id)
 
@@ -1164,7 +1225,7 @@ class IslrWhDocInvoices(models.Model):
                 apply_income = (apply_income and
                                 base >= rate_tuple[0] * rate_tuple[1] / 100.0)
             wh = 0.0
-            subtract = apply_income and rate_tuple[1] or 0.0
+            subtract = apply_income and rate_tuple[3] or 0.0
             subtract_write = 0.0
             sb_concept = subtract
             for line in iwdl_id.xml_ids:
@@ -1324,7 +1385,7 @@ class IslrWhDocInvoices(models.Model):
                               'invoice_id': ret_line.invoice_id.id,
                               'xml_ids': [(6, 0, xmls.get(concept_id, False))],
                               'iwdi_id': ret_line.id})
-                self.write({'sustraendo' :self._get_wh( iwdl_id, concept_id,)})
+                self._get_wh( iwdl_id, concept_id,)
         else:
             # Searching & Unlinking for concept lines from the current
             # withholding
@@ -1341,7 +1402,7 @@ class IslrWhDocInvoices(models.Model):
                         'concept_id': concept_id,
                         'invoice_id': ret_line.invoice_id.id},)
                 iwdl_ids += iwdl_id
-                self.write({'sustraendo': self._get_wh(iwdl_id, concept_id, )})
+                self._get_wh(iwdl_id, concept_id)
                 iwdl_id.write({'iwdi_id': ids[0]})
             #self.write({'iwdl_ids': [(6, 0, iwdl_ids)]})
         #values = self.get_amount_all()
@@ -1418,8 +1479,8 @@ class IslrWhDocInvoices(models.Model):
         iwdl_obj = self.env['islr.wh.doc.line']
         ut_obj = self.env['l10n.ut']
         iwhd_obj = self.env["islr.wh.historical.data"]
-        # money2ut = ut_obj.compute
-        # ut2money = ut_obj.compute_ut_to_money
+        money2ut = ut_obj.compute
+        ut2money = ut_obj.compute_ut_to_money
         islr_rate_obj = self.env['islr.rates']
         islr_rate_args = [('concept_id', '=', concept_id),
                           ('nature', '=', nature),
@@ -1450,25 +1511,17 @@ class IslrWhDocInvoices(models.Model):
             raise exceptions.except_orm(_('Falta la configuración'), msg)
 
         if not rate2:
-            ut_obj = self.env['l10n.ut'].search([], order='id desc', limit=1)
             #rate_brw = islr_rate_obj.browse(islr_rate_ids[0])
-
-            if islr_rate_ids.minimum == 83.33 and islr_rate_ids.name == 'PNRE':
-                valor = 0.0034
-            else:
-                valor = 0
-            rate_brw_minimum = float(ut_obj.amount *(islr_rate_ids.minimum + valor)* (islr_rate_ids.wh_perc/100))
-            rate_brw_minimum = round(rate_brw_minimum, 2)
-            rate_brw_subtract =   float(ut_obj.amount * islr_rate_ids.subtract * (islr_rate_ids.wh_perc/100))
-            rate_brw_subtract = round(rate_brw_subtract, 2)
+            rate_brw_minimum = ut2money(
+                islr_rate_ids.minimum, date_ret)
+            rate_brw_subtract = ut2money(
+                islr_rate_ids.subtract, date_ret)
         else:
             rate2 = {
                 'cumulative_base_ut': 0.0,
                 'cumulative_tax_ut': 0.0,
             }
-
-            ut_obj = self.env['l10n.ut'].search([], order='id desc', limit=1)
-            base_ut = ut_obj
+            base_ut = money2ut( base, date_ret)
             iwdl_ids = iwdl_obj.search(
 
                 [('partner_id', '=', inv_brw.partner_id.id),
@@ -1496,17 +1549,19 @@ class IslrWhDocInvoices(models.Model):
             found_rate = False
             for rate_brw in islr_rate_obj.browse(
                      islr_rate_ids):
-
+                # Get the invoice_lines that have the same concept_id than the
+                # rate_brw which is here Having the lines the subtotal for each
+                # lines can be got and with that it will be possible to which
+                # rate to grab,
+                # MULTICURRENCY WARNING: Values from the invoice_lines must be
+                # translate to VEF and then to UT this way computing in a
+                # proper way the amount values
                 if rate_brw.minimum > base_ut * rate_brw.base / 100.0:
                     continue
-                if islr_rate_ids.minimum == 83.33 and islr_rate_ids.name == 'PNRE':
-                    valor = 0.0034
-                else:
-                    valor = 0
-                rate_brw_minimum =  float(ut_obj.amount * (islr_rate_ids.minimum + valor) * (islr_rate_ids.wh_perc/100))
-                rate_brw_minimum = round(rate_brw_minimum, 2)
-                rate_brw_subtract =  float(ut_obj.amount * islr_rate_ids.subtract * (islr_rate_ids.wh_perc/100))
-                rate_brw_subtract = round(rate_brw_subtract, 2)
+                rate_brw_minimum = ut2money(
+                     rate_brw.minimum, date_ret)
+                rate_brw_subtract = ut2money(
+                     rate_brw.subtract, date_ret)
                 found_rate = True
                 rate2['subtrahend'] = rate_brw.subtract
                 break

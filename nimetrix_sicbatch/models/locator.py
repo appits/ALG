@@ -6,6 +6,7 @@ class Location (models.Model):
 
     send_sicbatch = fields.Boolean()
     tolva_id = fields.Integer()
+    tolva_etiqueta = fields.Char()
 
 
     
