@@ -73,7 +73,8 @@ class ConfigConnectionLine(models.Model):
     @api.constrains('operation_start_id', 'operation_end_id')
     def set_start_end(self):
         for record in self:
-            record.set_check(True, self.routing_id.id)
+            print('CheckStart')
+            #record.set_check(True, self.routing_id.id)
 
     @api.model
     def unlink(self):

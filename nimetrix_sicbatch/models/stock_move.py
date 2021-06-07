@@ -30,7 +30,10 @@ class StockPicking(models.Model):
                         'param3': line.product_id.name,
                         'param4': line.lot_id.name,
                         'param5': line.location_dest_id.id,
-                        'param6': line.location_dest_id.name
+                        'param6': line.location_dest_id.name,
+                        'param7': line.location_dest_id.tolva_id,
+                        'param8': line.product_id.product_tmpl_id.is_micro_manual,
+                        'param9': line.location_dest_id.tolva_etiqueta
                     }
                     response = requests.post(url=ws_url, json=params)
                     if response.status_code == 200:
@@ -43,7 +46,6 @@ class StockPicking(models.Model):
                         })
                     else:
                         raise UserError(_("No se puede conectar a sicbatch " + response.text))
-
         return res
 
 

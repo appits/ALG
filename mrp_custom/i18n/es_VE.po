@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0\n"
+"Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-28 01:00+0000\n"
-"PO-Revision-Date: 2020-08-28 01:00+0000\n"
+"POT-Creation-Date: 2021-04-02 15:52+0000\n"
+"PO-Revision-Date: 2021-04-02 15:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,12 +16,28 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: mrp_custom
-#: model:ir.model.fields,field_description:mrp_custom.field_mrp_routing__capacity_batch
+#: model:ir.model.fields,field_description:mrp_custom.field_mrp_bom__batch_controlled
+msgid "Batch Controlled"
+msgstr "Contralo por Batch"
+
+#. module: mrp_custom
+#: model:ir.model,name:mrp_custom.model_mrp_bom
+msgid "Bill of Material"
+msgstr "Lista de materiales"
+
+#. module: mrp_custom
+#: model:ir.model,name:mrp_custom.model_mrp_bom_line
+msgid "Bill of Material Line"
+msgstr "Línea de Lista de Materiales"
+
+#. module: mrp_custom
+#: model:ir.model.fields,field_description:mrp_custom.field_mrp_bom__capacity_batch
 msgid "Capacity Batch"
 msgstr "Capacidad de Batch"
 
 #. module: mrp_custom
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_list__company_id
+#: model:ir.model.fields,field_description:mrp_custom.field_plan_production_by_order__company_id
 msgid "Company"
 msgstr "Compañia"
 
@@ -38,12 +54,14 @@ msgstr "Crear movimiento"
 #. module: mrp_custom
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_list__create_uid
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_warning__create_uid
+#: model:ir.model.fields,field_description:mrp_custom.field_plan_production_by_order__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: mrp_custom
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_list__create_date
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_warning__create_date
+#: model:ir.model.fields,field_description:mrp_custom.field_plan_production_by_order__create_date
 msgid "Created on"
 msgstr "Creado en"
 
@@ -56,6 +74,7 @@ msgstr "Descartar"
 #. module: mrp_custom
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_list__display_name
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_warning__display_name
+#: model:ir.model.fields,field_description:mrp_custom.field_plan_production_by_order__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -83,6 +102,7 @@ msgstr "Agrupa los insumos de las producciones a generar"
 #. module: mrp_custom
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_list__id
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_warning__id
+#: model:ir.model.fields,field_description:mrp_custom.field_plan_production_by_order__id
 msgid "ID"
 msgstr ""
 
@@ -100,18 +120,21 @@ msgstr "No puede tener más de una ubicación transitoria"
 #. module: mrp_custom
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_list____last_update
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_warning____last_update
+#: model:ir.model.fields,field_description:mrp_custom.field_plan_production_by_order____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: mrp_custom
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_list__write_uid
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_warning__write_uid
+#: model:ir.model.fields,field_description:mrp_custom.field_plan_production_by_order__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: mrp_custom
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_list__write_date
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_warning__write_date
+#: model:ir.model.fields,field_description:mrp_custom.field_plan_production_by_order__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -119,6 +142,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_list__location_id
 msgid "Location"
 msgstr "Ubicación"
+
+#. module: mrp_custom
+#: model:ir.model.fields,field_description:mrp_custom.field_sale_order__mrp_processed
+msgid "Mrp Processed"
+msgstr "Produccion Procesada"
+
+#. module: mrp_custom
+#: model:ir.model.fields,field_description:mrp_custom.field_plan_production_by_order__orders_ids
+#: model_terms:ir.ui.view,arch_db:mrp_custom.plan_production_by_orders_form_view
+msgid "Orders"
+msgstr "Ordenes de venta"
+
+#. module: mrp_custom
+#: model_terms:ir.ui.view,arch_db:mrp_custom.plan_production_by_orders_form_view
+msgid "Payment Detail"
+msgstr ""
 
 #. module: mrp_custom
 #: model:ir.model.fields,field_description:mrp_custom.field_picking_list__location_dest_id
@@ -145,9 +184,40 @@ msgid "Picks"
 msgstr "Transferencias"
 
 #. module: mrp_custom
+#: model:ir.actions.act_window,name:mrp_custom.plan_production_by_orders_act_window
+msgid "Plan Orders production"
+msgstr "Plan de produccion en base a ordenes de venta"
+
+#. module: mrp_custom
+#: model:ir.model.fields,field_description:mrp_custom.field_product_product__plan_production
+#: model:ir.model.fields,field_description:mrp_custom.field_product_template__plan_production
+msgid "Plan Production"
+msgstr "Plan de produccion"
+
+#. module: mrp_custom
+#: model:ir.ui.menu,name:mrp_custom.plan_order_production_menu
+msgid "Plan Production by order"
+msgstr "Plan de produccion"
+
+#. module: mrp_custom
+#: model_terms:ir.ui.view,arch_db:mrp_custom.plan_production_by_orders_form_view
+msgid "Plan production by order"
+msgstr "Plan de produccion en base a ordenes de venta"
+
+#. module: mrp_custom
+#: model:ir.model.fields,field_description:mrp_custom.field_sale_order__process
+msgid "Process"
+msgstr "Procesar"
+
+#. module: mrp_custom
+#: model_terms:ir.ui.view,arch_db:mrp_custom.plan_production_by_orders_form_view
+msgid "Process Orders"
+msgstr "Procesar ordenes"
+
+#. module: mrp_custom
 #: model:ir.model.fields,field_description:mrp_custom.field_mrp_production__processed_picking_list
 msgid "Processed Picking List"
-msgstr "Movimiento Consolidado procesado"
+msgstr "Movimiento consolidado procesado"
 
 #. module: mrp_custom
 #: model:ir.model,name:mrp_custom.model_product_product
@@ -171,6 +241,11 @@ msgstr "Produccion"
 #: model:ir.model,name:mrp_custom.model_mrp_production
 msgid "Production Order"
 msgstr "Orden de producción"
+
+#. module: mrp_custom
+#: model:ir.model,name:mrp_custom.model_plan_production_by_order
+msgid "Production Plan by Orders"
+msgstr "Plan de producciones por ordenes"
 
 #. module: mrp_custom
 #: model:ir.model.fields,field_description:mrp_custom.field_sale_order__production_count
@@ -197,7 +272,12 @@ msgstr "Pedido de venta"
 #. module: mrp_custom
 #: model:ir.model,name:mrp_custom.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Línea de pedido de venta"
+msgstr "Línea pedido de venta"
+
+#. module: mrp_custom
+#: model:ir.model,name:mrp_custom.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento stock"
 
 #. module: mrp_custom
 #: code:addons/mrp_custom/models/sale_order.py:0
@@ -212,8 +292,16 @@ msgid "The quantity cannot be equal to zero"
 msgstr "La cantidad no puede ser igual a cero"
 
 #. module: mrp_custom
-#: code:addons/mrp_custom/models/sale_order.py:0
-#: code:addons/mrp_custom/models/sale_order.py:0
+#: code:addons/mrp_custom/models/mrp_bom.py:0
+#, python-format
+msgid ""
+"The product selected in the list cannot be the same as the product to be "
+"produced"
+msgstr ""
+
+#. module: mrp_custom
+#: code:addons/mrp_custom/utils/utils.py:0
+#: code:addons/mrp_custom/utils/utils.py:0
 #, python-format
 msgid ""
 "The type of manufacturing operation of this warehouse is archived, please "
@@ -276,6 +364,11 @@ msgstr ""
 #: model:ir.model,name:mrp_custom.model_picking_warning
 msgid "picking.warning"
 msgstr "Advertencia de transferencia"
+
+#. module: mrp_custom
+#: model_terms:ir.ui.view,arch_db:mrp_custom.plan_production_by_orders_form_view
+msgid "plan_production_by_orders_form_view"
+msgstr "Plan de produccion"
 
 #. module: mrp_custom
 #: code:addons/mrp_custom/models/stock_picking.py:0

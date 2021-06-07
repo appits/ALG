@@ -39,7 +39,7 @@
             <field name="res_model">picking.list</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="picking_list_form_view"/>
-            <field name="target">current</field>
+            <field name="target">inline</field>
         </record>
 
         <menuitem name="Picking List" id="picking_list_menu" parent="mrp.menu_mrp_manufacturing" action="picking_list_act_window"/>

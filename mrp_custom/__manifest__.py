@@ -23,9 +23,10 @@
         'views/mrp_production.xml',
         'views/stock_location.xml',
         'views/sale_order.xml',
-        'views/routing_work_center.xml',
         'views/stock_picking.xml',
+        'views/mrp_bom.xml',
         'wizard/picking_warning.xml',
         'wizard/picking_list.xml',
+        'wizard/plan_production_by_orders.xml',
     ],
 }

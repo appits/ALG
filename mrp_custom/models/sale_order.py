@@ -8,6 +8,8 @@ class SaleOrder(models.Model):
 
     production_ids = fields.Many2many('mrp.production', copy=False)
     production_count = fields.Integer(compute="count_production", string="Productions")
+    mrp_processed = fields.Boolean(default=False, copy=False)
+    process = fields.Boolean(default=False, copy=False)
 
     def count_production(self):
         production = []
@@ -35,12 +37,20 @@ class SaleOrder(models.Model):
 
     def action_confirm(self):
         productions = []
+        production = []
         for lines in self.order_line:
-            if lines.product_id.product_tmpl_id.generate_production:
+            self_prod = lines.env['mrp.production']
+            if lines.product_id.generate_production:
                 if lines.product_id.bom_ids:
-                    productions += utils.generate_production(self, lines.product_id, lines.product_uom_qty, self.warehouse_id, self.name, lines.product_uom.id, 0)
+                    production = utils.generate_production(self, lines.product_id, lines.product_uom_qty, self.warehouse_id, self.name, lines.product_uom.id, 0)
 
-        if productions:
+        if production:
+            productions += production
+            main_prod = self_prod.search([('id', 'in', production)])
+            for main in main_prod:
+                child_prod = self_prod.search([('origin', '=', main.name)])
+                if child_prod:
+                    productions += child_prod.ids
             self.production_ids = productions
         res = super(SaleOrder, self).action_confirm()
         return res
@@ -60,12 +70,12 @@ class SaleOrderLine(models.Model):
                         bom = bom_id
 
                 if bom.routing_id:
-                    if bom.routing_id.capacity_batch > 0:
+                    if bom.capacity_batch > 0:
                         qty_loop = lines.product_uom_qty
                         turns_qty = 0
                         while qty_loop > 0:
                             if qty_loop > bom.product_qty:
-                                qty_to_produce = bom.routing_id.capacity_batch
+                                qty_to_produce = bom.capacity_batch
                                 turns_qty += 1
                             else:
                                 qty_to_produce = qty_loop

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="plan_production_by_orders_form_view" model="ir.ui.view">
+            <field name="name">plan_production_by_orders_form_view.form</field>
+            <field name="model">plan.production.by.order</field>
+            <field name="arch" type="xml">
+                <form string="plan_production_by_orders_form_view">
+                    <strong><h1>Plan production by order</h1></strong>
+                    <button type="object" name="process_value"
+                            string="Process Orders"
+                            class="btn-primary"/>
+                    <group>
+                        <group>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Orders">
+                            <field name="orders_ids">
+                                <tree string="Payment Detail" create="0" delete="0">
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="date_order"/>
+                                    <field name="user_id"/>
+                                    <field name="amount_total"/>
+                                    <field name="state"/>
+                                    <field name="process" widget="boolean_toggle"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="plan_production_by_orders_act_window" model="ir.actions.act_window">
+            <field name="name">Plan Orders production</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">plan.production.by.order</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <menuitem name="Plan Production by order" id="plan_order_production_menu" parent="mrp.menu_mrp_manufacturing" action="plan_production_by_orders_act_window"/>
+
+    </data>
+</odoo>
