@@ -12,7 +12,7 @@
        <template id="factura_e">
             <t t-call="web.html_container">
               <t t-foreach="docs" t-as="o">
-                <t t-if="o.type == 'out_invoice'">
+                <t t-if="o.type in ('out_invoice', 'out_refund')">
                    <t t-if="o.state == 'posted'">
                       <t t-call="web.basic_layout">
                         <div class="page">
@@ -152,7 +152,7 @@
             <p style="font-size: 12px !important;">NOTA: (E) VENTA EXENTA EN VIRTUD DEL ARTICULO 18, NUMERALES 3 Y 11 DE LA LEY DE IMPUESTO AL VALOR AGREGADO (I.V.A.)</p>              
             <div>
                  <div class="row" >
-                        <!-- <div class="col-xs-3">
+                        <div class="col-xs-3">
                             <table class="table table-bordered" t-if="o.account_tax_ids" style="margin-left: 18px; width:450px" >
                                <tbody class="sale_tbody">
                                     <thead>
@@ -177,10 +177,10 @@
                                     </t>
                                 </tbody>
                             </table>
-                        </div> -->
+                        </div>
                         
                         <div class="col-xs-3 align-self-end">
-                            <table class="table table-bordered" style="margin-bottom:0px; margin-left:520px; width:350px ; padding: 0px; 5px;">
+                            <table class="table table-bordered" style="margin-bottom:0px; margin-left:120px; width:350px ; padding: 0px; 5px;">
                                 <!-- total tax vars -->
                                 <t t-set="total_exempt" 
                                     t-value="sum(o.account_tax_ids.filtered(lambda r: r.tax_total == 0).mapped('base_tax'))" />
@@ -207,7 +207,7 @@
                                 </tr>
                                 
                                 <tr>
-                                  <th name="th_impuesto" style="font-size: 13px" >Impuesto Bs.: </th>
+                                  <th name="th_impuesto" style="font-size: 13px" >Total I.V.A. Bs.: </th>
                                     <th class="text-right" style="font-size: 12px"><span  t-esc="'{0:,.2f}'.format(float(total_taxes))"/></th>
                                 </tr>
 
@@ -257,7 +257,7 @@
                             t-value="lambda n: '{0:,}'.format(int(n)).replace(',', '.') + '{:.2f}'.format(n - int(n)).replace('0.', ',')" />
                       
 
-                        <div class="col-xs-6">
+                        <div class="col-xs-3 mx-4">
                             <table class="table table-bordered" style="margin-bottom:0px; margin-left:60px; width:350px ; padding: 0px; 5px;">                             
 
                                 <tr>
@@ -290,7 +290,7 @@
                           </table>
                         </div>
                         
-                        <div class="col-xs-6">
+                        <div class="col-xs-3">
                             <table class="table table-bordered" style="margin-bottom:0px; margin-left:60px; width:350px ; padding: 0px; 5px;">                                
 
                                 <tr>
@@ -311,7 +311,7 @@
                                 </tr>
                                 
                                 <tr>
-                                  <th name="th_impuesto" style="font-size: 13px" >Impuesto US$.: </th>
+                                  <th name="th_impuesto" style="font-size: 13px" >Total I.V.A. US$: </th>
                                     <td class="text-right" style="font-size: 12px"><span  t-esc="format_decimals(total_taxes)"/></td>
                                 </tr>
 
