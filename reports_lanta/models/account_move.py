@@ -43,6 +43,19 @@ class AccountMove(models.Model):
                 if lines_tax.amount == 0:
                     lines.price_string = str(lines.price_unit) + ' (E)'
         return res
+    
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
+        res = super().fields_view_get(view_id, view_type, toolbar, submenu)
+        reports = res.get('toolbar', {}).get('print')
+        type_invoice = self._context.get('default_type')
+
+        # If it is not a customer invoice, remove the report that is filtered in the list comprehension.
+        if type_invoice not in ('out_invoice', 'out_refund') and reports:
+            res['toolbar']['print'] = [report for report in reports 
+                if report['report_name'] != 'reports_lanta.factura_e']
+
+        return res
 
 
 class AccountMoveLine(models.Model):
