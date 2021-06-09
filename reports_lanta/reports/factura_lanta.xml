@@ -253,6 +253,9 @@
                         <t t-set="total_invoice_bs" 
                         t-value="o.currency_id.with_context(date=o.date).compute(o.amount_total, res_company.currency_id)" />
 
+                        <t t-set="exchange_rate"
+                        t-value="o.env['multi.currency.rate'].search([('currency_id', '=', o.currency_id.id), ('rate_date', '&lt;=', o.date)], order='rate_date desc')[0].rate" />
+
                         <t t-set="format_decimals" 
                             t-value="lambda n: '{0:,}'.format(int(n)).replace(',', '.') + '{:.2f}'.format(n - int(n)).replace('0.', ',')" />
                       
@@ -262,7 +265,7 @@
 
                                 <tr>
                                     <th name="th_total" style="font-size: 13px">Tasa de Cambio : </th>
-                                    <td class="text-right" style="font-size: 12px"><span t-esc="format_decimals(o.currency_id.with_context(date=o.date).compute(1, res_company.currency_id))"/></td>
+                                    <td class="text-right" style="font-size: 12px"><span t-esc="format_decimals(exchange_rate)"/></td>
                                 </tr>
                               
                                 <tr>
