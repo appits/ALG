@@ -242,16 +242,16 @@
 
                         <!-- converted amounts -->
                         <t t-set="total_exempt_bs" 
-                        t-value="o.currency_id.with_context(date=o.currency_date).compute(total_exempt, res_company.currency_id)" />
+                        t-value="o.currency_id.with_context(date=o.date).compute(total_exempt, res_company.currency_id)" />
 
                         <t t-set="total_taxable_bs" 
-                        t-value="o.currency_id.with_context(date=o.currency_date).compute(total_taxable, res_company.currency_id)" />
+                        t-value="o.currency_id.with_context(date=o.date).compute(total_taxable, res_company.currency_id)" />
 
                         <t t-set="total_taxes_bs" 
-                        t-value="o.currency_id.with_context(date=o.currency_date).compute(total_taxes, res_company.currency_id)" />
+                        t-value="o.currency_id.with_context(date=o.date).compute(total_taxes, res_company.currency_id)" />
 
                         <t t-set="total_invoice_bs" 
-                        t-value="o.currency_id.with_context(date=o.currency_date).compute(o.amount_total, res_company.currency_id)" />
+                        t-value="o.currency_id.with_context(date=o.date).compute(o.amount_total, res_company.currency_id)" />
 
                         <t t-set="format_decimals" 
                             t-value="lambda n: '{0:,}'.format(int(n)).replace(',', '.') + '{:.2f}'.format(n - int(n)).replace('0.', ',')" />
@@ -262,7 +262,7 @@
 
                                 <tr>
                                     <th name="th_total" style="font-size: 13px">Tasa de Cambio : </th>
-                                    <td class="text-right" style="font-size: 12px"><span t-esc="format_decimals(o.exchange_rate)"/></td>
+                                    <td class="text-right" style="font-size: 12px"><span t-esc="format_decimals(o.currency_id.with_context(date=o.date).compute(1, res_company.currency_id))"/></td>
                                 </tr>
                               
                                 <tr>
