@@ -12,7 +12,7 @@
        <template id="nc_lanta">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-              <t t-if="o.type == 'out_refund' ">
+              <t t-if="o.type == 'out_refund' and o.reversed_entry_id">
                  <t t-if="o.state == 'posted'">
                     <t t-call="web.basic_layout">
                       <div class="page">

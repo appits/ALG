@@ -9,7 +9,7 @@
     'website': "http://www.ingeint.com",
     'category': 'reports',
     'version': '0.1',
-    'depends': ['base', 'stock', 'sale', 'purchase', 'account', 'mrp', 'invoice_tax'],
+    'depends': ['base', 'stock', 'sale', 'purchase', 'account', 'mrp', 'invoice_tax', 'account_debit_note'],
     'data': [
         'views/cancel_sequence.xml',
         'security/report_group.xml',
