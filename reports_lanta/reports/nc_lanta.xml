@@ -18,7 +18,8 @@
                       <div class="page">
                          <div class="row">
                             <div class="col-xs-9" style="margin-left: 15px;">
-                                  <p class="my-1" style="font-size: 12px !important;"><strong>Factura Nro. : </strong><span t-field="o.name"> </span></p>
+                                  <p class="my-1" style="font-size: 12px !important;"><strong>Nota de Credito Nro. : </strong><span t-field="o.journal_id.sequence_number_next"> </span></p>
+                                  <p class="my-1" style="font-size: 12px !important;"><strong>Referencia : </strong><span t-field="o.ref"> </span></p>
                                   <p class="my-1" style="font-size: 12px !important;"><strong>Lugar y Fecha de Emisión : </strong><br/><span t-field="o.company_id.city"/> <span t-field="o.invoice_date"/></p>
                                   <p class="my-1" style="font-size: 12px"><strong>Nombre y Apellido o Razón Social : </strong><span t-field="o.partner_id.name"></span></p>
                                   <p class="my-1" style="font-size: 12px"><strong>RIF : </strong>
@@ -71,7 +72,7 @@
                       </table>
                         <br/>
                       <div align="center">
-                          <p><strong>FACTURA</strong></p>
+                          <p><strong>NOTA DE CREDITO</strong></p>
                       </div>
                       <table  class="table table-bordered">
                          <tbody class="sale_tbody">
@@ -135,10 +136,10 @@
                       </table>
                       
                       <t t-if="o.currency_id.name == 'Bs.'">
-                          <t t-call="reports_lanta.totales_factura_bolivares"></t>
+                          <t t-call="reports_lanta.totales_factura_bolivares_nc"></t>
                       </t>
                       <t t-if="o.currency_id.name == 'USD'">
-                          <t t-call="reports_lanta.totales_factura_dolares"></t>
+                          <t t-call="reports_lanta.totales_factura_dolares_nc"></t>
                       </t>
                   
                     </t>
@@ -148,7 +149,7 @@
           </t>
       </template>
 
-      <template id="totales_factura_bolivares">
+      <template id="totales_factura_bolivares_nc">
           <p style="font-size: 12px !important;">NOTA: (E) VENTA EXENTA EN VIRTUD DEL ARTICULO 18, NUMERALES 3 Y 11 DE LA LEY DE IMPUESTO AL VALOR AGREGADO (I.V.A.)</p>              
           <div>
                <div class="row" >
@@ -227,7 +228,7 @@
           </div>
       </template>
 
-      <template id="totales_factura_dolares">
+      <template id="totales_factura_dolares_nc">
           <div>
                <div class="row" >
 
@@ -239,6 +240,7 @@
                       t-value="sum(o.account_tax_ids.filtered(lambda r: r.tax_total > 0).mapped('base_tax'))" />
 
                       <t t-set="total_taxes" t-value="sum(o.account_tax_ids.mapped('tax_total'))" />
+                        
 
                       <!-- converted amounts -->
                       <t t-set="total_exempt_bs" 
