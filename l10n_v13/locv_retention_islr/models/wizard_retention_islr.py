@@ -405,8 +405,8 @@ class ReportRetentionISLR(models.AbstractModel):
             'today': today,
             'company': company,
             'docs': docs,
-            'total_base_amount': total_base_amount,
-            'total_amount_ret':  total_amount_ret,
+            'total_base_amount': self.separador_cifra(total_base_amount),
+            'total_amount_ret':  self.separador_cifra(total_amount_ret),
             }
 
     def separador_cifra(self, valor):
