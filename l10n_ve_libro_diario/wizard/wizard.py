@@ -51,7 +51,7 @@ class WizardReport_1(models.TransientModel): # aqui declaro las variables del wi
         #nro_doc=self.partner_id.vat
         busca_partner = self.env['res.partner'].search([('id','=',aux)])
         for det in busca_partner:
-            tipo_doc=busca_partner.doc_type
+            tipo_doc=busca_partner.nationality
             nro_doc=str(busca_partner.vat)
         nro_doc=nro_doc.replace('V','')
         nro_doc=nro_doc.replace('v','')
