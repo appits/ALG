@@ -101,6 +101,14 @@ class RetentionISLR(models.Model):
 
         islr_concept_line = self.env['islr.wh.doc.line'].search([('concept_id', '=', concept),
                                                                  ('islr_wh_doc_id', '=', islr_concept)])
+        
+        # filter invoices without NC and ND
+        islr_concept_line = islr_concept_line.filtered(lambda r: len(r.invoice_id.debit_note_ids) == 0 and 
+            len(r.invoice_id.reversal_move_id) == 0)
+        # filter NC and ND
+        islr_concept_line = islr_concept_line.filtered(lambda r: len(r.invoice_id.reversed_entry_id) == 0 and 
+            len(r.invoice_id.debit_origin_id) == 0)
+
         if islr_concept_line:
             for i in islr_concept_line:
                 concept_id.append(i.concept_id.name)
@@ -326,6 +334,12 @@ class ReportRetentionISLR(models.AbstractModel):
 
         islr_concept_line = self.env['islr.wh.doc.line'].search([('concept_id', '=', concept),
                                                                  ('islr_wh_doc_id', '=', islr_concept)])
+        # filter invoices without NC and ND
+        islr_concept_line = islr_concept_line.filtered(lambda r: len(r.invoice_id.debit_note_ids) == 0 and 
+            len(r.invoice_id.reversal_move_id) == 0)
+        # filter NC and ND
+        islr_concept_line = islr_concept_line.filtered(lambda r: len(r.invoice_id.reversed_entry_id) == 0 and 
+            len(r.invoice_id.debit_origin_id) == 0)
 
         if islr_concept_line:
             for i in islr_concept_line:
@@ -391,8 +405,8 @@ class ReportRetentionISLR(models.AbstractModel):
             'today': today,
             'company': company,
             'docs': docs,
-            'total_base_amount': total_base_amount,
-            'total_amount_ret':  total_amount_ret,
+            'total_base_amount': self.separador_cifra(total_base_amount),
+            'total_amount_ret':  self.separador_cifra(total_amount_ret),
             }
 
     def separador_cifra(self, valor):

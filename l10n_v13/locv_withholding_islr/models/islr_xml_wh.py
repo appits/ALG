@@ -191,16 +191,28 @@ class IslrXmlWhDoc(models.Model):
         #                    ixwl.islr_wh_doc_inv_id.islr_wh_doc_id.date_ret})
         return self.write({'state': 'confirmed'})
 
-    
     def action_generate_line_xml(self):
         """ Passes the document to state confirmed
         """
+        domain = [
+            ('date_ret', '>=', self.date_start),
+            ('date_ret', '<=', self.date_end),
+            ('islr_xml_wh_doc', '=', False)
+        ]
+
         # to set date_ret if don't exists
         obj_ixwl = self.env['islr.xml.wh.line']
-        self.invoice_xml_ids = obj_ixwl.search([('date_ret', '>=', self.date_start),
-                                                ('date_ret', '<=', self.date_end)])
-        return True
+        lines = obj_ixwl.search(domain)
 
+        # filter invoices with NC and ND.
+        lines = lines.filtered(lambda r: len(r.account_invoice_id.debit_note_ids) == 0 and 
+            len(r.account_invoice_id.reversal_move_id) == 0)
+        # filter NC and ND
+        lines = lines.filtered(lambda r: len(r.account_invoice_id.reversed_entry_id) == 0 and 
+            len(r.account_invoice_id.debit_origin_id) == 0)
+
+        self.write({'invoice_xml_ids': [(6, 0, lines.ids)]})
+        return True
     
     def action_done1(self):
         """ Passes the document to state done

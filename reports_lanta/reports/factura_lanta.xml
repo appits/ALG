@@ -12,7 +12,7 @@
        <template id="factura_e">
             <t t-call="web.html_container">
               <t t-foreach="docs" t-as="o">
-                <t t-if="o.type in ('out_invoice', 'out_refund')">
+                <t t-if="o.type == 'out_invoice'">
                    <t t-if="o.state == 'posted'">
                       <t t-call="web.basic_layout">
                         <div class="page">

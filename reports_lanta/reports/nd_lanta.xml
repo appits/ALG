@@ -9,165 +9,332 @@
           name="reports_lanta.nd_lanta"/>
 
 
-       <template id="nd_lanta">
-            <t t-call="web.html_container">
-              <t t-foreach="docs" t-as="o">
-                <t t-if="o.type == 'in_refund'">
-                   <t t-if="o.state == 'posted'">
-                      <t t-call="web.basic_layout">
-                        <div class="page">
-                              <div align="right">
-                                        <p style="font-size: 13px !important;"><strong>Nota de Debito : </strong><span t-field="o.name"> </span></p>
-                                        <p style="font-size: 13px !important;"><strong>Lugar y Fecha : </strong><pr/><span t-field="o.company_id.city"/> <span t-field="o.invoice_date"/></p>
-                              </div>
-                              <div>
-                                <p style="font-size: 12px !important;"><strong>Nombre y Apellido o Razón Social: : </strong> <span t-field="o.partner_id.name"></span></p>
-                                <p style="font-size: 12px !important;"><strong>Codigo : </strong><span t-esc="o.partner_id.id"></span></p>
-                                <p style="font-size: 12px !important;"><strong>RIF : </strong><span t-esc="o.partner_id.vat"/></p>
-                                <p style="font-size: 13px"><strong>Dirección Fiscal : </strong><span t-field="o.partner_id.street"/></p><p style="font-size: 13px"><strong>Ciudad : </strong><span t-field="o.partner_id.city" ></span> <t t-esc="o.partner_id.state_id.name" /> </p>
-                                <p style="font-size: 12px !important;"><strong>Factura Afectada : </strong><span t-field="o.invoice_reverse_id.name"> </span></p>
-                                <p style="font-size: 12px !important;"><strong>Fecha de la Factura Afectada :  </strong><span t-field="o.invoice_reverse_id.date"> </span></p>
-                                <p style="font-size: 12px !important;"><strong>Monto de la Factura Afectada :  </strong><span t-esc="'{0:,.2f}'.format(int(o.invoice_reverse_id.amount_total))"> </span></p>
-<!--                                <p style="font-size: 12px !important;"><strong>Motivo : </strong><span t-field="o.x_studio_motivo"></span></p>-->
-                              </div>
-                        </div>
-                        <table  class="table table-bordered" t-if="o.invoice_line_ids">
-                           <tbody class="sale_tbody">
-                                <thead>
-                                    <tr>
-                                        <th name="th_description_normal" class="text-center" style="font-size: 12px !important; width: 15px">Codigo</th>
-                                        <th name="th_produc_normal" class="text-center" style="font-size: 12px !important;">Descripción</th>
-                                        <th name="th_produc_dosis" class="text-center" style="font-size: 14px !important; width: 15px">Dosís</th>
-                                        <th name="th_produc_uom" class="text-center" style="font-size: 12px !important; width: 15px">Unidad</th>
-                                        <th name="th_produc_qty" class="text-center" style="font-size: 12px !important; width: 15px">Cantidad</th>
-                                        <th name="th_produc_precio" class="text-center" style="font-size: 12px !important;">Precio Unit.</th>
-                                        <th name="th_produc_precio" class="text-center" style="font-size: 12px !important;">Total</th>
-                                    </tr>
-                                </thead>
-                                <t t-if="o.invoice_line_ids">
-                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
-                                        <t t-if="line">
-                                            <td style="font-size: 12px !important;" class="text-center: center">
-                                                <span t-field="line.product_id.default_code" />
-                                            </td>
-                                            <td style="font-size: 12px !important;" class="text-center: center">
-                                                <span t-field="line.product_id.name" />
-                                            </td>
-                                            <td style="font-size: 12px !important;">
-                                                <span t-field="line.dose_kgton" />
-                                            </td>
-                                            <td style="font-size: 12px !important;" class="text-center: center">
-                                                <span t-field="line.product_uom_id.name"/>
-                                            </td>
-                                            <td style="font-size: 12px !important;" class="text-right: right" align="right">
-                                                <span t-field="line.quantity"/>
-                                            </td>
-                                            <td align="right" style="font-size: 12px !important;">
-                                                <t t-if="line.price_string">
-                                                        <span t-esc="line.price_string"/>
-                                               </t>
-                                                <t t-else="line.price_string = False">
-                                                        <span t-esc="'{0:,.2f}'.format(int(line.price_unit))"/>
-                                                </t>
-                                            </td>
-                                            <td style="font-size: 12px !important;" class="text-right: right" align="right">
-                                                <span t-esc="'{0:,.2f}'.format(int(line.price_subtotal))" />
-                                            </td>
-                                        </t>
-                                    </tr>
-                                </t>
-                            </tbody>
-                        </table>
-                           <p style="font-size: 12px !important;">NOTA: (E) VENTA EXENTA EN VIRTUD DEL ARTICULO 18, NUMERALES 3 Y 11 DE LA LEY DE IMPUESTO AL VALOR AGREGADO (I.V.A.)</p>
-                          <div>
-                            <div class="border">
-                                 <div class="row" >
-                                        <div class="col-xs-3">
-                                            <table t-if="o.account_tax_ids" style="margin-left: 18px; width:450px" >
-                                               <tbody class="sale_tbody">
-                                                    <thead>
-                                                        <tr>
-                                                            <th name="th_impuesto" class="text-center" style="font-size: 13px !important;">Conceptos</th>
-                                                            <th name="th_base" class="text-center" style="font-size: 13px !important;" >Base Imponible</th>
-                                                            <th name="th_IVA" class="text-center" style="font-size: 13px !important;">Impuesto al Valor Agregado.:(I.V.A)</th>
-                                                        </tr>
-                                                    </thead>
-                                                   <t t-if="o.account_tax_ids">
-                                                        <tr t-foreach="o.account_tax_ids" t-as="line_tax">
-                                                            <td style="font-size: 12px !important;"  class="text-center: center" align="center">
-                                                                <span t-field="line_tax.tax_id.name"/>
-                                                            </td>
-                                                            <td style="font-size: 12px !important;"  class="text-right: right" align="right">
-                                                                <span t-field="line_tax.base_tax" t-options='{"precision": 2}'/>
-                                                            </td>
-                                                            <td style="font-size: 12px !important;"  class="text-right: right" align="right">
-                                                                <span t-field="line_tax.tax_total" t-options='{"precision": 2}'/>
-                                                            </td>
-                                                        </tr>
-                                                    </t>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    <table style="margin-bottom:0px; margin-left:60px; width:350px ; padding: 0px; 5px;">
-                                          <t t-if="o.account_tax_ids">
-                                              <tr t-foreach="o.account_tax_ids" t-as="total_tax">
-                                                  <t t-if="total_tax.tax_total == 0 and total_tax.base_tax > 0" t-as="exento">
-                                                      <th name="th_total" style="font-size: 13px">Total Exento : </th>
-                                                      <th style="font-size: 12px"><span t-esc="'{0:,.2f}'.format(float(total_tax.base_tax))"/></th>
-                                                  </t>
-                                              </tr>
-                                          </t>
-                                          <tr>
-                                            <th name="th_b_imponible"  style="font-size: 13px;">Total Base Imponible :</th>
-                                            <th style="font-size: 12px"><span t-esc="'{0:,.2f}'.format(float(o.amount_untaxed))"/></th>
-                                          </tr>
-                                           <t t-if="o.account_tax_ids">
-                                              <tr t-foreach="o.account_tax_ids" t-as="total_tax">
-                                                  <t t-if="total_tax.tax_total == 0 and total_tax.base_tax > 0" t-as="exento" style="font-size: 12px !important;">
-                                                      <th name="th_b_subtotal" style="font-size: 13px">Sub Total : </th>
-                                                      <th style="font-size: 12px"><span  t-esc="'{0:,.2f}'.format(float(total_tax.base_tax+o.amount_untaxed))"/></th>
-                                                  </t>
-                                              </tr>
-                                          </t>
-                                          <tr>
-                                            <th name="th_impuesto" style="font-size: 13px" >Impuesto : </th>
-                                              <th style="font-size: 12px"><span  t-esc="'{0:,.2f}'.format(float(o.amount_tax))"/></th>
-                                          </tr>
-                                          <tr>
-                                              <t t-if="o.currency_id.name == 'BS.' ">
-                                                  <th name="th_total" style="font-size: 13px">Total Factura en BS. : </th>
-                                                  <th style="font-size: 12px"><span t-esc="'{0:,.2f}'.format(float(o.amount_total))"/></th>
-                                              </t>
-                                              <t t-else="o.currency_id.name == 'USD' ">
-                                                    <th name="th_total" style="font-size: 13px">Total Factura en US$. : </th>
-                                                    <th style="font-size: 12px"><span t-esc="'{0:,.2f}'.format(float(o.amount_total))"/></th>
-                                              </t>
-                                          </tr>
-                                    </table>
-                                </div>
-                            </div>
-                          </div>
-                         <div class="before footer">
-                            <table style="margin-left: 18px; width:850px">
-                               <tbody class="sale_tbody">
-                                    <thead>
-                                        <tr>
-                                            <th name="th_impuesto" class="text-center" style="font-size: 13px !important;">Revisado Por:__________________________________</th>
-                                            <th></th>
-                                            <th name="th_base" class="text-center" style="font-size: 13px !important;" >Aprobado Por:__________________________________</th>
-                                            <th></th>
-                                            <th name="th_IVA" class="text-center" style="font-size: 13px !important;">Recibido Por:__________________________________</th>
-                                        </tr>
-                                    </thead>
-                                </tbody>
-                            </table>
-                         </div>
-                      </t>
-                   </t>
-            	</t>
-              </t>
+          <template id="monto_factura_afectada_nd">
+            <t t-set="invoice_origin_amount" t-value="o.debit_origin_id.amount_total" />
+            <t t-set="invoice_origin_date" t-value="o.debit_origin_id.date" />
+            <t t-set="invoice_origin_currency" t-value="o.debit_origin_id.currency_id" />
+            <t t-set="currency_bs" t-value="o.env['res.currency'].search([('name', '=', 'Bs.')])" />
+            <t t-set="currency_dolar" t-value="o.env['res.currency'].search([('name', '=', 'USD')])" />
+            
+            <t t-if="invoice_origin_currency == currency_bs">
+                <p class="my-1" style="font-size: 12px !important;"><strong>Monto Factura Afectada $.:    
+                </strong><span t-esc="format_decimals(invoice_origin_currency.with_context(date=invoice_origin_date).compute(invoice_origin_amount, currency_dolar))"></span></p>
+                <p class="my-1" style="font-size: 12px !important;"><strong>Monto Factura Afectada Bs.: </strong><span t-esc="format_decimals(o.debit_origin_id.amount_total)"> </span></p>
+            </t>
+            <t t-else="">
+                <p class="my-1" style="font-size: 12px !important;"><strong>Monto Factura Afectada $.:    
+                </strong><span t-esc="format_decimals(o.debit_origin_id.amount_total)"></span></p>
+                <p class="my-1" style="font-size: 12px !important;"><strong>Monto Factura Afectada Bs.: </strong><span t-esc="format_decimals(invoice_origin_currency.with_context(date=invoice_origin_date).compute(invoice_origin_amount, currency_bs))"> </span></p>
             </t>
         </template>
+
+       <template id="nd_lanta">
+        <t t-call="web.html_container">
+            <t t-set="format_decimals" 
+            t-value="lambda n: '{0:,}'.format(int(n)).replace(',', '.') + '{:.2f}'.format(n - int(n)).replace('0.', ',')" />
+            <t t-foreach="docs" t-as="o">
+              <t t-if="o.type == 'out_invoice' and o.debit_origin_id">
+                 <t t-if="o.state == 'posted'">
+                    <t t-call="web.basic_layout">
+                      <div class="page">
+                         <div class="row">
+                            <div class="col-xs-9" style="margin-left: 15px;">
+                                  <p class="my-1" style="font-size: 12px !important;"><strong>Nota de Debito Nro. : </strong><span t-esc="''.join(c for c in o.name if c.isdigit())"> </span></p>
+                                  <p class="my-1" style="font-size: 12px !important;"><strong>Lugar y Fecha de Emisión : </strong><br/><span t-field="o.company_id.city"/> <span t-field="o.invoice_date"/></p>
+                                  <p class="my-1" style="font-size: 12px"><strong>Nombre y Apellido o Razón Social : </strong><span t-field="o.partner_id.name"></span></p>
+                                  <p class="my-1" style="font-size: 12px"><strong>RIF : </strong>
+                                      <span t-esc="o.partner_id.vat"/>
+                                  </p>
+                                  <p class="my-1" style="font-size: 12px"><strong>Dirección Fiscal : </strong><span t-field="o.partner_id.street"/> <span t-field="o.partner_id.street2"/></p>
+                                  <p class="my-1" style="font-size: 12px"><strong>Ciudad : </strong><span t-field="o.partner_id.city" ></span> <t t-esc="o.partner_id.state_id.name" /> </p>
+                                  <p class="my-1" style="font-size: 12px"><strong>Lugar de despacho : </strong><span t-field="o.partner_shipping_id.name"/></p>
+                                  <p class="my-1" style="font-size: 12px"><strong>Dirección de despacho : </strong><span t-field="o.partner_shipping_id.street"/></p>
+                                  <p class="my-1" style="font-size: 12px !important;"><strong>Facturado por:  </strong><span t-field="o.create_uid"></span></p>
+                                  <p class="my-1" style="font-size: 12px !important;"><strong>Factura Afectada : </strong><span t-field="o.debit_origin_id.name"> </span></p>
+                                  <p class="my-1" style="font-size: 12px !important;"><strong>Fecha Factura Afectada : </strong><span t-field="o.debit_origin_id.invoice_date"> </span></p>
+                                  <t t-call="reports_lanta.monto_factura_afectada_nd" ></t>
+                            </div>
+                             <p style="color:white"> -----</p>
+                            <div class="col-xs-8" style="margin-left: 100px;">
+                                  <p class="my-1" style="font-size: 12px !important;"><strong>Condiciones: </strong><span t-field="o.invoice_payment_term_id.name"/></p>
+                                  <p class="my-1" style="font-size: 12px !important;"><strong>Fecha de vencimiento : </strong><span t-field="o.invoice_date_due"/></p>
+                                  <p class="my-1" style="font-size: 12px"><strong>Codigo : </strong><span t-esc="o.partner_id.id"></span></p>
+                                  <p class="my-1" style="font-size: 12px"><strong> Telefono : </strong><span t-field="o.partner_id.phone"/></p>
+                                  <p class="my-1" style="font-size: 12px"><strong>Nro. Pedido : </strong><span t-field="o.invoice_origin"> </span></p>
+                                  <p class="my-1" style="font-size: 12px"><strong>Nota de Carga : </strong><span t-field="o.loading_note"></span></p>
+<!--                                    <p style="font-size: 12px"><strong>Forma de pago : </strong><span t-esc="o.x_studio_forma_de_pago"></span></p>-->
+                                  <p class="my-1" style="font-size: 12px !important;"><strong>Revisado por:  </strong><span t-field="o.write_uid"></span></p>
+
+                            </div>
+                         </div>
+                      </div>
+
+                      <div class="my-3" align="center">
+                          <p><strong>NOTA DE DEBITO</strong></p>
+                      </div>
+                      <table  class="table table-bordered">
+                         <tbody class="sale_tbody">
+                              <thead>
+                                  <tr>
+                                      <th name="th_description_normal" class="text-center" style="font-size: 12px !important; width: 15px">Codigo</th>
+                                      <th name="th_produc_normal" class="text-center" style="font-size: 12px !important; width: 300px">Descripción</th>
+                                      <th name="th_produc_dosis" class="text-center" style="font-size: 12px !important; width: 15px">Dosís</th>
+                                      <th name="th_produc_uom" class="text-center" style="font-size: 12px !important; width: 15px">Unidad</th>
+                                      <th name="th_produc_qty" class="text-center" style="font-size: 12px !important;">Cantidad</th>
+                                      <th name="th_produc_pre" class="text-center" style="font-size: 12px !important;">Presentación</th>
+                                      <th name="th_produc_pre_qty" class="text-center" style="font-size: 12px !important; width: 15px">#Und.</th>
+                                      <th name="th_produc_precio" class="text-center" style="font-size: 12px !important;">Precio Unit.</th>
+                                      <th name="th_produc_precio" class="text-center" style="font-size: 12px !important;">Total</th>
+                                  </tr>
+                              </thead>
+                              <t t-if="o.invoice_line_ids">
+                                  <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                      <t t-if="line">
+                                          <td style="font-size: 12px !important;">
+                                              <span t-field="line.product_id.default_code" />
+                                          </td>
+                                          <td style="font-size: 12px !important;">
+                                              <span t-field="line.product_id.name" />
+                                          </td>
+                                          <td style="font-size: 12px !important;">
+                                              <span t-field="line.dose_kgton" />
+                                          </td>
+                                          <td style="font-size: 12px !important;">
+                                              <span t-field="line.product_uom_id.name"/>
+                                          </td>
+                                          <td style="font-size: 12px !important;"  align="right">
+                                              <span t-field="line.quantity" align="right"/>
+                                          </td>
+                                          <td style="font-size: 12px !important;">
+                                              <span t-field="line.product_packaging_id.name"/>
+                                          </td>
+                                          <t t-if="line.product_packaging_id" align="right">
+                                              <td style="font-size: 12px !important;">
+                                                  <span t-esc="'{0:,.3f}'.format(int(line.quantity / line.product_packaging_id.qty))"/>
+                                              </td>
+                                           </t>
+                                          <t t-else="line.product_packaging_id = False" align="right">
+                                            <td style="font-size: 12px !important;" align="right">0</td>
+                                          </t>
+                                          <td align="right" style="font-size: 12px !important;">
+                                              <t t-if="line.price_string">
+                                                      <span t-esc="line.price_string"/>
+                                             </t>
+                                              <t t-else="line.price_string = False" align="right">
+                                                      <span t-esc="'{0:,.2f}'.format(float(line.price_unit))" align="right"/>
+                                              </t>
+                                          </td>
+                                          <td style="font-size: 12px" align="right">
+                                              <span t-esc="'{0:,.2f}'.format(float(line.price_subtotal))" align="right"/>
+                                          </td>
+                                      </t>
+                                  </tr>
+                              </t>
+                          </tbody>
+                      </table>
+                      
+                      <t t-if="o.currency_id.name == 'Bs.'">
+                          <t t-call="reports_lanta.totales_factura_bolivares_nd"></t>
+                      </t>
+                      <t t-if="o.currency_id.name == 'USD'">
+                          <t t-call="reports_lanta.totales_factura_dolares_nd"></t>
+                      </t>
+                  
+                    </t>
+                 </t>
+              </t>
+            </t>
+          </t>
+      </template>
+
+      <template id="totales_factura_bolivares_nd">
+          <p style="font-size: 12px !important;">NOTA: (E) VENTA EXENTA EN VIRTUD DEL ARTICULO 18, NUMERALES 3 Y 11 DE LA LEY DE IMPUESTO AL VALOR AGREGADO (I.V.A.)</p>              
+          <div>
+               <div class="row" >
+                      <div class="col-xs-3">
+                          <table class="table table-bordered" t-if="o.account_tax_ids" style="margin-left: 18px; width:450px" >
+                             <tbody class="sale_tbody">
+                                  <thead>
+                                      <tr>
+                                          <th name="th_impuesto" class="text-center" style="font-size: 13px !important;">Conceptos</th>
+                                          <th name="th_base" class="text-center" style="font-size: 13px !important;" >Base Imponible</th>
+                                          <th name="th_IVA" class="text-center" style="font-size: 13px !important;">Impuesto al Valor Agregado.:(I.V.A)</th>
+                                      </tr>
+                                  </thead>
+                                  <t t-if="o.account_tax_ids">
+                                       <tr t-foreach="o.account_tax_ids" t-as="line_tax">
+                                           <td style="font-size: 12px !important;"  class="text-center: center" align="center">
+                                               <span t-field="line_tax.tax_id.name"/>
+                                           </td>
+                                           <td style="font-size: 12px !important;"  class="text-right: right" align="right">
+                                               <span t-field="line_tax.base_tax" t-options='{"precision": 2}'/>
+                                           </td>
+                                          <td style="font-size: 12px !important;"  class="text-right: right" align="right">
+                                              <span t-field="line_tax.tax_total" t-options='{"precision": 2}'/>
+                                          </td>
+                                      </tr>
+                                  </t>
+                              </tbody>
+                          </table>
+                      </div>
+                      
+                      <div class="col-xs-3 align-self-end">
+                          <table class="table table-bordered" style="margin-bottom:0px; margin-left:120px; width:350px ; padding: 0px; 5px;">
+                              <!-- total tax vars -->
+                              <t t-set="total_exempt" 
+                                  t-value="sum(o.account_tax_ids.filtered(lambda r: r.tax_total == 0).mapped('base_tax'))" />
+                              <t t-set="total_taxable" 
+                                  t-value="sum(o.account_tax_ids.filtered(lambda r: r.tax_total > 0).mapped('base_tax'))" />
+                              <t t-set="total_taxes" t-value="sum(o.account_tax_ids.mapped('tax_total'))" />
+                              
+
+                              <tr>
+                                  <th name="th_total" style="font-size: 13px">Total Exento Bs.: </th>
+                                  <th class="text-right" style="font-size: 12px"><span t-esc="'{0:,.2f}'.format(float(total_exempt))"/></th>
+                              </tr>
+                            
+                              <tr>
+                                <th name="th_b_imponible"  style="font-size: 13px;">Total Base Imponible Bs.:</th>
+                                <th class="text-right" style="font-size: 12px"><span t-esc="'{0:,.2f}'.format(float(total_taxable))"/></th>
+                              </tr>
+
+                              <tr>
+                                  <t style="font-size: 12px !important;">
+                                      <th name="th_b_subtotal" style="font-size: 13px">Sub Total Bs.: </th>
+                                      <th class="text-right" style="font-size: 12px"><span  t-esc="'{0:,.2f}'.format(float(total_exempt + total_taxable))"/></th>
+                                  </t>
+                              </tr>
+                              
+                              <tr>
+                                <th name="th_impuesto" style="font-size: 13px" >Total I.V.A. Bs.: </th>
+                                  <th class="text-right" style="font-size: 12px"><span  t-esc="'{0:,.2f}'.format(float(total_taxes))"/></th>
+                              </tr>
+
+                              <tr>
+                                  <t t-if="o.currency_id.name == 'Bs.' ">
+                                      <th name="th_total" style="font-size: 13px">Total Factura en Bs. : </th>
+                                      <th class="text-right" style="font-size: 12px"><span t-esc="'{0:,.2f}'.format(float(o.amount_total))"/></th>
+                                  </t>
+                                  <t t-else="o.currency_id.name == 'USD' ">
+                                        <th name="th_total" style="font-size: 13px">Total Factura en US$. : </th>
+                                        <th class="text-right" style="font-size: 12px"><span t-esc="'{0:,.2f}'.format(float(o.amount_total))"/></th>
+                                  </t>
+                              </tr>
+                        </table>
+                      </div>
+              </div>
+          </div>
+      </template>
+
+      <template id="totales_factura_dolares_nd">
+          <div>
+               <div class="row" >
+
+                      <!-- total tax vars -->
+                      <t t-set="total_exempt" 
+                      t-value="sum(o.account_tax_ids.filtered(lambda r: r.tax_total == 0).mapped('base_tax'))" />
+
+                      <t t-set="total_taxable" 
+                      t-value="sum(o.account_tax_ids.filtered(lambda r: r.tax_total > 0).mapped('base_tax'))" />
+
+                      <t t-set="total_taxes" t-value="sum(o.account_tax_ids.mapped('tax_total'))" />
+
+                      <!-- converted amounts -->
+                      <t t-set="total_exempt_bs" 
+                      t-value="o.currency_id.with_context(date=o.date).compute(total_exempt, res_company.currency_id)" />
+
+                      <t t-set="total_taxable_bs" 
+                      t-value="o.currency_id.with_context(date=o.date).compute(total_taxable, res_company.currency_id)" />
+
+                      <t t-set="total_taxes_bs" 
+                      t-value="o.currency_id.with_context(date=o.date).compute(total_taxes, res_company.currency_id)" />
+
+                      <t t-set="total_invoice_bs" 
+                      t-value="o.currency_id.with_context(date=o.date).compute(o.amount_total, res_company.currency_id)" />
+
+                      <t t-set="exchange_rate"
+                      t-value="o.env['multi.currency.rate'].search([('currency_id', '=', o.currency_id.id), ('rate_date', '&lt;=', o.date)], order='rate_date desc')[0].rate" />
+
+                      <div class="col-xs-3 mx-4">
+                          <table class="table table-bordered" style="margin-bottom:0px; margin-left:60px; width:350px ; padding: 0px; 5px;">                             
+
+                              <tr>
+                                  <th name="th_total" style="font-size: 13px">Tasa de Cambio : </th>
+                                  <td class="text-right" style="font-size: 12px"><span t-esc="format_decimals(exchange_rate)"/></td>
+                              </tr>
+                            
+                              <tr>
+                                <th name="th_b_imponible"  style="font-size: 13px;">Total Exento Bs:</th>
+                                <td class="text-right" style="font-size: 12px"><span t-esc="format_decimals(total_exempt_bs)"/></td>
+                              </tr>
+
+                              <tr>
+                                  <t style="font-size: 12px !important;">
+                                      <th name="th_b_subtotal" style="font-size: 13px">Total Base Imponible  Bs: </th>
+                                      <td class="text-right" style="font-size: 12px"><span  t-esc="format_decimals(total_taxable_bs)"/></td>
+                                  </t>
+                              </tr>
+                              
+                              <tr>
+                                <th name="th_impuesto" style="font-size: 13px" >Total (I.V.A) Bs: </th>
+                                  <td class="text-right" style="font-size: 12px"><span  t-esc="format_decimals(total_taxes_bs)"/></td>
+                              </tr>
+
+                              <tr>
+                                  <th name="th_impuesto" style="font-size: 13px" >Total Factura Bs: </th>
+                                    <td class="text-right" style="font-size: 12px"><span  t-esc="format_decimals(total_invoice_bs)"/></td>
+                              </tr>
+
+                        </table>
+                      </div>
+                      
+                      <div class="col-xs-3">
+                          <table class="table table-bordered" style="margin-bottom:0px; margin-left:60px; width:350px ; padding: 0px; 5px;">                                
+
+                              <tr>
+                                  <th name="th_total" style="font-size: 13px">Total Exento US$.: </th>
+                                  <td class="text-right" style="font-size: 12px"><span t-esc="format_decimals(total_exempt)"/></td>
+                              </tr>
+                            
+                              <tr>
+                                <th name="th_b_imponible"  style="font-size: 13px;">Total Base Imponible US$.:</th>
+                                <td class="text-right"  style="font-size: 12px"><span t-esc="format_decimals(total_taxable)"/></td>
+                              </tr>
+
+                              <tr>
+                                  <t style="font-size: 12px !important;">
+                                      <th name="th_b_subtotal" style="font-size: 13px">Sub Total US$.: </th>
+                                      <td class="text-right" style="font-size: 12px"><span  t-esc="format_decimals(total_exempt + total_taxable)"/></td>
+                                  </t>
+                              </tr>
+                              
+                              <tr>
+                                <th name="th_impuesto" style="font-size: 13px" >Total I.V.A. US$: </th>
+                                  <td class="text-right" style="font-size: 12px"><span  t-esc="format_decimals(total_taxes)"/></td>
+                              </tr>
+
+                              <tr>
+                                  <t t-if="o.currency_id.name == 'Bs.' ">
+                                      <th name="th_total" style="font-size: 13px">Total Factura en BS. : </th>
+                                      <td class="text-right" style="font-size: 12px"><span t-esc="format_decimals(o.amount_total)"/></td>
+                                  </t>
+                                  <t t-else="o.currency_id.name == 'USD' ">
+                                        <th name="th_total" style="font-size: 13px">Total Factura en US$. : </th>
+                                        <td class="text-right" style="font-size: 12px"><span t-esc="format_decimals(o.amount_total)"/></td>
+                                  </t>
+                              </tr>
+                        </table>
+                      </div>
+              </div>
+              <p class="text-center my-3" style="font-size: 12px !important">
+                  Venta exenta en virtud del articulo 10, numerales 3 y 11 de la ley de Impuesto al Valor Agredado (I.V.A.).
+                  <br/>
+                  Esta Factura se emite en base al articulo 25 del IVA y 51 de su reglamento y articulo 128 y 139 de la ley del BCV.
+                  <br/>
+                  El monto en Bs. es referencial para cumplimiento de la normativa fiscal. 
+              </p>
+          </div>
+      </template>
 
      </data>
 </odoo>
