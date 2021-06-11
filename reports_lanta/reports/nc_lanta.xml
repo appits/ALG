@@ -9,8 +9,29 @@
           name="reports_lanta.nc_lanta"/>
 
 
+        <template id="monto_factura_afectada_nc">
+            <t t-set="invoice_origin_amount" t-value="o.reversed_entry_id.amount_total" />
+            <t t-set="invoice_origin_date" t-value="o.reversed_entry_id.date" />
+            <t t-set="invoice_origin_currency" t-value="o.reversed_entry_id.currency_id" />
+            <t t-set="currency_bs" t-value="o.env['res.currency'].search([('name', '=', 'Bs.')])" />
+            <t t-set="currency_dolar" t-value="o.env['res.currency'].search([('name', '=', 'USD')])" />
+            
+            <t t-if="invoice_origin_currency == currency_bs">
+                <p class="my-1" style="font-size: 12px !important;"><strong>Monto Factura Afectada $.:    
+                </strong><span t-esc="format_decimals(invoice_origin_currency.with_context(date=invoice_origin_date).compute(invoice_origin_amount, currency_dolar))"></span></p>
+                <p class="my-1" style="font-size: 12px !important;"><strong>Monto Factura Afectada Bs.: </strong><span t-esc="format_decimals(o.reversed_entry_id.amount_total)"> </span></p>
+            </t>
+            <t t-else="">
+                <p class="my-1" style="font-size: 12px !important;"><strong>Monto Factura Afectada $.:    
+                </strong><span t-esc="format_decimals(o.reversed_entry_id.amount_total)"></span></p>
+                <p class="my-1" style="font-size: 12px !important;"><strong>Monto Factura Afectada Bs.: </strong><span t-esc="format_decimals(invoice_origin_currency.with_context(date=invoice_origin_date).compute(invoice_origin_amount, currency_bs))"> </span></p>
+            </t>
+        </template>
+
        <template id="nc_lanta">
         <t t-call="web.html_container">
+            <t t-set="format_decimals" 
+                t-value="lambda n: '{0:,}'.format(int(n)).replace(',', '.') + '{:.2f}'.format(n - int(n)).replace('0.', ',')" />
             <t t-foreach="docs" t-as="o">
               <t t-if="o.type == 'out_refund' and o.reversed_entry_id">
                  <t t-if="o.state == 'posted'">
@@ -31,7 +52,7 @@
                                   <p class="my-1" style="font-size: 12px !important;"><strong>Facturado por:  </strong><span t-field="o.create_uid"></span></p>
                                   <p class="my-1" style="font-size: 12px !important;"><strong>Factura Afectada : </strong><span t-field="o.reversed_entry_id.name"> </span></p>
                                   <p class="my-1" style="font-size: 12px !important;"><strong>Fecha Factura Afectada : </strong><span t-field="o.reversed_entry_id.invoice_date"> </span></p>
-                                  <p class="my-1" style="font-size: 12px !important;"><strong>Monto Factura Afectada : </strong><span t-field="o.reversed_entry_id.amount_total"> </span></p>
+                                  <t t-call="reports_lanta.monto_factura_afectada_nc" ></t>
                             </div>
                              <p style="color:white"> -----</p>
                             <div class="col-xs-8" style="margin-left: 100px;">
@@ -47,32 +68,8 @@
                             </div>
                          </div>
                       </div>
-                      <table class="table table-bordered my-2">
-                         <tbody class="sale_tbody">
-                              <thead>
-                                  <tr>
-                                      <th name="th_transporte" class="text-center" style="font-size: 12px !important;">Transporte</th>
-                                      <th name="th_placa" class="text-center" style="font-size: 12px !important;">Placa</th>
-                                       <th name="th_nombre" class="text-center" style="font-size: 12px !important;">Nombre del Conductor</th>
-                                      <th name="th_cedula" class="text-center" style="font-size: 12px !important;">Cedula</th>
-                                  </tr>
-                              </thead>
-                               <td class="text-center" style="font-size: 12px !important;">
-                                      <span t-field="o.transport" />
-                                  </td>
-                                  <td class="text-center" style="font-size: 12px !important;">
-                                      <span t-field="o.car_plate" />
-                                  </td>
-                                  <td class="text-center" style="font-size: 12px !important;">
-                                      <span t-field="o.date_driver" />
-                                  </td>
-                                  <td class="text-center" style="font-size: 12px !important;">
-                                      <span t-field="o.identification_driver" />
-                               </td>
-                         </tbody>
-                      </table>
-                        <br/>
-                      <div align="center">
+
+                      <div class="my-3" align="center">
                           <p><strong>NOTA DE CREDITO</strong></p>
                       </div>
                       <table  class="table table-bordered">
@@ -258,11 +255,7 @@
 
                       <t t-set="exchange_rate"
                       t-value="o.env['multi.currency.rate'].search([('currency_id', '=', o.currency_id.id), ('rate_date', '&lt;=', o.date)], order='rate_date desc')[0].rate" />
-
-                      <t t-set="format_decimals" 
-                          t-value="lambda n: '{0:,}'.format(int(n)).replace(',', '.') + '{:.2f}'.format(n - int(n)).replace('0.', ',')" />
                     
-
                       <div class="col-xs-3 mx-4">
                           <table class="table table-bordered" style="margin-bottom:0px; margin-left:60px; width:350px ; padding: 0px; 5px;">                             
 
