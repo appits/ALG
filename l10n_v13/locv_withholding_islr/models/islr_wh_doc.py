@@ -120,13 +120,8 @@ class IslrWhDoc(models.Model):
     def retencion_seq_get(self):
         #TODO REVISAR ESTA SECUENCIA SALTA UN NUMERO
         local_number = self.env['ir.sequence'].next_by_code('islr.wh.doc')
-        if type_islr=='in_refund':
-            local_number = self.env['ir.sequence'].next_by_code('islr.wh.doc.in_refund')
-            
-        if type_islr=='out_refund':
-            local_number = self.env['ir.sequence'].next_by_code('islr.wh.doc.out_refund')
-        
-            
+        print(local_number)
+        print(joder)
         if local_number and self.date_ret:
             account_month = self.date_ret.split('-')[1]
             if not account_month == local_number[4:6]:
