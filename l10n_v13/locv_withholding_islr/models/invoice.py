@@ -123,6 +123,7 @@ class AccountMove(models.Model):
 
         return super(AccountMove, self).create(vals)
     
+    
     def action_post(self):
         var = super(AccountMove, self).action_post()
         #if var:
@@ -158,11 +159,9 @@ class AccountMove(models.Model):
         invoice line'''
         iwdi_obj = self.env['islr.wh.doc.invoices']
         return iwdi_obj._get_concepts(ids)
-        
 
-        
-        
-        
+
+    @api.model
     def _create_doc_invoices(self,islr_wh_doc_id):
         """ This method link the invoices to be withheld
         with the withholding document.
@@ -192,13 +191,13 @@ class AccountMove(models.Model):
         acc_part_id = rp_obj._find_accounting_partner(self.partner_id)
 
         res = False
-        # ~ if self.type in ('out_refund', 'in_refund'):
-            # ~ return False
-        if not (self.type in ('out_invoice', 'in_invoice','in_refund') and rp_obj._find_accounting_partner(self.company_id.partner_id).islr_withholding_agent):
+        if self.type in ('out_refund', 'in_refund'):
+            return False
+        if not (self.type in ('out_invoice', 'in_invoice') and rp_obj._find_accounting_partner(self.company_id.partner_id).islr_withholding_agent):
             return True
 
         context['type'] = self.type
-        wh_ret_code = wh_doc_obj.retencion_seq_get(self.type)
+        wh_ret_code = wh_doc_obj.retencion_seq_get()
 
         if wh_ret_code:
             journal = wh_doc_obj._get_journal(self.partner_id)
