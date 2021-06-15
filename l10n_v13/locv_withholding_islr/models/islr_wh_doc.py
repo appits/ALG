@@ -117,7 +117,7 @@ class IslrWhDoc(models.Model):
         return res_company
     # @api.onchange('date_ret')
 
-    def retencion_seq_get(self,type_islr):
+    def retencion_seq_get(self):
         #TODO REVISAR ESTA SECUENCIA SALTA UN NUMERO
         local_number = self.env['ir.sequence'].next_by_code('islr.wh.doc')
         if type_islr=='in_refund':
