@@ -1,5 +1,5 @@
 # coding: utf-8
-import logging
+
 import base64
 import time
 from xml.etree.ElementTree import Element, SubElement, tostring
@@ -7,7 +7,7 @@ from xml.etree.ElementTree import Element, SubElement, tostring
 from odoo import api, fields, models
 from odoo.tools.translate import _
 from odoo.addons import decimal_precision as dp
-_logger = logging.getLogger(__name__)
+
 ISLR_XML_WH_LINE_TYPES = [('invoice', 'Invoice'), ('employee', 'Employee')]
 
 
@@ -36,14 +36,9 @@ class IslrXmlWhDoc(models.Model):
         #return amount_base
 
     @api.model
-    @api.returns('self', lambda value: value.id)
-    def _company_default_get(self, object=False, field=False):
-        """ Returns the user's company
-            - Deprecated
-        """
-        _logger.warning(
-            _("The method '_company_default_get' on res.company is deprecated and shouldn't be used anymore"))
-        return self.env.company
+    def _get_company(self):
+        user = self.env['res.users'].browse()
+        return user.company_id.id
 
 
     name = fields.Char(
@@ -52,7 +47,7 @@ class IslrXmlWhDoc(models.Model):
             help="Descripción de la declaración de retención de ingresos")
     company_id = fields.Many2one(
             'res.company', string='Compañia', required=True,
-            default=lambda self: self.env['res.company']._company_default_get(),
+            default=lambda s: s._get_company(),
             help="Compañia")
     state = fields.Selection([
             ('draft', 'Borrador'),
@@ -191,28 +186,16 @@ class IslrXmlWhDoc(models.Model):
         #                    ixwl.islr_wh_doc_inv_id.islr_wh_doc_id.date_ret})
         return self.write({'state': 'confirmed'})
 
+    
     def action_generate_line_xml(self):
         """ Passes the document to state confirmed
         """
-        domain = [
-            ('date_ret', '>=', self.date_start),
-            ('date_ret', '<=', self.date_end),
-            ('islr_xml_wh_doc', '=', False)
-        ]
-
         # to set date_ret if don't exists
         obj_ixwl = self.env['islr.xml.wh.line']
-        lines = obj_ixwl.search(domain)
-
-        # filter invoices with NC and ND.
-        lines = lines.filtered(lambda r: len(r.account_invoice_id.debit_note_ids) == 0 and 
-            len(r.account_invoice_id.reversal_move_id) == 0)
-        # filter NC and ND
-        lines = lines.filtered(lambda r: len(r.account_invoice_id.reversed_entry_id) == 0 and 
-            len(r.account_invoice_id.debit_origin_id) == 0)
-
-        self.write({'invoice_xml_ids': [(6, 0, lines.ids)]})
+        self.invoice_xml_ids = obj_ixwl.search([('date_ret', '>=', self.date_start),
+                                                ('date_ret', '<=', self.date_end)])
         return True
+
     
     def action_done1(self):
         """ Passes the document to state done
@@ -308,7 +291,7 @@ class IslrXmlWhDoc(models.Model):
                 FROM islr_xml_wh_line
                 WHERE id in (%s)
                 GROUP BY partner_vat, control_number, porcent_rete, concept_code,
-                    invoice_number,account_invoice_id, date_ret ORDER BY concept_code ASC''' % "," .join(map(str,local_ids))
+                    invoice_number,account_invoice_id, date_ret''' % "," .join(map(str,local_ids))
                 self.env.cr.execute(sql)
                 xml_lines = self.env.cr.fetchall()
             else:
@@ -368,20 +351,20 @@ class IslrXmlWhLine(models.Model):
 
 
     concept_id = fields.Many2one(
-            'islr.wh.concept', string='Concepto de Retencion',
+            'islr.wh.concept', string='Entrada de diario',
             help="Concepto de retención asociado a esta tasa",
             required=True, ondelete='cascade')
     #period_id = fields.Many2one(
     #        'account.period', 'Period', required=False,
     #        help="Period when the journal entries were done")
     partner_vat = fields.Char(
-            'RIF', size=10, required=True, help="Socio RIF")
+            'VAT', size=10, required=True, help="Socio IVA")
     invoice_number = fields.Char(
             'Número de factura', size=20, required=True,
             default='0',
-            help="Número de factura")
+            help="Number of invoice")
     control_number = fields.Char(
-            'Numero de Control', size=20,
+            'Control Number', size=20, required=True,
             default='NA',
             help="Reference")
     concept_code = fields.Char(
@@ -422,12 +405,12 @@ class IslrXmlWhLine(models.Model):
             'res.partner', 'Empresa', required=True,
             help="Socio objeto de retención")
     sustract = fields.Float(
-            'Sustraendo', help="Subtrahend",
+            'Subtrahend', help="Subtrahend",
             digits=dp.get_precision('Withhold ISLR'))
     islr_wh_doc_inv_id = fields.Many2one(
             'islr.wh.doc.invoices', 'Factura retenida',
             help="Facturas retenidas")
-    date_ret = fields.Date('Fecha de Operacion')
+    date_ret = fields.Date('Operation Date')
     type = fields.Selection(
             ISLR_XML_WH_LINE_TYPES,
             string='Tipo', required=True, readonly=False,

@@ -46,35 +46,15 @@ class RepComprobanteIslr(models.AbstractModel):
         data = {'form': self.env['islr.wh.doc'].browse(docids)}
         res = dict()
         partner_id = data['form'].partner_id
-        total_doc = 0
-        date_ret = data['form'].date_ret
-        if date_ret:
-            split_date = (str(date_ret).split('-'))
-            date_ret = str(split_date[2]) + '/' + (split_date[1]) + '/' + str(split_date[0])
-            period_date = (str(data['form'].date_ret).split('-'))
-            period =  str(period_date[1]) + '/' + str(period_date[0])
-        else:
-            raise Warning(_("Se necesita la Fecha para poder procesar."))
         if partner_id.company_type == 'person':
-            if partner_id.vat:
-                document = partner_id.vat
+            if partner_id.nationality == 'V' or partner_id.nationality == 'E':
+                document = str(partner_id.nationality) + str(partner_id.identification_id)
             else:
-                if partner_id.nationality == 'V' or partner_id.nationality == 'E':
-                    document = str(partner_id.nationality) + str(partner_id.identification_id)
-                else:
-                    document = str(partner_id.identification_id)
+                document = str(partner_id.identification_id)
         else:
             document = partner_id.vat
 
         if data['form'].state == 'done':
-            if data['form'].currency_id.id == data['form'].company_id.currency_id.id :
-                total_doc = data['form'].invoice_ids.invoice_id.amount_total
-            elif data['form'].invoice_ids.invoice_id.currency_id != data['form'].company_id.currency_id.id:
-                tasa = data['form'].invoice_ids.invoice_id.exchange_rate
-                if tasa:
-                    total_doc = data['form'].invoice_ids.invoice_id.amount_total * tasa
-
-
             # code_code = ''
             # for code in data['form'].concept_ids.iwdi_id.islr_xml_id:
             #     code_code = code.concept_code
@@ -82,12 +62,10 @@ class RepComprobanteIslr(models.AbstractModel):
                 'data': data['form'],
                 'document': document,
                 # 'code_code': code_code,
-                'total_doc': total_doc,
                 'model': self.env['report.locv_withholding_islr.template_wh_islr'],
                 'doc_model': self.env['report.locv_withholding_islr.template_wh_islr'],
                 'lines': res,  # self.get_lines(data.get('form')),
-                'date_ret': date_ret,
-                'period': period,
+                # date.partner_id
             }
         else:
             raise UserError(_("La Retencion de ISLR debe estar en estado Realizado para poder generar su Comprobante"))
@@ -135,13 +113,13 @@ class RepComprobanteIslr(models.AbstractModel):
 
     def get_period(self, date):
         if not date:
-            raise Warning(_("Se necesita una fecha, por favor ingresar"))
+            raise Warning(_("You need date."))
         split_date = str(date).split('-')
         return str(split_date[1]) + '/' + str(split_date[0])
 
     def get_date(self, date):
         if not date:
-            raise Warning(_("Se necesita una fecha, por favor ingresar."))
+            raise Warning(_("You need date."))
         split_date = date.split('-')
         return str(split_date[2]) + '/' + (split_date[1]) + '/' + str(split_date[0])
 

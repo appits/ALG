@@ -43,13 +43,13 @@ class IslrRates(models.Model):
             digits=dp.get_precision('Withhold ISLR'))
     minimum= fields.Float(
             'Min. Cantidad', required=True,
-          #  digits=dp.get_precision('Withhold ISLR'),
+            digits=dp.get_precision('Withhold ISLR'),
             help="Cantidad mínima, a partir de la cual determinará si esta"
                  "retenido")
     wh_perc= fields.Float(
             'Porcentaje de la Cantidad', required=True,
             digits=dp.get_precision('Withhold ISLR'),
-            help="El porcentaje que se aplica a los ingresos imponibles sujetos a impuestos que arroja la"
+            help="El porcentaje que se aplica a los ingresos imponibles sujetos a impuestos arroja la"
                  "cantidad a retener")
     subtract= fields.Float(
             'Sustracción en unidades impositivas', required=True,

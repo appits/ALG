@@ -191,9 +191,9 @@ class AccountMove(models.Model):
         acc_part_id = rp_obj._find_accounting_partner(self.partner_id)
 
         res = False
-        if self.type in ('out_refund', 'in_refund'):
-            return False
-        if not (self.type in ('out_invoice', 'in_invoice') and rp_obj._find_accounting_partner(self.company_id.partner_id).islr_withholding_agent):
+        # ~ if self.type in ('out_refund', 'in_refund'):
+            # ~ return False
+        if not (self.type in ('out_invoice', 'in_invoice','in_refund') and rp_obj._find_accounting_partner(self.company_id.partner_id).islr_withholding_agent):
             return True
 
         context['type'] = self.type

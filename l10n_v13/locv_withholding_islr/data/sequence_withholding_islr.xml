@@ -32,6 +32,5 @@
             <field eval="False" name="company_id"/>
             <field name="padding">6</field>
         </record>
-
     </data>
 </odoo>

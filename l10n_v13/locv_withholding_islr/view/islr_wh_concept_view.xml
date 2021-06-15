@@ -72,8 +72,8 @@
                         <field name="name"/>
 <!--                        <field name="codigo"/>-->
                         <field name="withholdable"/>
-<!--                        <field name="property_retencion_islr_payable" attrs="{'readonly':[('withholdable','=',False)],'required':[('withholdable','=',True)]}"/>-->
-<!--                        <field name="property_retencion_islr_receivable" attrs="{'readonly':[('withholdable','=',False)],'required':[('withholdable','=',True)]}"/>-->
+                        <field name="property_retencion_islr_payable" attrs="{'readonly':[('withholdable','=',False)],'required':[('withholdable','=',True)]}"/>
+                        <field name="property_retencion_islr_receivable" attrs="{'readonly':[('withholdable','=',False)],'required':[('withholdable','=',True)]}"/>
                     </group>
                     <notebook colspan="4">
                         <page string="Rates" attrs="{'readonly':[('withholdable','=',False)]}">
