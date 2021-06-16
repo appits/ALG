@@ -502,7 +502,7 @@ class TxtIva(models.Model):
                     value2 = float(amount_untaxed)
                 txt_string = (
                     txt_string + buyer + '\t' + period + '\t'
-                    + (str(txt_line.invoice_id.date)) + '\t' + operation_type +
+                    + (str(txt_line.invoice_id.invoice_date)) + '\t' + operation_type +
                     '\t' + document_type + '\t' + vendor + '\t' +
                     document_number + '\t' + control_number + '\t' +
                     self.formato_cifras(amount_total2) + '\t' +
