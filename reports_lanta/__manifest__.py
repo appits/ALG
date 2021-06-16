@@ -23,6 +23,7 @@
         'views/mrp_production.xml',
         'views/res_company.xml',
         'views/partner.xml',
+        'views/manual_debit_note.xml',
         'views/product_template.xml',
         'reports/guia_despacho.xml',
         'reports/informe_recepcion.xml',
