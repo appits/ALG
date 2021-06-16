@@ -10,3 +10,4 @@ from . import mrp_production
 from . import res_company
 from . import partner
 from . import product_template
+from . import debit_note
