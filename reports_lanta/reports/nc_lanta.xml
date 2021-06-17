@@ -28,12 +28,18 @@
             </t>
         </template>
 
+        <template id="monto_factura_afectada_nc_manual">
+            <p class="my-1" style="font-size: 12px !important;"><strong>Monto Factura Afectada $.:    
+            </strong><span t-esc="format_decimals(o.invoice_affected_amount_usd)"></span></p>
+            <p class="my-1" style="font-size: 12px !important;"><strong>Monto Factura Afectada Bs.: </strong><span t-esc="format_decimals(o.invoice_affected_amount_bs)"> </span></p>
+        </template>
+
        <template id="nc_lanta">
         <t t-call="web.html_container">
             <t t-set="format_decimals" 
                 t-value="lambda n: '{0:,}'.format(int(n)).replace(',', '.') + '{:.2f}'.format(n - int(n)).replace('0.', ',')" />
             <t t-foreach="docs" t-as="o">
-              <t t-if="o.type == 'out_refund' and o.reversed_entry_id">
+              <t t-if="(o.type == 'out_refund' and o.reversed_entry_id) or (o.type == 'out_refund' and o.is_manual_credit_note)">
                  <t t-if="o.state == 'posted'">
                     <t t-call="web.basic_layout">
                       <div class="page">
@@ -53,6 +59,16 @@
                                   <p class="my-1" style="font-size: 12px !important;"><strong>Factura Afectada : </strong><span t-field="o.reversed_entry_id.name"> </span></p>
                                   <p class="my-1" style="font-size: 12px !important;"><strong>Fecha Factura Afectada : </strong><span t-field="o.reversed_entry_id.invoice_date"> </span></p>
                                   <t t-call="reports_lanta.monto_factura_afectada_nc" ></t>
+                                  <t t-if="o.debit_origin_id">
+                                    <p class="my-1" style="font-size: 12px !important;"><strong>Factura Afectada : </strong><span t-field="o.reversed_entry_id.name"> </span></p>
+                                    <p class="my-1" style="font-size: 12px !important;"><strong>Fecha Factura Afectada : </strong><span t-field="o.reversed_entry_id.invoice_date"> </span></p>
+                                    <t t-call="reports_lanta.monto_factura_afectada_nc" ></t>
+                                  </t>
+                                  <t t-else="">
+                                    <p class="my-1" style="font-size: 12px !important;"><strong>Factura Afectada : </strong><span t-field="o.invoice_affected"> </span></p>
+                                    <p class="my-1" style="font-size: 12px !important;"><strong>Fecha Factura Afectada : </strong><span t-field="o.invoice_affected_date"> </span></p>
+                                    <t t-call="reports_lanta.monto_factura_afectada_nc_manual" ></t>
+                                  </t>
                             </div>
                              <p style="color:white"> -----</p>
                             <div class="col-xs-8" style="margin-left: 100px;">

@@ -11,3 +11,4 @@ class DebitNote(models.Model):
     invoice_affected_amount_bs = fields.Float('Monto de Factura Afectada Bs.')
     invoice_affected_amount_usd = fields.Float('Monto de Factura Afectada $')
     is_manual_debit_note = fields.Boolean(default=False)
+    is_manual_credit_note = fields.Boolean(default=False)
