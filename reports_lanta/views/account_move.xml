@@ -11,8 +11,8 @@
                 <xpath expr="//field[@name='ref']" position="before">
                     <field name="invoice_reverse_id" string="Referencia Factura" force_save="1"
                            domain="[('type', '=', 'out_invoice'), ('state', '=', 'posted')]"
-                           attrs="{'invisible': [('type', 'not in', ('out_refund', 'out_receipt')), '|', ('is_manual_debit_note', '=', False), ('is_manual_credit_note', '=', False)],
-                                  'required': [('type', 'in', ('out_refund', 'out_receipt')), ('is_manual_debit_note', '=', False), ('is_manual_credit_note', '=', False)],
+                           attrs="{'invisible': [('type', 'not in', ('out_refund', 'out_receipt'))],
+                                  'required': [('type', 'in', ('out_refund', 'out_receipt'))],
                                   'readonly': [('state', 'in', ('posted', 'cancel'))]}"/>
                 </xpath>
                  <xpath expr="//field[@name='ref']" position="before">
