@@ -56,10 +56,7 @@
                                   <p class="my-1" style="font-size: 12px"><strong>Lugar de despacho : </strong><span t-field="o.partner_shipping_id.name"/></p>
                                   <p class="my-1" style="font-size: 12px"><strong>Dirección de despacho : </strong><span t-field="o.partner_shipping_id.street"/></p>
                                   <p class="my-1" style="font-size: 12px !important;"><strong>Facturado por:  </strong><span t-field="o.create_uid"></span></p>
-                                  <p class="my-1" style="font-size: 12px !important;"><strong>Factura Afectada : </strong><span t-field="o.reversed_entry_id.name"> </span></p>
-                                  <p class="my-1" style="font-size: 12px !important;"><strong>Fecha Factura Afectada : </strong><span t-field="o.reversed_entry_id.invoice_date"> </span></p>
-                                  <t t-call="reports_lanta.monto_factura_afectada_nc" ></t>
-                                  <t t-if="o.debit_origin_id">
+                                  <t t-if="o.reversed_entry_id">
                                     <p class="my-1" style="font-size: 12px !important;"><strong>Factura Afectada : </strong><span t-field="o.reversed_entry_id.name"> </span></p>
                                     <p class="my-1" style="font-size: 12px !important;"><strong>Fecha Factura Afectada : </strong><span t-field="o.reversed_entry_id.invoice_date"> </span></p>
                                     <t t-call="reports_lanta.monto_factura_afectada_nc" ></t>
