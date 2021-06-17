@@ -367,7 +367,7 @@ class ReportRetentionISLR(models.AbstractModel):
                     nro_control = concept_line.invoice_id.nro_ctrl
                 else:
                     nro_control = concept_line.invoice_id.nro_ctrl
-                fecha = concept_line.invoice_id.date
+                fecha = concept_line.invoice_id.invoice_date
                 fecha_inicio = fecha.strftime('%d-%m-%Y')
                 for cod in concept_line.concept_id.rate_ids:
                     if cod.wh_perc == concept_line.retencion_islr:
