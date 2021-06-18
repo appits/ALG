@@ -293,7 +293,7 @@ class MUnicipalityTax(models.Model):
             #if vals.get('type', 'in_invoice') == 'in_invoice':
             #raise UserError(_('TIPO yy = %s')%vals['type'])
             if vals['type']=="in_invoice" or vals['type']=="in_refund" or vals['type']=="in_receipt":
-                    vals['name'] = self.env['ir.sequence'].next_by_code('purchase.muni.wh.voucher.number') or '/'
+                    vals['name'] = self.env['ir.sequence'].next_by_code('l10n_ve_cuenta_retencion_municipal') or '/'
                     _logger.info("\n\n\n vals[name] %s \n\n\n",vals['name'])
             else:
                 #vals['name'] = '/'
