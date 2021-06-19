@@ -55,12 +55,20 @@ class RepComprobanteIslr(models.AbstractModel):
             document = partner_id.vat
 
         if data['form'].state == 'done':
+            if data['form'].currency_id.id == data['form'].company_id.currency_id.id :
+                total_doc = data['form'].invoice_ids.invoice_id.amount_total
+            elif data['form'].invoice_ids.invoice_id.currency_id != data['form'].company_id.currency_id.id:
+                tasa = data['form'].invoice_ids.invoice_id.exchange_rate
+                if tasa:
+                    total_doc = data['form'].invoice_ids.invoice_id.amount_total * tasa
             # code_code = ''
             # for code in data['form'].concept_ids.iwdi_id.islr_xml_id:
             #     code_code = code.concept_code
             return {
                 'data': data['form'],
                 'document': document,
+                'document': document,
+                'total_doc': total_doc,
                 # 'code_code': code_code,
                 'model': self.env['report.locv_withholding_islr.template_wh_islr'],
                 'doc_model': self.env['report.locv_withholding_islr.template_wh_islr'],
