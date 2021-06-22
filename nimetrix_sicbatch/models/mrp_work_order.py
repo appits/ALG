@@ -93,29 +93,26 @@ class MrpWorkorder_Extension(models.Model):
                         raise UserError(_("No se puede conectar a sicbatch " + response.text))
 
                     utils.send_log(self, record, response.text, 'IP')
-
-                    stock_move_line = record.env['stock.move'].search(
-                        [('raw_material_production_id', '=', record.production_id.id)
-                         ])
+                    
                     lines = 0
-                    for line in stock_move_line:
+
+                    for line in record.production_id.bom_id.bom_line_ids:
                         if not line.product_id.product_tmpl_id.categ_id.send_sicbatch:
                             continue
                         lines = lines + 1
-                        monitoring = "spDetalleReceta_Actualizar: "+line.product_id.product_tmpl_id.default_code + "_" +line.product_id.product_tmpl_id.name
+                        monitoring = line.product_id.product_tmpl_id.default_code + "_" + line.product_id.product_tmpl_id.name
                         data = {
                             'name': 'spDetalleReceta_Actualizar',
                             'param1': record.production_id.bom_id.product_tmpl_id.default_code,
                             'param2': line.product_id.product_tmpl_id.default_code,
                             'param3': line.product_qty,
-                            'param4': lines,
-                            'param5': line.product_id.product_tmpl_id.name
+                            'param4': lines
                         }
-                        response = requests.post(url=url, json=data, timeout=8)
+                        response = requests.post(url=url, json=data)
 
                         if response.status_code != 200:
                             raise UserError(_("Cannot connect to sicbatch, error: " + response.text))
-
+                            
                     production = record.env['mrp.production'].search(
                         [('id', '=', record.production_id.id)])
 
