@@ -274,10 +274,10 @@ class MUnicipalityTax(models.Model):
        if not self.transaction_date:
             raise ValidationError("Debe establecer una fecha de Transacción")
        self.state = 'posted'
-       nombre_ret_municipal = self.get_name()
+       #nombre_ret_municipal = self.get_name()
        # id_move=self.registro_movimiento_retencion(nombre_ret_municipal)
        # idv_move=id_move.id
-       valor=self.registro_movimiento_linea_retencion(nombre_ret_municipal)
+       valor=self.registro_movimiento_linea_retencion(self.name)
        valor.action_post()
        self.wh_muni_id = valor
 
