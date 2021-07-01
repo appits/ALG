@@ -53,9 +53,11 @@ class Picking(models.Model):
         if self.sale_id:
             if self.sale_id.warehouse_id.lot_stock_id.id == self.location_id.id and self.location_dest_id.usage == 'customer':
                 self.transaction_main = True
-        elif self.type_transaction == 'incoming':
-            if self.location_id.usage == 'supplier':
-                self.transaction_main = True
+        else:
+            for line in self:
+                if line.type_transaction == 'incoming':
+                    if line.location_id.usage == 'supplier':
+                        line.transaction_main = True
 
     @api.constrains('state')
     def get_total_qty(self):
