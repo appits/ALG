@@ -213,8 +213,12 @@ class AccountMoveLine(models.Model):
                 if line.move_id.asset_id and line.parent_state == 'posted':
                     for currencies_sch in line.move_id.asset_id.currencies_asset_ids:
                         rate = currencies_sch.rate
-                        debit = round(line.debit / rate, 2)
-                        credit = round(line.credit / rate, 2)
+                        if rate:
+                            debit = round(line.debit / rate, 2)
+                            credit = round(line.credit / rate, 2)
+                        else:
+                            debit = round(0, 2)
+                            credit = round(0, 2)
                         self._create_fact(line, currencies_sch.schema_id, rate, debit, credit)
 
                 schemas = self.env['acct.schema'].search([

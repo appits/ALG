@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
+# Author: Oscar Llovera
+
 {
-    'name': "account_asset_depreciated",
+    'name': "account_asset_custom",
     'summary': """
-        Recording of depreciated assets.
+       Customized module for asset depreciation..
     """,
-    'author': "Oscar Llovera",
+    'author': "ITSales",
     'category': 'Accounting/Accounting',
     'version': '0.1',
     'depends': ['account_asset'],
     'data': [
-        # 'security/ir.model.access.csv',
         'views/views.xml',
-        'views/templates.xml',
     ],
 }

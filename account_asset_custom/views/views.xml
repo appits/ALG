@@ -5,8 +5,16 @@
     <field name="model">account.asset</field>
     <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
     <field name="arch" type="xml">
+
+      <!-- nuevos campos -->
       <field name="original_value" position="before">
         <field name="is_depreciated" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+      </field>
+
+      <field name="acquisition_date" position="after">
+        <field name="already_depreciated_amount_import"/>
+        <field name="depreciation_number_import" />
+        <field name="depreciation_accumulate" />
       </field>
 
       <xpath expr="//field[@name='method']/.." position="attributes">
