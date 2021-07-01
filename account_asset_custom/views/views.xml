@@ -17,6 +17,11 @@
         <field name="depreciation_accumulate" />
       </field>
 
+      <field name="first_depreciation_date" position="after">
+        <field name="first_depretiation_date_offset" attrs="{'invisible': [('depreciation_number_import', '=', 0)], 'required': [('depreciation_number_import', '&gt;', 0)]}"/>
+      </field>
+
+      <!-- Grupos invisibles por condicion -->
       <xpath expr="//field[@name='method']/.." position="attributes">
         <attribute name="attrs">{'invisible': [('is_depreciated', '=', True)]}</attribute>
       </xpath> 

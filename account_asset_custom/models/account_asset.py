@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from dateutil.relativedelta import relativedelta
 
 
 class AccountAsset(models.Model):
@@ -10,6 +11,7 @@ class AccountAsset(models.Model):
     first_depreciation_date = fields.Date(required=False)
     already_depreciated_amount_import = fields.Monetary(readonly=True, states={'draft': [('readonly', False)]})
     depreciation_number_import = fields.Integer(readonly=True, states={'draft': [('readonly', False)]})
+    first_depretiation_date_offset = fields.Date(compute='_compute_first_depretiation_date_offset', readonly=False)
     depreciation_accumulate = fields.Monetary(compute='_compute_depreciation_accumulate')
 
     @api.depends(
@@ -35,6 +37,16 @@ class AccountAsset(models.Model):
                 asset.book_value = 0
                 asset.gross_increase_value = 0
     
+    @api.depends('depreciation_number_import', 'first_depreciation_date')
+    def _compute_first_depretiation_date_offset(self):
+        for asset in self:
+            if asset.depreciation_number_import and asset.first_depreciation_date:
+                months = (self.depreciation_number_import * int(self.method_period)) + 1
+                self.first_depretiation_date_offset = (self.first_depreciation_date + 
+                    relativedelta(months=months, day=1, days=-1))
+            else:
+                self.first_depretiation_date_offset = False
+        
     @api.onchange('salvage_value')
     def _onchange_salvage_value(self):
         self._compute_values()
@@ -60,6 +72,8 @@ class AccountAsset(models.Model):
         depreciation_date, already_depreciated_amount, amount_change_ids):
         if self.depreciation_number_import:
             starting_sequence += self.depreciation_number_import
+            if self.first_depretiation_date_offset > depreciation_date:
+                depreciation_date = self.first_depretiation_date_offset         
         
         return super()._recompute_board(depreciation_number, starting_sequence, amount_to_depreciate,
             depreciation_date, already_depreciated_amount, amount_change_ids)
