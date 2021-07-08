@@ -222,7 +222,8 @@ class AccountMove(models.Model):
                 return {'warning': {'title': "Advertencia!",
                                     'message': "  El Numero de la Factura del Proveedor ya Existe  "}}
         if vals.get('nro_ctrl', False):
-            if self.maq_fiscal_p == False:
+            maq_fiscal_p = vals.get('maq_fiscal_p', self.maq_fiscal_p)
+            if maq_fiscal_p is False:
                 nro_ctrl_id = self._unique_invoice_per_partner('nro_ctrl', vals.get('nro_ctrl', False))
                 if not nro_ctrl_id:
                     self.nro_ctrl = False
